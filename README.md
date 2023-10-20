@@ -184,8 +184,6 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
 // 选择项目管理 > 运营管理 > 聊天室。 在聊天室的操作栏中选择查看聊天室成员，然后在弹出的对话框中将用户添加到聊天室。
 ```
 
-![CreateChatroom](./Documentation/CreateChatroom.png)。
-
 事件透传请参考下一章。
 
 # 注意事项
@@ -248,7 +246,7 @@ ChatroomUIKitClient.shared.registerRoomEventsListener（listener：self）
 
 ````
 // 可以通过设置属性来改变弹幕区域的整体单元格布局风格。
-Appearance.barrageCellStyle = .hideUserIdentify
+Appearance.barrageCellStyle = .hideUserIdentity
 // 创建ChatroomView，传入布局参数、底部工具栏扩展按钮模型协议数组等参数。
 let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: "聊天室 ID",frame: <#T##CGRect#>)
 self.view.addSubView(roomView)
