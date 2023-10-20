@@ -18,39 +18,39 @@
 
 ## [目录](https://github.com/easemob/UIKit_Chatroom_ios#table-of-contents)
 
-- [前置开发环境要求](https://github.com/easemob/UIKit_Chatroom_ios#requirements)
-- [安装](https://github.com/easemob/UIKit_Chatroom_ios#installation)
-- [文档](https://github.com/easemob/UIKit_Chatroom_ios#documentation)
-- [结构](https://github.com/easemob/UIKit_Chatroom_ios#struct)
-- [快速入门](https://github.com/easemob/UIKit_Chatroom_ios#quickStart)
-- [注意事项](https://github.com/easemob/UIKit_Chatroom_ios#precautions)
-- [进阶用法](https://github.com/easemob/UIKit_Chatroom_ios#advancedusage)
-- [自定义](https://github.com/easemob/UIKit_Chatroom_ios#customize)
-- [业务流程图](https://github.com/easemob/UIKit_Chatroom_ios#businessflowchart)
-- [Api时序图](https://github.com/easemob/UIKit_Chatroom_ios#Api时序图)
-- [设计指南](https://github.com/easemob/UIKit_Chatroom_ios#designguidelines)
-- [贡献](https://github.com/easemob/UIKit_Chatroom_ios#contributing)
-- [许可证](https://github.com/easemob/UIKit_Chatroom_ios#license)
+- [前置开发环境要求](#前置开发环境要求)
+- [安装](#安装)
+- [文档](#文档)
+- [结构](#结构)
+- [快速开始](#快速开始)
+- [注意事项](#注意事项)
+- [进阶用法](#进阶用法)
+- [自定义](#自定义)
+- [业务流程图](#业务流程图)
+- [Api时序图](#Api时序图)
+- [设计指南](#设计指南)
+- [贡献](#贡献)
+- [许可证](#许可证)
 
-# [前置开发环境要求](https://github.com/easemob/UIKit_Chatroom_ios#requirements)
+# 前置开发环境要求
 
 - Xcode 14.0及以上版本
 - 最低支持系统：iOS 13.0
 - 请确保您的项目已设置有效的开发者签名
 
-# [安装](https://github.com/easemob/UIKit_Chatroom_ios#installation)
+# 安装
 
 您可以使用 CocoaPods 安装 ChatroomUIKit 作为 Xcode 项目的依赖项。
 
-## [CocoaPods](https://github.com/easemob/UIKit_Chatroom_ios#cocoapods)
+## CocoaPods
 
-在podfile中赋值如下
+在podfile中添加如下依赖
 
 ```
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '13.0'
 
-target 'AUIKitDemo' do
+target 'YourTarget' do
   use_frameworks!
   
   pod 'ChatroomUIKit'
@@ -65,8 +65,13 @@ post_install do |installer|
 end
 ```
 
+然后cd到终端下podfile所在文件夹目录执行
+```
+    pod install
+```
 
-# [结构](https://github.com/easemob/UIKit_Chatroom_ios#struct)
+
+# 结构
 
 ### [ChatroomUIKit 基本组件](https://github.com/easemob/UIKit_Chatroom_ios#chatroomuikit-basic-components)
 
@@ -99,7 +104,7 @@ end
        └─ Extension // 一些方便的系统类扩展。
 ````
 
-# [文档](https://github.com/easemob/UIKit_Chatroom_ios#documentation)
+# 文档
 
 ## [文档](/Documentation/ChatroomUIKit.doccarchive)
 
@@ -113,19 +118,19 @@ python3 -m http.server 8080
 
 部署完成后，您可以在浏览器中访问“http://yourlocalhost:8080/documentation/chatroomuikit”，其中“yourlocalhost”是您的本地IP地址。 或者，您可以将此文件夹部署在外部网络地址上。
 
-## [Appearance]
+## Appearance
 
 [Appearance](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/Appearance.md)
 
 即加载UI前的可配项配置
 
-## [ComponentRegister]
+## ComponentRegister
 
 [ComponentRegister](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/ComponentRegister.md).
 
 可继承进行定制的 UI 组件。
 
-## [GiftsViewController]
+## GiftsViewController
 
 [GiftsViewController](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/GiftsViewController.md)
 
@@ -133,11 +138,11 @@ python3 -m http.server 8080
 
 如果想呈现动画、特效，建议使用腾讯libpag。
 
-# [快速入门](https://github.com/easemob/UIKit_Chatroom_ios#quickstart)
+# 快速入门
 
 本指南提供了不同 ChatroomUIKit 组件的多个使用示例。 请参阅“示例”文件夹以获取显示各种用例的详细代码片段和项目。
 
-### [第一步：初始化ChatroomUIKit](https://github.com/easemob/UIKit_Chatroom_ios#step-1-initialize-chatroomuikit)
+### 第一步：初始化ChatroomUIKit
 
 ````
 import ChatroomUIKit
@@ -157,7 +162,7 @@ import ChatroomUIKit
 }
 ````
 
-### [第2步：登录](https://github.com/easemob/UIKit_Chatroom_ios#step-2-login)
+### 第2步：登录
 
 ````
 // 使用当前用户对象符合`UserInfoProtocol`协议的用户信息登录ChatroomUIKit。
@@ -166,7 +171,7 @@ import ChatroomUIKit
 ChatroomUIKitClient.shared.login(with userId: "user id", token: "token", completion: <#T##(ChatError?) -> Void#>)
 ````
 
-### [第三步：创建聊天室视图](https://github.com/easemob/UIKit_Chatroom_ios#step-3-create-chat-room-view)
+### 第三步：创建聊天室视图
 
 ````
 // 1. 获取聊天室列表并加入聊天室。 或者，在 Agora 控制台上创建聊天室。
@@ -183,17 +188,23 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
 
 事件透传请参考下一章。
 
-# [注意事项](https://github.com/easemob/UIKit_Chatroom_ios#precautions)
+# 注意事项
 
 在调用`ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame:CGRect, isowner:Bool)`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
 
 例如，如果您有一个播放视频流的视图，请务必在此视图上方添加 ChatroomView。
 
-# [进阶用法](https://github.com/easemob/UIKit_Chatroom_ios#advancedusage)
+# 进阶用法
 
 以下是进阶用法的三个示例。
 
-### [1.登录](https://github.com/easemob/UIKit_Chatroom_ios#1login)
+## 1.初始化聊天室UIKit
+
+```
+    let error = ChatroomUIKitClient.shared.setup(with: <#T##String#>,option: <#T##ChatroomUIKitInitialOptions.ChatOptions#>)
+```
+
+## 2.登录
 
 ```Swift
 class YourAppUser: UserInfoProtocol {
@@ -213,16 +224,15 @@ class YourAppUser: UserInfoProtocol {
 ChatroomUIKitClient.shared.login(with: YourAppUser(), token: "token", completion: <#T##(ChatError?) -> Void#>)
 ```
 
-### [2.初始化聊天室视图](https://github.com/easemob/UIKit_Chatroom_ios#2initializing-the-chat-room-view)
-
-````
+## 3.初始化聊天室视图
+```
 //1. 获取聊天室列表并加入聊天室。 或者，在 Agora 控制台上创建聊天室。
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
 ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: "chatroom id", frame: destination, is: true) 
-//3. 添加视图。
-````
+//3. 添加视图
+```
 
-### [3.监听ChatroomUIKit事件和错误](https://github.com/easemob/UIKit_Chatroom_ios#3listening-to-chatroomuikit-events-and-errors)
+## 4.监听ChatroomUIKit事件和错误
 
 您可以调用“registerRoomEventsListener”方法来侦听 ChatroomUIKit 事件和错误。
 
@@ -230,9 +240,9 @@ ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: "chatroom id", fram
 ChatroomUIKitClient.shared.registerRoomEventsListener（listener：self）
 ```
 
-# [自定义](https://github.com/easemob/UIKit_Chatroom_ios#customization)
+# 自定义
 
-### [1.修改可配置项](https://github.com/easemob/UIKit_Chatroom_ios#1modify-configurable-items)
+## 1.修改可配置项
 
 下面展示如何更改弹幕区域的整体单元格布局风格以及如何创建ChatroomView。
 
@@ -246,7 +256,7 @@ self.view.addSubView(roomView)
 
 详情请参见[Appearance](./Documentation/Appearance.md)。
 
-### [2.自定义组件](https://github.com/easemob/UIKit_Chatroom_ios#2custom-components)
+## 2.自定义组件
 
 下面展示如何自定义礼物弹幕视图cell。
 
@@ -273,7 +283,7 @@ ComponentsRegister.shared.GiftBarragesViewCell = CustomGiftBarragesViewCell.self
 
 详情请参见[ComponentsRegister](./Documentation/ComponentsRegister.md)。
 
-### [3.切换默认或自定义主题](https://github.com/easemob/UIKit_Chatroom_ios#3switch-original-or-custom-theme)
+## 3.切换默认或自定义主题
 
 - 切换到 ChatroomUIKit 附带的浅色或深色主题。
 
@@ -281,8 +291,7 @@ ComponentsRegister.shared.GiftBarragesViewCell = CustomGiftBarragesViewCell.self
 Theme.switchTheme(style: .dark)` 或 `Theme.switchTheme(style: .light)
 ````
 
-### [3.切换原创或自定义主题](https://github.com/easemob/UIKit_Chatroom_ios#3switch-original-or-custom-theme)
-
+## 3.切换原创或自定义主题
 - 切换到 ChatroomUIKit 附带的浅色或深色主题。
 
 ````
@@ -319,19 +328,17 @@ Appearance.switchHues()
 
 请注意，自定义主题和内置主题是互斥的。
 
-# [业务流程图](https://github.com/easemob/UIKit_Chatroom_ios#businessflowchart)
-
+# 业务流程图
 下图展示了业务请求和回调的整个逻辑。
-
 ![业务逻辑整体流程图](/Documentation/BusinessFlowchart.png)
 
-# [Api时序图](https://github.com/easemob/UIKit_Chatroom_ios#apisequencediagram)
+# Api时序图
 
 下图是Example项目中最佳实践的API调用时序图。
 
 [APIUML](./Documentation/Api.png)
 
-# [设计指南](https://github.com/easemob/UIKit_Chatroom_ios#designguidelines)
+# 设计指南
 
 如果您对设计指南和细节有任何疑问，您可以在 Figma 设计稿中添加评论并提及我们的设计师 Stevie Jiang。
 
@@ -339,14 +346,14 @@ Appearance.switchHues()
 
 请参阅[UI设计指南](https://www.figma.com/file/OX2dUdilAKHahAh9VwX8aI/Streamuikit?node-id=137)
 
-# [贡献](https://github.com/easemob/UIKit_Chatroom_ios#contributing)
+# 贡献
 
 欢迎贡献和反馈！ 对于任何问题或改进建议，您可以提出问题或提交拉取请求。
 
-## [作者](https://github.com/easemob/UIKit_Chatroom_ios#author)
+## 作者
 
 zjc19891106, [984065974@qq.com](mailto:984065974@qq.com)
 
-## [许可证](https://github.com/easemob/UIKit_Chatroom_ios#license)
+## 许可证
 
 ChatroomUIKit 可在 MIT 许可下使用。 有关详细信息，请参阅许可证文件。
