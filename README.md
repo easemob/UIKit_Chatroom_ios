@@ -2,7 +2,7 @@
 
 本产品主要为了解决大部分用户的泛娱乐业务场景下对聊天室的绝大部分用户需求，主要为用户解决直接集成SDK繁琐，复杂度高，部分api体验不好（在用户侧业务员看来）等问题。致力于打造集成简单，自由度高，流程简单，文档说明足够详细的聊天室UIKit产品。
 
-# [示例演示]
+# 示例演示
 
 在本项目中，“Example”文件夹中有一个最佳实践演示项目，供您构建自己的业务能力。
 
@@ -10,13 +10,13 @@
 
 ![Demo](/Documentation/demo.png)
 
-# [聊天室 UIKit 指南](https://github.com/easemob/UIKit_Chatroom_ios#chatroom-uikit-guide)
+# 聊天室 UIKit 指南
 
-## [简介](https://github.com/easemob/UIKit_Chatroom_ios#introduction)
+## 简介
 
 本指南介绍了 ChatroomUIKit 框架在 iOS 开发中的概述和使用示例，并描述了该 UIKit 的各个组件和功能，使开发人员能够很好地了解 UIKit 并有效地使用它。
 
-## [目录](https://github.com/easemob/UIKit_Chatroom_ios#table-of-contents)
+## 目录
 
 - [前置开发环境要求](#前置开发环境要求)
 - [安装](#安装)
