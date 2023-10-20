@@ -115,19 +115,19 @@ python3 -m http.server 8080
 
 ## [Appearance]
 
-![Appearance](/Documentation/Appearance.md)
+![Appearance](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/Appearance.md)
 
 即加载UI前的可配项配置
 
 ## [ComponentRegister]
 
- ![ComponentRegister](/Documentation/ComponentRegister.md).
+ ![ComponentRegister](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/ComponentRegister.md).
 
 可继承进行定制的 UI 组件。
 
 ## [GiftsViewController]
 
-![GiftsViewController](/Documentation/GiftsViewController.md)
+![GiftsViewController](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/GiftsViewController.md)
 
 包含礼品清单的容器。 您可以继承该类来实现额外的UI定义和业务处理。 当您点击**发送**按钮发送礼物后，您可以决定是否关闭礼物弹窗，并在您的服务器上调用您业务中的礼物接口将礼物消息发送到聊天室。
 
