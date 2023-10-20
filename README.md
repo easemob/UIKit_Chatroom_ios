@@ -148,7 +148,7 @@ python3 -m http.server 8080
 import ChatroomUIKit
     
 @UIApplicationMain
-类AppDelegate：UIResponder，UIApplicationDelegate {
+class AppDelegate：UIResponder，UIApplicationDelegate {
 
      var window：UIWindow？
 
@@ -165,7 +165,7 @@ import ChatroomUIKit
 ### 第2步：登录
 
 ```
-// 使用当前用户对象符合`UserInfoProtocol`协议的用户信息登录ChatroomUIKit。
+// 使用当前用户对象符合`UserInfoProtocol`协议的用户信息登录ChatroomUIKit。建议在进入列表前登录
 // 需要从您的应用服务器获取token。 您也可以使用控制台生成的临时Token登录。
 // 在控制台生成用户和临时用户 token，请参见 https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA-im-%E7%94%A8%E6%88%B7。
 ChatroomUIKitClient.shared.login(with userId: "user id", token: "token", completion: <#T##(ChatError?) -> Void#>)
