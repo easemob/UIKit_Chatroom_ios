@@ -39,7 +39,7 @@
 - 最低支持系统：iOS 13.0
 - 请确保您的项目已设置有效的开发者签名
 
-# 【安装】(https://github.com/easemob/UIKit_Chatroom_ios#installation)
+# [安装](https://github.com/easemob/UIKit_Chatroom_ios#installation)
 
 您可以使用 CocoaPods 安装 ChatroomUIKit 作为 Xcode 项目的依赖项。
 
