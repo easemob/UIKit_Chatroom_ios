@@ -74,7 +74,6 @@ end
 
 解决方法: Build Setting里搜索 ```ENABLE_USER_SCRIPT_SANDBOXING```把```User Script Sandboxing```改为```NO```
 >
-![](https://fullapp.oss-cn-beijing.aliyuncs.com/uikit/readme/ios/fix_compiler_xcode15_sandbox_error.jpg)
 
 
 ````
