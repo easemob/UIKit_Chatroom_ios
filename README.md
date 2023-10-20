@@ -156,7 +156,7 @@ import ChatroomUIKit
      func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
          // 您可以在应用程序加载时或使用之前初始化 ChatroomUIKit。
          // 需要传入App Key。
-         // 获取App Key，请访问https://docs.agora.io/en/agora-chat/get-started/enable?platform=android#get-chat-project-information。
+         // 获取App Key，请访问https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E8%8E%B7%E5%8F%96%E7%8E%AF%E4%BF%A1%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF-im-%E7%9A%84%E4%BF%A1%E6%81%AF
          let error = ChatroomUIKitClient.shared.setup（with: "Appkey"）
      }
 }
@@ -164,25 +164,25 @@ import ChatroomUIKit
 
 ### 第2步：登录
 
-````
+```
 // 使用当前用户对象符合`UserInfoProtocol`协议的用户信息登录ChatroomUIKit。
-// 需要从您的应用服务器获取token。 您也可以使用Agora控制台生成的临时Token登录。
-// 在 Agora 控制台生成用户和临时用户 token，请参见 https://docs.agora.io/en/agora-chat/get-started/enable?platform=ios#manage-users-and-generate - 代币。
+// 需要从您的应用服务器获取token。 您也可以使用控制台生成的临时Token登录。
+// 在控制台生成用户和临时用户 token，请参见 https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA-im-%E7%94%A8%E6%88%B7。
 ChatroomUIKitClient.shared.login(with userId: "user id", token: "token", completion: <#T##(ChatError?) -> Void#>)
-````
+```
 
 ### 第三步：创建聊天室视图
 
-````
+```
 // 1. 获取聊天室列表并加入聊天室。 或者，在 Agora 控制台上创建聊天室。
-// 选择“项目管理 > 运营管理 > 聊天室”，单击“创建聊天室”，在弹出的对话框中设置参数，创建聊天室。 获取聊天室 ID，将其传递给以下 `launchRoomView` 方法。
+// 选择“项目管理 > 运营管理 > 聊天室”，单击“创建聊天室”，在弹出的对话框中设置参数，创建聊天室。 获取聊天室 ID，将其传递给以下 `launchRoomView` 方法。参见https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E5%AE%A4
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
 // 建议ChatroomView的宽度初始化为屏幕的宽度，高度不小于屏幕的高度减去导航的高度。
 let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: CGRect, is owner: Bool)    
 // 3. 添加视图。
 // 4. 通过控制台将用户添加到聊天室。
 // 选择项目管理 > 运营管理 > 聊天室。 在聊天室的操作栏中选择查看聊天室成员，然后在弹出的对话框中将用户添加到聊天室。
-````
+```
 
 ![CreateChatroom](./Documentation/CreateChatroom.png)。
 
@@ -220,13 +220,13 @@ class YourAppUser: UserInfoProtocol {
             
 }
 // 使用当前用户对象符合UserInfoProtocol协议的用户信息登录ChatroomUIKit。
-// 您需要从应用程序服务器获取用户令牌。 或者，您可以使用临时令牌。 如需生成临时令牌，请访问 https://docs.agora.io/en/agora-chat/get-started/enable?platform=ios#generate-a-user-token。
+// token生成参见快速开始中登录步骤中链接。
 ChatroomUIKitClient.shared.login(with: YourAppUser(), token: "token", completion: <#T##(ChatError?) -> Void#>)
 ```
 
 ## 3.初始化聊天室视图
 ```
-//1. 获取聊天室列表并加入聊天室。 或者，在 Agora 控制台上创建聊天室。
+//1. 获取聊天室列表并加入聊天室或者控制台上创建聊天室。
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
 ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: "chatroom id", frame: destination, is: true) 
 //3. 添加视图
