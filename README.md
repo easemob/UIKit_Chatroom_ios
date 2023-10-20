@@ -281,7 +281,7 @@ class CustomGiftBarragesViewCell: GiftBarrageCell {
 ComponentsRegister.shared.GiftBarragesViewCell = CustomGiftBarragesViewCell.self
 ````
 
-详情请参见[ComponentsRegister](./Documentation/ComponentsRegister.md)。
+详情请参见[ComponentsRegister](./Documentation/ComponentRegister.md)
 
 ## 3.切换默认或自定义主题
 
