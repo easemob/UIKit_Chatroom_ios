@@ -115,19 +115,19 @@ python3 -m http.server 8080
 
 ## [Appearance]
 
-![Appearance](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/Appearance.md)
+[Appearance](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/Appearance.md)
 
 即加载UI前的可配项配置
 
 ## [ComponentRegister]
 
- ![ComponentRegister](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/ComponentRegister.md).
+[ComponentRegister](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/ComponentRegister.md).
 
 可继承进行定制的 UI 组件。
 
 ## [GiftsViewController]
 
-![GiftsViewController](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/GiftsViewController.md)
+[GiftsViewController](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/GiftsViewController.md)
 
 包含礼品清单的容器。 您可以继承该类来实现额外的UI定义和业务处理。 当您点击**发送**按钮发送礼物后，您可以决定是否关闭礼物弹窗，并在您的服务器上调用您业务中的礼物接口将礼物消息发送到聊天室。
 
@@ -179,7 +179,7 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
 // 选择项目管理 > 运营管理 > 聊天室。 在聊天室的操作栏中选择查看聊天室成员，然后在弹出的对话框中将用户添加到聊天室。
 ````
 
-![CreateChatroom](/Documentation/CreateChatroom.png)。
+![CreateChatroom](./Documentation/CreateChatroom.png)。
 
 事件透传请参考下一章。
 
@@ -244,7 +244,7 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: "聊天室 ID",
 self.view.addSubView(roomView)
 ````
 
-详情请参见![Appearance](/Documentation/Appearance.md)。
+详情请参见[Appearance](./Documentation/Appearance.md)。
 
 ### [2.自定义组件](https://github.com/easemob/UIKit_Chatroom_ios#2custom-components)
 
@@ -271,7 +271,7 @@ class CustomGiftBarragesViewCell: GiftBarrageCell {
 ComponentsRegister.shared.GiftBarragesViewCell = CustomGiftBarragesViewCell.self
 ````
 
-详情请参见![ComponentsRegister](/Documentation/ComponentsRegister.md)。
+详情请参见[ComponentsRegister](./Documentation/ComponentsRegister.md)。
 
 ### [3.切换默认或自定义主题](https://github.com/easemob/UIKit_Chatroom_ios#3switch-original-or-custom-theme)
 
@@ -325,11 +325,11 @@ Appearance.switchHues()
 
 ![业务逻辑整体流程图](/Documentation/BusinessFlowchart.png)
 
-# [ApiSequenceDiagram](https://github.com/easemob/UIKit_Chatroom_ios#apisequencediagram)
+# [Api时序图](https://github.com/easemob/UIKit_Chatroom_ios#apisequencediagram)
 
 下图是Example项目中最佳实践的API调用时序图。
 
-![APIUML](/Documentation/Api.png)
+[APIUML](./Documentation/Api.png)
 
 # [设计指南](https://github.com/easemob/UIKit_Chatroom_ios#designguidelines)
 
