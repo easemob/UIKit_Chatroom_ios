@@ -30,7 +30,7 @@ final class UIComponentsExampleViewController: UIViewController {
     }()
     
     lazy var inputBar: ChatInputBar = {
-        ChatInputBar(frame: CGRect(x: 0, y: ScreenHeight, width: ScreenWidth, height: 52),text: nil,placeHolder: "Input words.")
+        ChatInputBar(frame: CGRect(x: 0, y: ScreenHeight, width: ScreenWidth, height: 52),text: nil,placeHolder: "说点什么!.")
     }()
     
     lazy var gift1: GiftsViewController = {
@@ -48,7 +48,7 @@ final class UIComponentsExampleViewController: UIViewController {
     
     /// Switch theme
     private lazy var modeSegment: UISegmentedControl = {
-        let segment = UISegmentedControl(items: ["Light","Dark"])
+        let segment = UISegmentedControl(items: ["明","暗"])
         segment.frame = CGRect(x: 100, y: 170, width: 96, height: 46)
         segment.setImage(UIImage(named: "sun"), forSegmentAt: 0)
         segment.setImage(UIImage(named: "moon"), forSegmentAt: 1)
@@ -87,7 +87,7 @@ final class UIComponentsExampleViewController: UIViewController {
         let user = User()
         user.nickName = "Jack"
         user.avatarURL = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_1.png"
-        user.identify = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_2.png"
+        user.identity = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_2.png"
         user.userId = "12323123123"
         ChatroomContext.shared?.currentUser = user
         self.view.addSubview(self.background)
@@ -106,12 +106,12 @@ final class UIComponentsExampleViewController: UIViewController {
         }
         
         //View global notify
-        let button = UIButton(type: .custom).frame(CGRect(x: 100, y: 140, width: 150, height: 20)).textColor(.white, .normal).backgroundColor(UIColor.theme.primaryColor6).cornerRadius(.extraSmall).title("Add Global Notify", .normal).addTargetFor(self, action: #selector(addCarouselTask), for: .touchUpInside)
+        let button = UIButton(type: .custom).frame(CGRect(x: 100, y: 140, width: 150, height: 20)).textColor(.white, .normal).backgroundColor(UIColor.theme.primaryColor6).cornerRadius(.extraSmall).title("全局广播", .normal).addTargetFor(self, action: #selector(addCarouselTask), for: .touchUpInside)
         self.view.addSubview(button)
         self.carouselTextView.alpha = 0
         
         // Switch ChatBarrageCellStyle
-        let switchCellStyle = UIButton(type: .custom).frame(CGRect(x: 100, y: self.speakerSegment.frame.maxY+5, width: 150, height: 40)).textColor(.white, .normal).backgroundColor(UIColor.theme.primaryColor6).cornerRadius(.small).title(".all", .normal).title("Long Presse Switch", .normal).font(.systemFont(ofSize: 16, weight: .semibold))
+        let switchCellStyle = UIButton(type: .custom).frame(CGRect(x: 100, y: self.speakerSegment.frame.maxY+5, width: 150, height: 40)).textColor(.white, .normal).backgroundColor(UIColor.theme.primaryColor6).cornerRadius(.small).title(".all", .normal).title("长按切换", .normal).font(.systemFont(ofSize: 16, weight: .semibold))
         switchCellStyle.addInteraction(UIContextMenuInteraction(delegate: self))
         self.view.addSubview(switchCellStyle)
         
@@ -186,7 +186,7 @@ extension UIComponentsExampleViewController: ChatBottomFunctionBarActionEvents,G
     func onBottomItemClicked(item: ChatroomUIKit.ChatBottomItemProtocol) {
         switch item.type {
         case 2:
-            DialogManager.shared.showGiftsDialog(titles: ["Gifts","1231232"], gifts: [self.gift1,self.gift2])
+            DialogManager.shared.showGiftsDialog(titles: ["礼物","1231232"], gifts: [self.gift1,self.gift2])
             self.gift1.giftsView.addActionHandler(actionHandler: self)
         default:
             break

@@ -27,7 +27,7 @@ import UIKit
         UILabel(frame: CGRect(x: 8, y: 10, width: 40, height: 18)).font(UIFont.theme.bodyMedium).textColor(UIColor.theme.secondaryColor8).textAlignment(.center).backgroundColor(.clear)
     }()
     
-    lazy var userIdentify: ImageView = {
+    lazy var identity: ImageView = {
         var originX = 6
         switch self.style {
         case .all,.hideAvatar:
@@ -43,7 +43,7 @@ import UIKit
         var originX = 6
         switch self.style {
         case .all,.hideTime:
-            originX += Int(self.userIdentify.frame.maxX)
+            originX += Int(self.identity.frame.maxX)
         case .hideUserIdentity:
             originX += Int(self.time.frame.maxX)
         case .hideTimeAndUserIdentity:
@@ -78,17 +78,17 @@ import UIKit
         self.contentView.addSubview(self.container)
         switch barrageStyle {
         case .all:
-            self.container.addSubViews([self.time,self.userIdentify,self.avatar,self.content])
+            self.container.addSubViews([self.time,self.identity,self.avatar,self.content])
         case .hideTime:
-            self.container.addSubViews([self.userIdentify,self.avatar,self.content])
+            self.container.addSubViews([self.identity,self.avatar,self.content])
         case .hideUserIdentity:
             self.container.addSubViews([self.time,self.avatar,self.content])
         case .hideAvatar:
-            self.container.addSubViews([self.time,self.userIdentify,self.content])
+            self.container.addSubViews([self.time,self.identity,self.content])
         case .hideTimeAndUserIdentity:
             self.container.addSubViews([self.avatar,self.content])
         case .hideTimeAndAvatar:
-            self.container.addSubViews([self.userIdentify,self.content])
+            self.container.addSubViews([self.identity,self.content])
         case .hideUserIdentityAndAvatar:
             self.container.addSubViews([self.time,self.content])
         case .hideTimeAndUserIdentityAndAvatar:
@@ -112,7 +112,7 @@ import UIKit
     /// - Parameter chat: ``ChatEntity``
     @objc public func refresh(chat: ChatEntity) {
         self.time.text = chat.showTime
-        self.userIdentify.image(with: chat.message.user?.identify ?? "", placeHolder: Appearance.userIdentifyPlaceHolder)
+        self.identity.image(with: chat.message.user?.identity ?? "", placeHolder: Appearance.identityPlaceHolder)
         self.avatar.image(with: chat.message.user?.avatarURL ?? "", placeHolder: Appearance.avatarPlaceHolder)
         self.container.frame = CGRect(x: 15, y: 6, width: chat.width + 30, height: chat.height - 6)
         self.content.attributedText = chat.attributeText

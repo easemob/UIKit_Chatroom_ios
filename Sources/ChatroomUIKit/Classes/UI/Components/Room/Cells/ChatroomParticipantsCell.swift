@@ -66,7 +66,7 @@ import UIKit
     
     @objc public func refresh(user: UserInfoProtocol) {
         self.user = user
-        self.userLevel.image(with: user.identify, placeHolder: Appearance.userIdentifyPlaceHolder)
+        self.userLevel.image(with: user.identity, placeHolder: Appearance.identityPlaceHolder)
         self.userAvatar.image(with: user.avatarURL, placeHolder: Appearance.avatarPlaceHolder)
         self.userName.text = user.nickName
     }

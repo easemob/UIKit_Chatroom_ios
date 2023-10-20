@@ -57,7 +57,7 @@ final public class ImageCacheManager {
     /**
      Returns the image for the given key if it exists in the memory cache or disk cache.
      
-     - Parameter key: The key used to identify the image.
+     - Parameter key: The key used to identity the image.
      - Returns: The image for the given key if it exists in the memory cache or disk cache, otherwise returns nil.
      */
     func image(for key: String) -> UIImage? {

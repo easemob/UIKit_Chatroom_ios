@@ -84,7 +84,7 @@ import UIKit
     public static var notifyMessageOriginPoint: CGPoint = CGPoint(x: 20, y: 100)
         
     /// The placeholder image of the user-level image view of ``ChatBarrageCell``.
-    public static var userIdentifyPlaceHolder: UIImage? = UIImage(named: "achievement", in: .chatroomBundle, with: nil)
+    public static var identityPlaceHolder: UIImage? = UIImage(named: "achievement", in: .chatroomBundle, with: nil)
     
     /// The height limit of the input box in ``ChatInputBar``.
     public static var maxInputHeight: CGFloat = 88

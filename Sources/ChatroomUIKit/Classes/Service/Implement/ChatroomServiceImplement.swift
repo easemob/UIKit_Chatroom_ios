@@ -152,7 +152,7 @@ extension ChatroomServiceImplement: ChatroomService {
             user.userId = $0.userId
             user.nickName = $0.nickName
             user.avatarURL = $0.avatarURL
-            user.identify = $0.identify
+            user.identity = $0.identity
             user.gender = $0.gender
             return user
         })

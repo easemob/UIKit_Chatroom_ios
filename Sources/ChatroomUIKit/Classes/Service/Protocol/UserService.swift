@@ -22,8 +22,8 @@ import Foundation
     /// The user's gender. If you didn't set, the default value is 0.  For example you can set 1 for male and 2 for female
     var gender: Int { set get }
     
-    /// User's identify picture url
-    var identify: String {set get}
+    /// User's identity picture url
+    var identity: String {set get}
 }
 
 @objc public protocol UserServiceProtocol: NSObjectProtocol {

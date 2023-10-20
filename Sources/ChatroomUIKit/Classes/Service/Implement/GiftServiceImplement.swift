@@ -45,7 +45,7 @@ extension GiftServiceImplement: GiftService {
         user.userId = ChatroomContext.shared?.currentUser?.userId ?? ""
         user.nickName = ChatroomContext.shared?.currentUser?.nickName ?? ""
         user.avatarURL = ChatroomContext.shared?.currentUser?.avatarURL ?? ""
-        user.identify = ChatroomContext.shared?.currentUser?.identify ?? ""
+        user.identity = ChatroomContext.shared?.currentUser?.identity ?? ""
         user.gender = ChatroomContext.shared?.currentUser?.gender ?? 1
         let userMap = user.kj.JSONObject()
         let message = ChatMessage(conversationID: self.currentRoomId, body: ChatCustomMessageBody(event: chatroom_UIKit_gift, customExt: ["gift" : gift?.kj.JSONString() ?? ""]), ext: userMap)

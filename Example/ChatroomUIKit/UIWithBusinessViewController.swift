@@ -34,11 +34,11 @@ final class UIWithBusinessViewController: UIViewController {
     }()
     
     lazy var members: UIButton = {
-        UIButton(type: .custom).frame(CGRect(x: 100, y: 160, width: 150, height: 20)).textColor(.white, .normal).backgroundColor(UIColor.theme.primaryColor6).cornerRadius(.extraSmall).title("Participants", .normal).addTargetFor(self, action: #selector(showParticipants), for: .touchUpInside)
+        UIButton(type: .custom).frame(CGRect(x: 100, y: 160, width: 150, height: 20)).textColor(.white, .normal).backgroundColor(UIColor.theme.primaryColor6).cornerRadius(.extraSmall).title("获取成员", .normal).addTargetFor(self, action: #selector(showParticipants), for: .touchUpInside)
     }()
     
     private lazy var modeSegment: UISegmentedControl = {
-        let segment = UISegmentedControl(items: ["Light","Dark"])
+        let segment = UISegmentedControl(items: ["明","暗"])
         segment.frame = CGRect(x: 100, y: 195, width: 96, height: 46)
         segment.setImage(UIImage(named: "sun"), forSegmentAt: 0)
         segment.setImage(UIImage(named: "moon"), forSegmentAt: 1)
@@ -55,7 +55,7 @@ final class UIWithBusinessViewController: UIViewController {
     }()
     
     lazy var illustrate: UILabel = {
-        UILabel(frame: CGRect(x: 100, y: 259, width: 130, height: 20)).text("show gift in chat area").font(UIFont.theme.labelSmall).textColor(UIColor.theme.neutralColor98)
+        UILabel(frame: CGRect(x: 100, y: 259, width: 130, height: 20)).text("在聊天区域显示礼物").font(UIFont.theme.labelSmall).textColor(UIColor.theme.neutralColor98)
     }()
     
     lazy var showGiftInChatArea: UISwitch = {
@@ -139,13 +139,12 @@ extension UIWithBusinessViewController {
                     }
                 })
             case "Remove":
-                DialogManager.shared.showAlert(content: "Remove `\(user.nickName.isEmpty ? user.userId:user.nickName)`.Are you sure?", showCancel: true, showConfirm: true) { [weak self] in
-                    guard let `self` = self else { return }
+                DialogManager.shared.showAlert(content: "删除 `\(user.nickName.isEmpty ? user.userId:user.nickName)`.确定?", showCancel: true, showConfirm: true) {
                     ChatroomUIKitClient.shared.roomService?.kick(userId: user.userId) { [weak self] error in
                         guard let `self` = self else { return }
                         if error == nil {
 //                            self.removeUser(user: user)
-                            self.showToast(toast: error == nil ? "Remove successful!":"\(error?.errorDescription ?? "")",duration: 2)
+                            self.showToast(toast: error == nil ? "删除成功":"\(error?.errorDescription ?? "")",duration: 2)
                         } else {
                             self.showToast(toast: "\(error?.errorDescription ?? "")", duration: 3)
                         }

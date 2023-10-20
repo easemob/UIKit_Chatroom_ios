@@ -27,7 +27,7 @@ final class ChatroomListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Chat Room List"
+        self.title = "聊天室列表"
         self.tableView.registerCell(ChatroomCell.self, forCellReuseIdentifier: "reuseIdentifier")
         self.tableView.rowHeight = 60
         self.tableView.tableFooterView = UIView()
@@ -36,7 +36,7 @@ final class ChatroomListViewController: UITableViewController {
                 self?.chatrooms.append(contentsOf: result?.list ?? [])
                 self?.tableView.reloadDataSafe()
             } else {
-                self?.showToast(toast: "get chatroom error:\(error?.errorDescription ?? "")", duration: 3)
+                self?.showToast(toast: "获取聊天室出错:\(error?.errorDescription ?? "")", duration: 3)
             }
         })
     }

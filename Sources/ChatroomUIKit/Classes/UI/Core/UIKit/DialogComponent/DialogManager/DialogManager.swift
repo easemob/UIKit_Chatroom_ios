@@ -44,20 +44,16 @@ import UIKit
     
     /// Shows the message reporting page.
     /// - Parameter message: ``ChatMessage``
-    @objc public func showReportDialog(message: ChatMessage) {
+    @objc public func showReportDialog(message: ChatMessage,errorClosure: @escaping (ChatError?)->Void) {
         var vc = PageContainersDialogController()
         let report = ComponentsRegister
             .shared.ReportViewController.init(message: message) {
                 vc.dismiss(animated: true)
-                if $0 != nil {
-                    UIViewController.currentController?.showToast(toast: $0?.errorDescription ?? "",duration: 2)
-                } else {
-                    UIViewController.currentController?.showToast(toast: "Successful!",duration: 2)
-                }
+                errorClosure($0)
             }
         vc = PageContainersDialogController(pageTitles: ["barrage_long_press_menu_report".chatroom.localize], childControllers: [report], constraintsSize: Appearance.pageContainerConstraintsSize)
         
-        UIViewController.currentController?.presentViewController(vc)
+        UIViewController.currentController?.presentingViewController?.presentViewController(vc)
     }
     
     /// Shows message operations.
@@ -106,6 +102,6 @@ import UIKit
             }.rightButton(title: "Confirm".chatroom.localize)
         }
         let alertVC = AlertViewController(custom: alert)
-        UIViewController.currentController?.presentViewController(alertVC)
+        UIViewController.currentController?.presentingViewController?.presentViewController(alertVC)
     }
 }

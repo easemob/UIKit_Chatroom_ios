@@ -115,8 +115,8 @@ extension UserServiceImplement:UserServiceProtocol {
         user.gender = info.gender
         if let ext = info.ext{
             let extMap = ext.chatroom.jsonToDictionary()
-            if let identify = extMap["identify"] as? String {
-                user.identify = identify
+            if let identity = extMap["identity"] as? String {
+                user.identity = identity
             }
         }
         return user
@@ -129,7 +129,7 @@ extension UserServiceImplement:UserServiceProtocol {
         info.avatarUrl = user.avatarURL
         info.gender = user.gender
         //In addition to the existing user attribute fields in the UserInfo object of the SDK, other extended fields are placed in the ext map and serialized into json string to interact with other terminals.
-        let ext = ["identify":user.identify].chatroom.jsonString
+        let ext = ["identity":user.identity].chatroom.jsonString
         info.ext = ext
         return info
     }
@@ -167,7 +167,7 @@ extension UserServiceImplement: ChatClientDelegate {
 
 @objcMembers final public class User:NSObject, UserInfoProtocol,Convertible {
     
-    public var identify: String = ""
+    public var identity: String = ""
     
     public var userId: String = ""
     

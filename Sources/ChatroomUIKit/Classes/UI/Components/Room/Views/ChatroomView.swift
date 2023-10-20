@@ -214,7 +214,11 @@ extension ChatroomView: ChatBarrageActionEventsHandler {
             case "unmute":
                 self?.service?.unmute(userId: message.from, completion: { _ in })
             case "Report":
-                DialogManager.shared.showReportDialog(message: message)
+                DialogManager.shared.showReportDialog(message: message) { error in
+                    if error != nil {
+                        UIViewController.currentController?.showToast(toast: "\(error?.errorDescription ?? "")", duration: 2)
+                    }
+                }
             default:
                 item.action?(item)
             }
