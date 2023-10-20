@@ -1,15 +1,14 @@
 # 聊天室 UIKit
 
-[![License](https://img.shields.io/cocoapods/l/ChatroomUIKit.svg?style=flat)](https://cocoapods.org/pods/ChatroomUIKit)
-[![Platform](https://img.shields.io/cocoapods/p/ChatroomUIKit.svg?style=flat)](https://cocoapods.org/pods/ChatroomUIKit)
+本产品主要为了解决大部分用户的泛娱乐业务场景下对聊天室的绝大部分用户需求，主要为用户解决直接集成SDK繁琐，复杂度高，部分api体验不好（在用户侧业务员看来）等问题。致力于打造集成简单，自由度高，流程简单，文档说明足够详细的聊天室UIKit产品。
 
-# [示例演示](https://github.com/easemob/UIKit_Chatroom_ios#sample-demo)
+# [示例演示]
 
 在本项目中，“Example”文件夹中有一个最佳实践演示项目，供您构建自己的业务能力。
 
 如需体验ChatroomUIKit的功能，您可以扫描以下二维码试用demo。
 
-[![示例演示](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/demo.png)](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/demo. PNG）。
+![Demo](/Documentation/demo.png)
 
 # [聊天室 UIKit 指南](https://github.com/easemob/UIKit_Chatroom_ios#chatroom-uikit-guide)
 
@@ -103,7 +102,7 @@ end
 
 # [文档](https://github.com/easemob/UIKit_Chatroom_ios#documentation)
 
-## [文档](https://github.com/easemob/UIKit_Chatroom_ios/tree/main/Documentation/ChatroomUIKit.doccarchive)
+## [文档](/Documentation/ChatroomUIKit.doccarchive)
 
 您可以在 Xcode 中打开“ChatroomUIKit.doccarchive”文件来查看其中的文件或将此文件部署到您的主页。
 
@@ -115,15 +114,15 @@ python3 -m http.server 8080
 
 部署完成后，您可以在浏览器中访问“http://yourlocalhost:8080/documentation/chatroomuikit”，其中“yourlocalhost”是您的本地IP地址。 或者，您可以将此文件夹部署在外部网络地址上。
 
-## [Appearance](https://github.com/easemob/UIKit_Chatroom_ios/tree/main/Documentation/Appearance.md)。
+## ![Appearance](/Documentation/Appearance.md)。
 
 即加载UI前的可配项配置
 
-## [ComponentRegister](https://github.com/easemob/UIKit_Chatroom_ios/tree/main/Documentation/ComponentRegister.md).
+## ![ComponentRegister](/Documentation/ComponentRegister.md).
 
 可继承进行定制的 UI 组件。
 
-## [GiftsViewController](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/GiftsViewController.md)
+## ![GiftsViewController](/Documentation/GiftsViewController.md)
 
 包含礼品清单的容器。 您可以继承该类来实现额外的UI定义和业务处理。 当您点击**发送**按钮发送礼物后，您可以决定是否关闭礼物弹窗，并在您的服务器上调用您业务中的礼物接口将礼物消息发送到聊天室。
 
@@ -175,7 +174,7 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
 // 选择项目管理 > 运营管理 > 聊天室。 在聊天室的操作栏中选择查看聊天室成员，然后在弹出的对话框中将用户添加到聊天室。
 ````
 
-[![CreateChatroom](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/CreateChatroom.png)](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/CreateChatroom.png）。
+![CreateChatroom](/Documentation/CreateChatroom.png)。
 
 事件透传请参考下一章。
 
@@ -240,7 +239,7 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: "聊天室 ID",
 self.view.addSubView(roomView)
 ````
 
-详情请参见【Appearance】(https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/Appearance.md)。
+详情请参见![Appearance](/Documentation/Appearance.md)。
 
 ### [2.自定义组件](https://github.com/easemob/UIKit_Chatroom_ios#2custom-components)
 
@@ -267,7 +266,7 @@ class CustomGiftBarragesViewCell: GiftBarrageCell {
 ComponentsRegister.shared.GiftBarragesViewCell = CustomGiftBarragesViewCell.self
 ````
 
-详情请参见【ComponentsRegister】(https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/ComponentsRegister.md)。
+详情请参见![ComponentsRegister](/Documentation/ComponentsRegister.md)。
 
 ### [3.切换默认或自定义主题](https://github.com/easemob/UIKit_Chatroom_ios#3switch-original-or-custom-theme)
 
@@ -319,13 +318,13 @@ Appearance.switchHues()
 
 下图展示了业务请求和回调的整个逻辑。
 
-[![业务逻辑整体流程图](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/BusinessFlowchart.png)](https://github.com/easemob/UIKit_Chatroom_ios/blob/main /文档/BusinessFlowchart.png)
+![业务逻辑整体流程图](/Documentation/BusinessFlowchart.png)
 
 # [ApiSequenceDiagram](https://github.com/easemob/UIKit_Chatroom_ios#apisequencediagram)
 
 下图是Example项目中最佳实践的API调用时序图。
 
-[![APIUML](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/Api.png)](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/Api. .png）
+![APIUML](/Documentation/Api.png)
 
 # [设计指南](https://github.com/easemob/UIKit_Chatroom_ios#designguidelines)
 
