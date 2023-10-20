@@ -336,7 +336,7 @@ Appearance.switchHues()
 
 下图是Example项目中最佳实践的API调用时序图。
 
-[APIUML](./Documentation/Api.png)
+![APIUML](/Documentation/Api.png)
 
 # 设计指南
 
