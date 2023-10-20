@@ -113,15 +113,21 @@ python3 -m http.server 8080
 
 部署完成后，您可以在浏览器中访问“http://yourlocalhost:8080/documentation/chatroomuikit”，其中“yourlocalhost”是您的本地IP地址。 或者，您可以将此文件夹部署在外部网络地址上。
 
-## ![Appearance](/Documentation/Appearance.md)。
+## [Appearance]
+
+![Appearance](/Documentation/Appearance.md)
 
 即加载UI前的可配项配置
 
-## ![ComponentRegister](/Documentation/ComponentRegister.md).
+## [ComponentRegister]
+
+ ![ComponentRegister](/Documentation/ComponentRegister.md).
 
 可继承进行定制的 UI 组件。
 
-## ![GiftsViewController](/Documentation/GiftsViewController.md)
+## [GiftsViewController]
+
+![GiftsViewController](/Documentation/GiftsViewController.md)
 
 包含礼品清单的容器。 您可以继承该类来实现额外的UI定义和业务处理。 当您点击**发送**按钮发送礼物后，您可以决定是否关闭礼物弹窗，并在您的服务器上调用您业务中的礼物接口将礼物消息发送到聊天室。
 
@@ -177,7 +183,7 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
 
 事件透传请参考下一章。
 
-# 【注意事项】(https://github.com/easemob/UIKit_Chatroom_ios#precautions)
+# [注意事项](https://github.com/easemob/UIKit_Chatroom_ios#precautions)
 
 在调用`ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame:CGRect, isowner:Bool)`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
 
@@ -329,7 +335,7 @@ Appearance.switchHues()
 
 如果您对设计指南和细节有任何疑问，您可以在 Figma 设计稿中添加评论并提及我们的设计师 Stevie Jiang。
 
-参见【UI设计图】(https://www.figma.com/file/OX2dUdilAKHahAh9VwX8aI/Streamuikit?node-id=137%3A38589&mode=dev)。
+参见[设计图](https://www.figma.com/file/OX2dUdilAKHahAh9VwX8aI/Streamuikit?node-id=137%3A38589&mode=dev)。
 
 请参阅[UI设计指南](https://www.figma.com/file/OX2dUdilAKHahAh9VwX8aI/Streamuikit?node-id=137)
 
