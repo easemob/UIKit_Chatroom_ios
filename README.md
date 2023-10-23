@@ -70,12 +70,11 @@ end
     pod install
 ```
 
+>⚠️Xcode15编译报错 ```Sandbox: rsync.samba(47334) deny(1) file-write-create...```
 
 # 结构
 
 ### [ChatroomUIKit 基本组件](https://github.com/easemob/UIKit_Chatroom_ios#chatroomuikit-basic-components)
-
->⚠️Xcode15编译报错 ```Sandbox: rsync.samba(47334) deny(1) file-write-create...```
 
 解决方法: Build Setting里搜索 ```ENABLE_USER_SCRIPT_SANDBOXING```把```User Script Sandboxing```改为```NO```
 >
