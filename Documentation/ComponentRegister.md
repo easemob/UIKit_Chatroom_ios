@@ -1,8 +1,8 @@
 # [ComponentRegister](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/ComponentsRegister.swift)
 
-An object containing types of UI Components that are used through the ChatroomUIKit SDK.
+聊天室UIKit中所有的可以继承注册自定义的组件类容器.
 
-## Classes that can be inherited and modified
+## 可以继承注册修改的类
 
 1. [ComponentsRegister.shared.GiftBarragesViewCell](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Gift/Cells/GiftBarrageCell.swift).
 
