@@ -24,6 +24,8 @@ import Foundation
     
     /// User's identity picture url
     var identity: String {set get}
+    
+    func toJsonObject() -> Dictionary<String,Any>?
 }
 
 @objc public protocol UserServiceProtocol: NSObjectProtocol {

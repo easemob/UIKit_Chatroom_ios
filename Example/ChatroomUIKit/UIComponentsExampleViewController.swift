@@ -236,7 +236,7 @@ extension UIComponentsExampleViewController {
     
     @objc func startMessage(_ text: String?) -> ChatMessage {
         let user = ChatroomContext.shared?.currentUser as? User
-        return ChatMessage(conversationID: "test", from: "12323123123", to: "test",body: ChatTextMessageBody(text: text == nil ? "Welcome":text), ext: user?.kj.JSONObject())
+        return ChatMessage(conversationID: "test", from: "12323123123", to: "test",body: ChatTextMessageBody(text: text == nil ? "Welcome":text), ext: user?.toJsonObject())
     }
     
     /// Simulate fetch json from server .
@@ -250,7 +250,11 @@ extension UIComponentsExampleViewController {
                 assert(false)
             }
             if let jsons = data["gifts"] as? [Dictionary<String,Any>] {
-                return jsons.kj.modelArray(GiftEntity.self)
+                return jsons.compactMap {
+                    let entity = GiftEntity()
+                    entity.setValuesForKeys($0)
+                    return entity
+                }
             }
         }
         return []

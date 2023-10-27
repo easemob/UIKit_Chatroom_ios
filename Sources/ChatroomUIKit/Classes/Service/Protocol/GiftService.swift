@@ -22,6 +22,8 @@ import Foundation
     var sentThenClose: Bool {set get}
     
     var sendUser: UserInfoProtocol? {set get}
+    
+    func toJsonObject() -> Dictionary<String,Any>
 }
 
 @objc public protocol GiftService: NSObjectProtocol {

@@ -15,6 +15,8 @@ import UIKit
     
     public static let shared: ChatroomContext? = ChatroomContext()
     
+    public var ownerId: String = ""
+    
     public var currentUser: UserInfoProtocol? {
         willSet {
             if let user = newValue {
@@ -24,12 +26,16 @@ import UIKit
     }
     
     public var owner: Bool {
-        let chatroom = ChatRoom(id: self.roomId ?? "")
-        return chatroom?.owner == ChatClient.shared().currentUsername
+        if self.ownerId.isEmpty {
+            let chatroom = ChatRoom(id: self.roomId ?? "")
+            return (chatroom?.owner ?? "" == ChatClient.shared().currentUsername)
+        } else {
+            return (self.ownerId == ChatClient.shared().currentUsername)
+        }
     }
     
     /// The cache mute users map.Key is user id.
-    public var muteMap: Dictionary<String,Bool>?
+    public var muteMap: Dictionary<String,Bool>? = Dictionary<String,Bool>()
     
     public var roomId: String?
     

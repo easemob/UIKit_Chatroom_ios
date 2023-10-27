@@ -46,7 +46,7 @@ import UIKit
     
     /// Chat barrages list.
     public private(set) lazy var barrageList: ChatBarrageList = {
-        ChatBarrageList(frame: CGRect(x: 0, y: ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage ? self.giftBarrages.frame.maxY+20:self.touchFrame.minY, width: self.touchFrame.width-50, height: self.touchFrame.height-54-BottomBarHeight-5-(ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage ? (Appearance.giftBarrageRowHeight*2):0)))
+        ChatBarrageList(frame: CGRect(x: 0, y: ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage ? self.giftBarrages.frame.maxY+20:self.touchFrame.minY, width: self.touchFrame.width-50, height: self.touchFrame.height-54-BottomBarHeight-5-(ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage ? (Appearance.giftBarrageRowHeight*2):0))).backgroundColor(.clear)
     }()
     
     /// Bottom function bar below chat barrages list.
@@ -69,12 +69,12 @@ import UIKit
     ///   - hiddenChat: `Bool` hiddenChat value
     @objc public required convenience init(respondTouch frame: CGRect) {
         if ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage {
-            if frame.height < 236 {
-                assert(false,"The lower limit of the entire view height must not be less than 206.")
+            if frame.height < 370 {
+                assert(false,"The lower limit of the entire view height must not be less than 263.")
             }
         } else {
-            if frame.height < 384 {
-                assert(false,"The lower limit of the entire view height must not be less than 354.")
+            if frame.height < 370 - (Appearance.giftBarrageRowHeight*2) {
+                assert(false,"The lower limit of the chat view height must not be less than 218.")
             }
         }
         self.init(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: ScreenHeight))
@@ -143,6 +143,18 @@ import UIKit
         })
     }
     
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let respondRect = CGRect(x: self.touchFrame.minX, y: self.touchFrame.minY+Appearance.giftBarrageRowHeight*2-Appearance.maxInputHeight, width: self.touchFrame.width, height: self.touchFrame.height)
+        if respondRect.contains(point) {
+            for subview in subviews.reversed() {
+                let convertedPoint = subview.convert(point, from: self)
+                if let hitView = subview.hitTest(convertedPoint, with: event) {
+                    return hitView
+                }
+            }
+        }
+        return super.hitTest(point, with: event)
+    }
     
     /// When you want receive chatroom view's touch action events.You can called the method.
     /// - Parameter actionHandler: ``ChatroomViewActionEventsDelegate``
@@ -175,16 +187,19 @@ extension ChatroomView: GiftsBarrageListTransformAnimationDataSource {
 extension ChatroomView: ChatBarrageActionEventsHandler {
     
     public func onMessageBarrageLongPressed(message: ChatMessage) {
+        if message.body.type == .custom {
+            return
+        }
         if let owner = ChatroomContext.shared?.owner,owner {
             if let map = ChatroomContext.shared?.muteMap {
                 let mute = map[message.from] ?? false
                 if mute {
                     if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "Mute"
                     }) {
-                        Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_unmute".chatroom.localize, type: .normal, tag: "unmute")
+                        Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_unmute".chatroom.localize, type: .normal,tag: "unMute")
                     }
                 } else {
-                    if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "unmute"
+                    if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "unMute"
                     }) {
                         Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
                     }
@@ -215,8 +230,12 @@ extension ChatroomView: ChatBarrageActionEventsHandler {
                 self?.service?.unmute(userId: message.from, completion: { _ in })
             case "Report":
                 DialogManager.shared.showReportDialog(message: message) { error in
+                    var result = "Report successful!"
                     if error != nil {
-                        UIViewController.currentController?.showToast(toast: "\(error?.errorDescription ?? "")", duration: 2)
+                        result = "\(error?.errorDescription ?? "")"
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                        UIViewController.currentController?.showToast(toast: result, duration: 2)
                     }
                 }
             default:

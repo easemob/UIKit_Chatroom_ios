@@ -29,7 +29,7 @@ public extension UIFont {
         
         public var headlineSmall = UIFont.systemFont(ofSize: 16, weight: .semibold)
         
-        public var headlineExtraSmall = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        public var headlineExtraSmall = UIFont.systemFont(ofSize: 14, weight: .semibold)
         
         public var titleLarge = UIFont.systemFont(ofSize: 18, weight: .medium)
         

@@ -31,7 +31,6 @@ A chat room UIKit that is easy to use, efficient, innovative and rich in custom 
         'Sources/ChatroomUIKit/Classes/Service/**/*'
       ]
       ss.dependency 'HyphenateChat'
-      ss.dependency 'KakaJSON'
   end
 
   s.subspec 'UI' do |ss|

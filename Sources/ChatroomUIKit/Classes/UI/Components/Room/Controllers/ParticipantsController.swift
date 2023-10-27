@@ -62,7 +62,7 @@ open class ParticipantsController: UITableViewController {
         self.tableView.dataSource = self
         self.tableView.tableHeaderView = self.searchField
         self.tableView.registerCell(ComponentsRegister.shared.ChatroomParticipantCell, forCellReuseIdentifier: "ChatroomParticipantsCell")
-        self.tableView.rowHeight = Appearance.membersRowHeight
+        self.tableView.rowHeight = Appearance.participantsRowHeight
         self.tableView.separatorColor(UIColor.theme.neutralColor9)
         self.tableView.tableFooterView(UIView())
         self.searchField.addActionHandler(handler: self)
@@ -86,6 +86,9 @@ open class ParticipantsController: UITableViewController {
                     self?.fetchFinish = true
                     if error == nil {
                         self?.users.append(contentsOf: datas ?? [])
+                        if self?.users.first?.userId != ChatroomContext.shared?.ownerId,let owner = ChatroomContext.shared?.usersMap?[ChatroomContext.shared?.ownerId ?? ""] {
+                            self?.users.insert(owner, at: 0)
+                        }
                         self?.tableView.reloadData()
                     } else {
                         self?.showToast(toast: "fetch mute error:\(error?.errorDescription ?? "")", duration: 3)
@@ -93,7 +96,7 @@ open class ParticipantsController: UITableViewController {
                 }
             }
         } else {
-            self.roomService.fetchParticipants(pageSize: Appearance.membersPageSize) { [weak self] datas, error in
+            self.roomService.fetchParticipants(pageSize: Appearance.participantsPageSize) { [weak self] datas, error in
                 DispatchQueue.main.async {
                     self?.loadingView.stopAnimating()
                     self?.fetchFinish = true
@@ -101,7 +104,7 @@ open class ParticipantsController: UITableViewController {
                         self?.users.append(contentsOf: datas ?? [])
                         self?.tableView.reloadData()
                     } else {
-                        self?.showToast(toast: "fetch members error:\(error?.errorDescription ?? "")", duration: 3)
+                        self?.showToast(toast: "fetch participants error:\(error?.errorDescription ?? "")", duration: 3)
                     }
                 }
             }
@@ -134,7 +137,7 @@ open class ParticipantsController: UITableViewController {
     
     open override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if !self.muteTab {
-            if UInt(self.users.count)%Appearance.membersPageSize == 0,self.users.count - 2 == indexPath.row,self.fetchFinish {
+            if UInt(self.users.count)%Appearance.participantsPageSize == 0,self.users.count - 2 == indexPath.row,self.fetchFinish {
                 self.fetchFinish = false
                 self.fetchUsers()
             }
@@ -147,10 +150,10 @@ open class ParticipantsController: UITableViewController {
             if mute {
                 if let index = Appearance.defaultOperationUserActions.firstIndex(where: { $0.tag == "Mute"
                 }) {
-                    Appearance.defaultOperationUserActions[index] = ActionSheetItem(title: "barrage_long_press_menu_unmute".chatroom.localize, type: .normal, tag: "unmute")
+                    Appearance.defaultOperationUserActions[index] = ActionSheetItem(title: "barrage_long_press_menu_unmute".chatroom.localize, type: .normal,tag: "unMute")
                 }
             } else {
-                if let index = Appearance.defaultOperationUserActions.firstIndex(where: { $0.tag == "unmute"
+                if let index = Appearance.defaultOperationUserActions.firstIndex(where: { $0.tag == "unMute"
                 }) {
                     Appearance.defaultOperationUserActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
                 }
@@ -197,11 +200,15 @@ extension ParticipantsController: SearchBarActionEvents {
     
     public func onSearchBarClicked() {
         self.search = SearchParticipantsViewController(rawSources: self.rawSources()) { [weak self] user in
-            self?.operationUser(user: user)
+            if ChatroomContext.shared?.owner ?? false {
+                self?.operationUser(user: user)
+            }
         } didSelect: { user in
             
         }
-        self.present(self.search!, animated: true)
+        if let vc = self.search {
+            self.present(vc, animated: true)
+        }
     }
     
     private func rawSources() -> [UserInfoProtocol] {

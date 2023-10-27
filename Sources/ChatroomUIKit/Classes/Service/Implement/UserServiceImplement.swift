@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import KakaJSON
 
 @objc public final class UserServiceImplement: NSObject {
         
@@ -19,7 +18,6 @@ import KakaJSON
     ///   - userProperty: Whether using user properties service.
     ///   - completion: Callback,login successful or failure.
     @objc public init(userInfo: UserInfoProtocol,token: String,use userProperty: Bool = true,completion: @escaping (ChatError?) -> Void) {
-        ChatroomContext.shared?.currentUser = userInfo
         super.init()
         self.login(userId: userInfo.userId, token: token) { [weak self] success, error in
             if !success {
@@ -165,7 +163,11 @@ extension UserServiceImplement: ChatClientDelegate {
     }
 }
 
-@objcMembers final public class User:NSObject, UserInfoProtocol,Convertible {
+@objcMembers final public class User:NSObject, UserInfoProtocol {
+    
+    public func toJsonObject() -> Dictionary<String, Any>? {
+        ["userId":self.userId,"nickName":self.nickName,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
+    }
     
     public var identity: String = ""
     
@@ -179,10 +181,9 @@ extension UserServiceImplement: ChatClientDelegate {
     
     public var mute: Bool = false
     
-    override public required init() {}
-    
-    public func kj_modelKey(from property: Property) -> ModelPropertyKey {
-        property.name
+    public override func setValue(_ value: Any?, forUndefinedKey key: String) {
+        
     }
+    
 }
 

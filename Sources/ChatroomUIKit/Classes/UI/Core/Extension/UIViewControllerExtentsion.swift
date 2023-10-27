@@ -49,7 +49,7 @@ extension UIViewController {
     /// - Parameters:
     ///   - content: ``String`` value.
     ///   - duration: ``TimeInterval``.How long show
-    public func showToast(toast content: String, duration: TimeInterval = 2.0) {
+    public func showToast(toast content: String, duration: TimeInterval = 2.0, delay: TimeInterval = 0.0) {
         let toastView = UIVisualEffectView(effect: UIBlurEffect(style: .light)).cornerRadius(.medium)
         toastView.alpha = 0
         toastView.backgroundColor = Theme.style == .dark ? UIColor.theme.barrageLightColor3:UIColor.theme.barrageDarkColor3
@@ -79,7 +79,7 @@ extension UIViewController {
             label.bottomAnchor.constraint(equalTo: toastView.bottomAnchor, constant: -8)
         ])
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: delay, options: .curveEaseOut, animations: {
             toastView.alpha = 1
         }, completion: { (finished) in
             if finished {

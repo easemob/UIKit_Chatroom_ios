@@ -21,7 +21,6 @@ final class ExamplesViewController: UIViewController {
         super.viewDidLoad()
         self.title = "ChatroomUIKit Examples"
         // Do any additional setup after loading the view.
-        self.view.addSubview(self.nickNameField)
     }
     
     @IBAction func push_component_UI(_ sender: UIButton) {

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import KakaJSON
 
 let chatroom_UIKit_gift = "CHATROOMUIKITGIFT"
 
@@ -40,15 +39,10 @@ let chatroom_UIKit_gift = "CHATROOMUIKITGIFT"
 extension GiftServiceImplement: GiftService {
     
     public func sendGift(gift: GiftEntityProtocol, completion: @escaping (ChatMessage?,ChatError?) -> Void) {
-        let gift = gift as? GiftEntity
-        let user = User()
-        user.userId = ChatroomContext.shared?.currentUser?.userId ?? ""
-        user.nickName = ChatroomContext.shared?.currentUser?.nickName ?? ""
-        user.avatarURL = ChatroomContext.shared?.currentUser?.avatarURL ?? ""
-        user.identity = ChatroomContext.shared?.currentUser?.identity ?? ""
-        user.gender = ChatroomContext.shared?.currentUser?.gender ?? 1
-        let userMap = user.kj.JSONObject()
-        let message = ChatMessage(conversationID: self.currentRoomId, body: ChatCustomMessageBody(event: chatroom_UIKit_gift, customExt: ["gift" : gift?.kj.JSONString() ?? ""]), ext: userMap)
+        let gift = gift
+        let user =  ChatroomContext.shared?.currentUser
+        let userMap = user?.toJsonObject()
+        let message = ChatMessage(conversationID: self.currentRoomId, body: ChatCustomMessageBody(event: chatroom_UIKit_gift, customExt: ["chatroom_uikit_gift" : gift.toJsonObject().chatroom.jsonString]), ext: userMap)
         message.chatType = .chatRoom
         ChatClient.shared().chatManager?.send(message, progress: nil,completion: { chatMessage, error in
             completion(chatMessage,error)
@@ -78,14 +72,14 @@ extension GiftServiceImplement: ChatManagerDelegate {
                 case .custom:
                     if let body = message.body as? ChatCustomMessageBody {
                         if body.event == chatroom_UIKit_gift,let json = message.ext as? [String:Any] {
-                            let user = model(from: json, type: User.self)
-                            if let userInfo = user as? UserInfoProtocol,let jsonString = body.customExt["gift"] {
+                            let user = User()
+                            user.setValuesForKeys(json)
+                            if !body.customExt.isEmpty,let jsonString = body.customExt["chatroom_uikit_gift"] {
                                 let json = jsonString.chatroom.jsonToDictionary()
-                                let model = model(from: json, type: GiftEntity.self)
-                                if let gift = model as? GiftEntityProtocol {
-                                    gift.sendUser = userInfo
-                                    response.receiveGift(roomId: self.currentRoomId, gift: gift,message: message)
-                                }
+                                let entity = GiftEntity()
+                                entity.setValuesForKeys(json)
+                                entity.sendUser = user
+                                response.receiveGift(roomId: self.currentRoomId, gift: entity,message: message)
 
                             }
                         }
@@ -98,13 +92,15 @@ extension GiftServiceImplement: ChatManagerDelegate {
     }
 }
 
-@objc public class GiftEntity:NSObject,GiftEntityProtocol,Convertible {
+@objcMembers public class GiftEntity:NSObject,GiftEntityProtocol {
+    public func toJsonObject() -> Dictionary<String, Any> {
+        ["giftId":self.giftId,"giftName":self.giftName,"giftPrice":self.giftPrice,"giftCount":self.giftCount,"giftIcon":self.giftIcon,"giftEffect":self.giftEffect]
+    }
+    
     
     public var giftId: String = ""
     
     public var giftName: String = ""
-    
-    public var giftName1: String = ""
     
     public var giftPrice: String = ""
     
@@ -123,9 +119,9 @@ extension GiftServiceImplement: ChatManagerDelegate {
     required public override init() {
         
     }
-    
-    public func kj_modelKey(from property: Property) -> ModelPropertyKey {
-        property.name
+
+    public override func setValue(_ value: Any?, forUndefinedKey key: String) {
+        
     }
 }
 

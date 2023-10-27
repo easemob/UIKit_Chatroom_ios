@@ -23,8 +23,8 @@ import UIKit
     
     /// Shows the chat room member list page.
     /// - Parameters:
-    ///   - moreClosure: Callback that occurs when you click `...` to perform operations on chat room members.
-    ///   - muteMoreClosure: Callback that occurs when you click `...` to perform operations on muted chat room members.
+    ///   - moreClosure: Callback that occurs when you click `...` to perform operations on chat room participants.
+    ///   - muteMoreClosure: Callback that occurs when you click `...` to perform operations on muted chat room participants.
     @objc public func showParticipantsDialog(moreClosure: @escaping (UserInfoProtocol) -> Void,muteMoreClosure: @escaping (UserInfoProtocol) -> Void) {
         let participants = ComponentsRegister
             .shared.ParticipantsViewController.init(muteTab: false, moreClosure: moreClosure)

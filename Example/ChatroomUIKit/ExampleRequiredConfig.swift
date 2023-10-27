@@ -23,17 +23,20 @@ public class ExampleRequiredConfig {
     
     /// `YourAppUser` 代表您App中的用户类.
     public final class YourAppUser: NSObject,UserInfoProtocol {
+        public var identity: String = ""//user level picture url
         
-        public var userId: String = <#value#>
+        public func toJsonObject() -> Dictionary<String, Any>? {
+            ["userId":self.userId,"nickName":self.nickName,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
+        }
+        
+        
+        public var userId: String = <#T##String#>
         
         public var nickName: String = "Jack"
         
         public var avatarURL: String = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_1.png"
         
         public var gender: Int = 1
-        
-        public var identity: String = ""//用户身份
-        
         
     }
 }

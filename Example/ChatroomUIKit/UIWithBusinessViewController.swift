@@ -30,7 +30,7 @@ final class UIWithBusinessViewController: UIViewController {
     }()
     
     lazy var roomView: ChatroomUIKit.ChatroomView = {
-        ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), is: ChatroomContext.shared?.owner ?? false, options: self.option)
+        ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "",options: self.option)
     }()
     
     lazy var members: UIButton = {
@@ -184,7 +184,11 @@ extension UIWithBusinessViewController {
                 assert(false)
             }
             if let jsons = data["gifts"] as? [Dictionary<String,Any>] {
-                return jsons.kj.modelArray(GiftEntity.self)
+                return jsons.compactMap {
+                    let entity = GiftEntity()
+                    entity.setValuesForKeys($0)
+                    return entity
+                }
             }
         }
         return []
@@ -249,11 +253,11 @@ extension UIWithBusinessViewController: RoomEventsListener {
         self.showToast(toast: "User login on other device", duration: 3)
     }
     
-    func onUserUnmuted(roomId: String, userId: String, operatorId: String) {
+    func onUserUnmuted(roomId: String, userId: String) {
         self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickName ?? userId) was unmuted.", duration: 3)
     }
     
-    func onUserMuted(roomId: String, userId: String, operatorId: String) {
+    func onUserMuted(roomId: String, userId: String) {
         self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickName ?? userId) was muted.", duration: 3)
     }
     

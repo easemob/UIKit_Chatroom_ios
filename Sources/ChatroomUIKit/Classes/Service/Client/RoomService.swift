@@ -11,6 +11,7 @@ import UIKit
 @objc public enum RoomEventsError: UInt {
     case join
     case leave
+    case destroyed
     case kick
     case mute
     case unmute
@@ -48,26 +49,24 @@ import UIKit
     /// - Parameters:
     ///   - roomId: Chat room ID.
     ///   - userId: The user ID of the unmuted member.
-    ///   - operatorId: The user ID of the operator that removes the member from the mute list of the chat room.
-    func onUserUnmuted(roomId: String, userId: String, operatorId: String)
+    func onUserUnmuted(roomId: String, userId: String)
     
     /// Occurs when a member is muted.
     /// The muted member, administrators, and the owner of the chat room receive this event.
     /// - Parameters:
     ///   - roomId: Chat room ID.
     ///   - userId: The user ID of the muted member.
-    ///   - operatorId: The user ID of the operator that adds the member to the mute list of the chat room.
-    func onUserMuted(roomId: String, userId: String, operatorId: String)
+    func onUserMuted(roomId: String, userId: String)
     
     /// Occurs when a user joins the chat room.
-    /// All members in the chat room, except the new member, receive the event.
+    /// All participants in the chat room, except the new member, receive the event.
     /// - Parameters:
     ///   - roomId: Chat room ID.
-    ///   - user: The user ID that conforms to UserInfoProtocol.
+    ///   - user: The user instance that conforms to UserInfoProtocol.
     func onUserJoined(roomId: String, user: UserInfoProtocol)
     
     /// Occurs when a member leaves the chat room.
-    /// All members in the chat room, except the one that leaves, receive the event.
+    /// All participants in the chat room, except the one that leaves, receive the event.
     /// - Parameters:
     ///   - roomId: Chat room ID.
     ///   - userId: The user ID of the member that leaves the chat room.
@@ -81,7 +80,7 @@ import UIKit
     func onUserBeKicked(roomId: String, reason: ChatroomBeKickedReason)
     
     /// Occurs when a global notification message is received.
-    /// All members in the chat room receive the event.
+    /// All participants in the chat room receive the event.
     /// - Parameter message: ChatMessage instance.
     func onReceiveGlobalNotify(message: ChatMessage)
     
@@ -90,7 +89,7 @@ import UIKit
     func onReceiveMessage(message: ChatMessage)
     
     /// Occurs when the chat room announcement is updated.
-    /// All members in the chat room receive the event.
+    /// All participants in the chat room receive the event.
     /// - Parameters:
     ///   - roomId: Chat room ID.
     ///   - announcement: The chat room announcement text.
@@ -119,8 +118,11 @@ import UIKit
         }
     }
     
-    /// The current page number for getting chat room members.
+    /// The current page number for getting chat room participants.
     public private(set)var pageNum = 1
+    
+    
+    public private(set)var pageNumOfMute = 1
     
     public private(set) lazy var giftService: GiftService? = {
         let newValue = GiftServiceImplement(roomId: self.roomId)
@@ -178,7 +180,7 @@ import UIKit
         }
     }
     
-    @objc public func destroyed() {
+    private func cleanCache() {
         self.roomId = ""
         self.roomService = nil
         self.giftDrive = nil
@@ -200,7 +202,7 @@ import UIKit
     //MARK: - Room operation
     /// Switches to another chat room.
     /// In this case, the SDK will clean the user cache and fetch member information and the mute list from the server. This will cause a lot of network IO.
-    /// This method can only be called by other chat room members than the chat room owner.
+    /// This method can only be called by other chat room participants than the chat room owner.
     /// - Parameters:
     ///   - roomId: Chat room ID.
     ///   - completion: Switch result.
@@ -221,7 +223,7 @@ import UIKit
     @objc public func enterRoom(completion: @escaping (ChatError?) -> Void) {
         if let userId = ChatroomContext.shared?.currentUser?.userId  {
             self.roomService?.chatroomOperating(roomId: self.roomId, userId: userId, type: .join) { [weak self] success, error in
-                guard let `self` = self else { return  }
+                guard let `self` = self else { return }
                 if !success {
                     let errorInfo = "Joined chatroom error:\(error?.errorDescription ?? "")"
                     consoleLogInfo(errorInfo, type: .error)
@@ -238,13 +240,23 @@ import UIKit
     @objc public func leaveRoom(completion: @escaping (ChatError?) -> Void) {
         self.roomService?.chatroomOperating(roomId: self.roomId, userId: ChatClient.shared().currentUsername ?? "", type: .leave, completion: { [weak self] success, error in
             if success {
-                self?.roomId = ""
+                self?.cleanCache()
             } else {
                 self?.handleError(type: .leave, error: error!)
-                self?.destroyed()
             }
         })
     }
+    
+    @objc public func destroyed(completion: @escaping (ChatError?) -> Void) {
+        self.roomService?.chatroomOperating(roomId: self.roomId, userId: ChatClient.shared().currentUsername ?? "", type: .destroyed, completion: { [weak self] success, error in
+            if success {
+                self?.cleanCache()
+            } else {
+                self?.handleError(type: .destroyed, error: error!)
+            }
+        })
+    }
+    
     //MARK: - Participants operation
     @objc public func kick(userId: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.operatingUser(roomId: self.roomId, userId: userId, type: .kick, completion: { [weak self] success, error in
@@ -282,6 +294,9 @@ import UIKit
     @objc public func fetchParticipants(pageSize: UInt, completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
         self.roomService?.fetchParticipants(roomId: self.roomId, pageSize: pageSize, completion: { [weak self] userIds, error in
             guard let `self` = self else { return  }
+            if error == nil {
+                self.pageNum += 1
+            }
             if let ids = userIds {
                 var unknownUserIds = [String]()
                 for userId in ids {
@@ -335,8 +350,11 @@ import UIKit
     }
     
     @objc public func fetchMuteUsers(pageSize: UInt, completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
-        self.roomService?.fetchMuteUsers(roomId: self.roomId, pageNum: UInt(self.pageNum), pageSize: pageSize, completion: { [weak self] userIds, error in
+        self.roomService?.fetchMuteUsers(roomId: self.roomId, pageNum: UInt(self.pageNumOfMute), pageSize: pageSize, completion: { [weak self] userIds, error in
             guard let `self` = self else { return }
+            if error == nil {
+                self.pageNumOfMute += 1
+            }
             if let ids = userIds,(ids.count != 0) {
                 var unknownUserIds = [String]()
                 for userId in ids {
@@ -345,7 +363,7 @@ import UIKit
                         unknownUserIds.append(userId)
                     }
                 }
-                if unknownUserIds.count > 0,self.pageNum == 1,ChatroomUIKitClient.shared.option.option_chat.useProperties {
+                if unknownUserIds.count > 0,self.pageNumOfMute == 1,ChatroomUIKitClient.shared.option.option_chat.useProperties {
                     ChatroomUIKitClient.shared.userImplement?.userInfos(userIds: unknownUserIds, completion: { infos, error in
                         if error == nil {
                             var users = [UserInfoProtocol]()
@@ -381,7 +399,7 @@ import UIKit
         })
     }
     
-    /// Fetch user infos on members list end scroll,Then cache user info
+    /// Fetch user infos on participants list end scroll,Then cache user info
     /// - Parameters:
     ///   - unknownUserIds: User ID array without user information
     ///   - completion: Callback user infos and error.
@@ -456,16 +474,17 @@ import UIKit
 
 extension RoomService: ChatroomResponseListener {
     
-    public func onUserMuted(roomId: String, userId: String, operatorId: String) {
+    public func onUserMuted(roomId: String, userId: String) {
         for listener in self.eventsListener.allObjects {
-            listener.onUserMuted(roomId: roomId, userId: userId, operatorId: operatorId)
+            listener.onUserMuted(roomId: roomId, userId: userId)
         }
 
     }
     
-    public func onUserUnmuted(roomId: String, userId: String, operatorId: String) {
+    public func onUserUnmuted(roomId: String, userId: String) {
         for listener in self.eventsListener.allObjects {
-            listener.onUserUnmuted(roomId: roomId, userId: userId, operatorId: operatorId)
+            ChatroomContext.shared?.muteMap?.removeValue(forKey: userId)
+            listener.onUserUnmuted(roomId: roomId, userId: userId)
         }
     }
     

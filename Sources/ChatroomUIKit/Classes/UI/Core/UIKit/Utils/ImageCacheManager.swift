@@ -29,7 +29,7 @@ final public class ImageCacheManager {
     private var cancellables = Set<AnyCancellable>()
     
     private init() {
-        createCacheDirectory()
+        self.createCacheDirectory()
         NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification)
             .sink { [weak self] out in
                 self?.memoryCache.removeAllObjects()
@@ -44,7 +44,7 @@ final public class ImageCacheManager {
     */
     private func createCacheDirectory() {
         do {
-            try fileManager.createDirectory(atPath: cacheDirectory, withIntermediateDirectories: true, attributes: nil)
+            try self.fileManager.createDirectory(atPath: self.cacheDirectory, withIntermediateDirectories: true, attributes: nil)
         } catch {
             print("Failed to create cache directory: \(error)")
         }
@@ -62,16 +62,16 @@ final public class ImageCacheManager {
      */
     func image(for key: String) -> UIImage? {
         // Check memory cache first
-        if let cachedImage = memoryCache.object(forKey: key as NSString) {
+        if let cachedImage = self.memoryCache.object(forKey: key as NSString) {
             return cachedImage
         }
         
         // Check disk cache
-        let filePath = cachePath(for: key)
-        if fileManager.fileExists(atPath: filePath) {
-            if let data = fileManager.contents(atPath: filePath), let image = UIImage(data: data) {
+        let filePath = self.cachePath(for: key)
+        if self.fileManager.fileExists(atPath: filePath) {
+            if let data = self.fileManager.contents(atPath: filePath), let image = UIImage(data: data) {
                 // Cache the image to memory
-                memoryCache.setObject(image, forKey: key as NSString)
+                self.memoryCache.setObject(image, forKey: key as NSString)
                 return image
             }
         }
@@ -87,12 +87,14 @@ final public class ImageCacheManager {
         - key: The key to associate with the image.
      */
     func cacheImage(_ image: UIImage, for key: String) {
-        memoryCache.setObject(image, forKey: key as NSString)
-        
-        // Save image to disk cache
-        let filePath = cachePath(for: key)
-        if let data = image.pngData()  {
-            fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
+        DispatchQueue.main.async {
+            self.memoryCache.setObject(image, forKey: key as NSString)
+            
+            // Save image to disk cache
+            let filePath = self.cachePath(for: key)
+            if let data = image.pngData()  {
+                self.fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
+            }
         }
     }
     

@@ -33,16 +33,16 @@ public extension NotificationCenter {
     ///
     ///     The block takes one argument:
     ///   - notification: The notification.
-    func observeOnce(forName name: NSNotification.Name?, immediateRemove: Bool,
-                     object obj: Any? = nil,
-                     queue: OperationQueue? = nil,
-                     using block: @escaping (_ notification: Notification) -> Void) {
-        var handler: NSObjectProtocol!
-        handler = addObserver(forName: name, object: obj, queue: queue) { [weak self] in
-            if immediateRemove == true { self?.removeObserver(handler!) }
-            block($0)
-        }
-    }
+//    func observeOnce(forName name: NSNotification.Name?, immediateRemove: Bool,
+//                     object obj: Any? = nil,
+//                     queue: OperationQueue? = nil,
+//                     using block: @escaping (_ notification: Notification) -> Void) {
+//        var handler: NSObjectProtocol!
+//        handler = addObserver(forName: name, object: obj, queue: queue) { [weak self] in
+//            if immediateRemove == true { self?.removeObserver(handler!) }
+//            block($0)
+//        }
+//    }
     
 }
 

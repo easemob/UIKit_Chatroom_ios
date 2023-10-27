@@ -55,10 +55,10 @@ struct Coder {
         return result
     }
     
-    static func encoder<T:Codable>(model: T) -> Dictionary<String,Any>? {
+    static func encoder<T:Codable>(classType: T) -> Dictionary<String,Any>? {
         var result: Dictionary<String,Any>?
         do {
-            result = try JSONEncoder().encode(model).chatroom.toDictionary()
+            result = try JSONEncoder().encode(classType).chatroom.toDictionary()
         } catch {
             consoleLogInfo("encoder failure:\(error.localizedDescription)", type: .debug)
         }

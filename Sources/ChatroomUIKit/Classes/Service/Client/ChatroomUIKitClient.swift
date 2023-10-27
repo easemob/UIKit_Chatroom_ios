@@ -100,12 +100,13 @@ import UIKit
     /// - Parameters:
     ///   - roomId: Chat room ID.
     ///   - frame: Frame.
-    ///   - owner: Whether the current user is the chat room owner. `true`：The current user is the chat room owner; `false`: The current user is a regular chat room member.
+    ///   - ownerId: Owner's user id..
     ///   - options: ``UIOptions``
     /// - Returns: ``ChatroomView`` instance.
-    @objc public func launchRoomViewWithOptions(roomId: String,frame: CGRect, is owner: Bool, options: ChatroomUIKitInitialOptions.UIOptions = ChatroomUIKitInitialOptions.UIOptions()) -> ChatroomView {
+    @objc public func launchRoomViewWithOptions(roomId: String,frame: CGRect, ownerId: String , options: ChatroomUIKitInitialOptions.UIOptions = ChatroomUIKitInitialOptions.UIOptions()) -> ChatroomView {
         self.roomId = roomId
         ChatroomContext.shared?.roomId = roomId
+        ChatroomContext.shared?.ownerId = ownerId
         self.option.option_UI.bottomDataSource = options.bottomDataSource
         self.option.option_UI.showGiftsBarrage = options.showGiftsBarrage
         self.option.option_UI.chatBarrageAreaShowGift = options.chatBarrageAreaShowGift
@@ -119,9 +120,22 @@ import UIKit
     /// Destroys a chat room.
     /// This method frees memory.
     @objc public func destroyRoom() {
+        if ChatroomContext.shared?.owner ?? false {
+            self.roomService?.destroyed(completion: { [weak self] error in
+                self?.roomService = nil
+                self?.roomId = ""
+            })
+        } else {
+            self.roomService?.leaveRoom(completion: { [weak self] error in
+                self?.roomService = nil
+                self?.roomId = ""
+            })
+        }
+    }
+    
+    /// unregister theme.
+    @objc public func unregisterThemes() {
         Theme.unregisterSwitchThemeViews()
-        self.roomService?.destroyed()
-        self.roomService = nil
     }
     
     /// Updates user information that is used for login with the `login(with user: UserInfoProtocol,token: String,use userProperties: Bool = true,completion: @escaping (ChatError?) -> Void)` method.
@@ -186,8 +200,12 @@ extension ChatroomUIKitClient: UserStateChangedListener {
         switch state {
         case .connected:
             if !self.roomId.isEmpty {
-                self.roomService?.enterRoom(completion: { _ in
-                    
+                self.roomService?.enterRoom(completion: { error in
+                    if let service = self.roomService,let error = error {
+                        for listener in service.eventsListener.allObjects {
+                            listener.onErrorOccur(error: error, type: .join)
+                        }
+                    }
                 })
             }
         default:

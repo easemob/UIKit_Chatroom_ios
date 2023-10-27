@@ -4,7 +4,6 @@ platform :ios, '13.0'
 
 target 'ChatroomUIKit_Example' do
   pod 'ChatroomUIKit', :path => '../'
-  pod 'KakaJSON'
     post_install do |installer|
       installer.generated_projects.each do |project|
         project.targets.each do |target|
