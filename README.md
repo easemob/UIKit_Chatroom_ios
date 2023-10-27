@@ -119,21 +119,17 @@ python3 -m http.server 8080
 
 ## Appearance
 
-[Appearance](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/Appearance.md)
-
-即加载UI前的可配项配置
+[Appearance](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/Appearance.md) 即加载UI前的可配项配置类
 
 ## ComponentRegister
 
-[ComponentRegister](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/ComponentRegister.md).
-
-可继承进行定制的 UI 组件。
+[ComponentRegister](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/ComponentRegister.md).即可继承进行定制的 UI 组件。
 
 ## GiftsViewController
 
 [GiftsViewController](https://github.com/easemob/UIKit_Chatroom_ios/blob/dev/Documentation/GiftsViewController.md)
 
-包含礼品清单的容器。 您可以继承该类来实现额外的UI定义和业务处理。 当您点击**发送**按钮发送礼物后，您可以决定是否关闭礼物弹窗，并在您的服务器上调用您业务中的礼物接口将礼物消息发送到聊天室。
+礼物的承载容器。 您可以继承该类来实现额外的UI定义和业务处理。 当您点击发送按钮发送礼物后，您可以决定是否关闭礼物弹窗，并在您的服务器上调用您业务中的礼物接口将礼物消息发送到聊天室。
 
 如果想呈现动画、特效，建议使用腾讯libpag。
 
@@ -193,9 +189,9 @@ addSubView(roomView)
 
 # 注意事项
 
-在调用`ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "")`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
+在调用`ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "当前聊天室的主播用户ID")`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
 
-例如，如果您有一个播放视频流的视图，请务必在此视图上方添加 ChatroomView。
+例如，如果您有一个播放视频流的视图，请添加到视频视图的上方，`ChatroomView`实质上是全屏覆盖的，传入的frame是可用区域，弹幕区域以及底部功能条区域，以及键盘弹起后输入框中事件的响应高度。
 
 # 进阶用法
 
