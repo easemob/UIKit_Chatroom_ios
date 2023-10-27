@@ -46,7 +46,7 @@ import UIKit
     
     /// Chat barrages list.
     public private(set) lazy var barrageList: ChatBarrageList = {
-        ChatBarrageList(frame: CGRect(x: 0, y: ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage ? self.giftBarrages.frame.maxY+20:self.touchFrame.minY, width: self.touchFrame.width-50, height: self.touchFrame.height-54-BottomBarHeight-5-(ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage ? (Appearance.giftBarrageRowHeight*2):0))).backgroundColor(.clear)
+        ChatBarrageList(frame: CGRect(x: 0, y: ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage ? self.giftBarrages.frame.maxY+5:self.touchFrame.minY, width: self.touchFrame.width-50, height: self.touchFrame.height-54-BottomBarHeight-5-(ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage ? (Appearance.giftBarrageRowHeight*2):0))).backgroundColor(.clear)
     }()
     
     /// Bottom function bar below chat barrages list.
