@@ -204,18 +204,23 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
 ## 2.登录
 
 ```Swift
-class YourAppUser: UserInfoProtocol {
-     var userId: String = "您的应用程序用户 ID"
-            
-     var nickName: String = "您的用户昵称"
-            
-     var avatarURL: String = "您的用户头像url"
-            
-     var gender：Int = 1
-            
-     var recognize: String = "你的用户身份标识url"
-            
-}
+    public final class YourAppUser: NSObject,UserInfoProtocol {
+        public var identity: String = ""//user level picture url
+        
+        public func toJsonObject() -> Dictionary<String, Any>? {
+            ["userId":self.userId,"nickName":self.nickName,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
+        }
+        
+        
+        public var userId: String = <#T##String#>
+        
+        public var nickName: String = "Jack"
+        
+        public var avatarURL: String = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_1.png"
+        
+        public var gender: Int = 1
+        
+    }
 // 使用当前用户对象符合UserInfoProtocol协议的用户信息登录ChatroomUIKit。
 // token生成参见快速开始中登录步骤中链接。
 ChatroomUIKitClient.shared.login(with: YourAppUser(), token: "token", completion: <#T##(ChatError?) -> Void#>)
@@ -225,7 +230,7 @@ ChatroomUIKitClient.shared.login(with: YourAppUser(), token: "token", completion
 ```
 //1. 获取聊天室列表并加入聊天室或者控制台上创建聊天室。
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
-ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: "chatroom id", frame: destination, is: true) 
+ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: "chatroom id", frame: destination, ownerId: "Chatroom's owner id") 
 //3. 添加视图
 ```
 
