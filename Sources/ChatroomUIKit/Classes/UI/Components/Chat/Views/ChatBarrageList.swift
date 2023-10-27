@@ -64,22 +64,13 @@ var chatViewWidth: CGFloat = 0
 
     private var cellOffset = CGFloat(0)
     
-    private var hover = false {
+    private var hover = false
+    
+    private var moreMessagesCount = 0  {
         willSet {
-            DispatchQueue.main.async {
-                if !newValue {
-                    self.moreMessagesCount = 0
-                }
-                if self.moreMessagesCount > 0 {
-                    self.moreMessages.isHidden = !newValue
-                } else {
-                    self.moreMessages.isHidden = true
-                }
-            }
+            self.moreMessages.isHidden = newValue <= 0
         }
     }
-    
-    private var moreMessagesCount = 0
 
     public var messages: [ChatEntity]? = [ChatEntity]()
 
@@ -96,7 +87,7 @@ var chatViewWidth: CGFloat = 0
     }()
     
     lazy var moreMessages: UIButton = {
-        UIButton(type: .custom).frame(CGRect(x: self.chatView.frame.width-180, y: self.chatView.frame.maxY, width: 180, height: 26)).cornerRadius(.large).font(UIFont.theme.labelMedium).title("    \(self.moreMessagesCount) new messages", .normal)
+        UIButton(type: .custom).frame(CGRect(x: 20, y: self.chatView.frame.maxY-28, width: 180, height: 26)).cornerRadius(.large).font(UIFont.theme.labelMedium).title("    \(self.moreMessagesCount) "+"new messages".chatroom.localize, .normal).addTargetFor(self, action: #selector(scrollTableViewToBottom), for: .touchUpInside)
     }()
 
     override public init(frame: CGRect) {
@@ -106,7 +97,7 @@ var chatViewWidth: CGFloat = 0
         self.addSubViews([self.blurView])
         self.blurView.layer.mask = self.gradientLayer
         self.blurView.addSubview(self.chatView)
-        self.blurView.addSubview(self.moreMessages)
+        self.chatView.addSubview(self.moreMessages)
         self.moreMessages.isHidden = true
         self.chatView.bounces = false
         self.chatView.allowsSelection = false
@@ -132,7 +123,11 @@ extension ChatBarrageList:UITableViewDelegate, UITableViewDataSource {
     
     @objc public func scrollTableViewToBottom() {
         if self.messages?.count ?? 0 > 1 {
-            self.chatView.scrollToRow(at: IndexPath(row: self.messages!.count-1, section: 0), at: .bottom, animated: true)
+            self.chatView.reloadData()
+            let lastIndexPath = IndexPath(row: self.chatView.numberOfRows(inSection: 0) - 1, section: 0)
+            if lastIndexPath.row >= 0 {
+                self.chatView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+            }
         }
     }
 
@@ -202,6 +197,10 @@ extension ChatBarrageList:UITableViewDelegate, UITableViewDataSource {
         if offsetY > contentHeight - tableHeight {
             self.hover = false
         }
+        
+        if indexPath.row - self.moreMessagesCount == 0 {
+            self.moreMessagesCount = 0
+        }
     }
     
     @objc func longGesture(gesture: UILongPressGestureRecognizer) {
@@ -255,12 +254,14 @@ extension ChatBarrageList: IChatBarrageListDrive {
     public func showNewMessage(message: ChatMessage,gift: GiftEntityProtocol?) {
         self.messages?.append(self.convertMessageToRender(message: message, gift: gift))
         if message.from == ChatClient.shared().currentUsername {
+            self.moreMessagesCount = 0
             self.chatView.reloadDataSafe()
             DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
                 self.scrollTableViewToBottom()
             }
         } else {
             if !self.hover {
+                self.moreMessagesCount = 0
                 self.chatView.reloadDataSafe()
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
                     self.scrollTableViewToBottom()
@@ -271,7 +272,7 @@ extension ChatBarrageList: IChatBarrageListDrive {
                 if self.moreMessagesCount > 99 {
                     count = "99+ "
                 }
-                self.moreMessages.setTitle("    \(count)new messages", for: .normal)
+                self.moreMessages.setTitle("  \(count) "+"new messages".chatroom.localize, for: .normal)
             }
         }
     }
