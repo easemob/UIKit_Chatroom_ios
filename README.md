@@ -115,7 +115,7 @@ end
 python3 -m http.server 8080
 ````
 
-部署完成后，您可以在浏览器中访问“http://yourlocalhost:8080/documentation/chatroomuikit”，其中“yourlocalhost”是您的本地IP地址。 或者，您可以将此文件夹部署在外部网络地址上。
+部署完成后，您可以在浏览器中访问 http://yourlocalhost:8080/documentation/chatroomuikit   其中`yourlocalhost`是您的本地IP地址。 或者，您可以将此文件夹部署在外部网络地址上。
 
 ## Appearance
 
