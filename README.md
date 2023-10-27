@@ -66,19 +66,19 @@ end
 ```
 
 然后cd到终端下podfile所在文件夹目录执行
+
 ```
     pod install
 ```
 
 >⚠️Xcode15编译报错 ```Sandbox: rsync.samba(47334) deny(1) file-write-create...```
 
+> 解决方法: Build Setting里搜索 ```ENABLE_USER_SCRIPT_SANDBOXING```把```User Script Sandboxing```改为```NO```
+
+
 # 结构
 
-### [ChatroomUIKit 基本组件](https://github.com/easemob/UIKit_Chatroom_ios#chatroomuikit-basic-components)
-
-解决方法: Build Setting里搜索 ```ENABLE_USER_SCRIPT_SANDBOXING```把```User Script Sandboxing```改为```NO```
->
-
+### ChatroomUIKit 基本项目结构
 
 ````
 聊天室UI套件
@@ -91,13 +91,13 @@ end
 │ └─ Client // ChatroomUIKit 初始化类。
 │
 └─ UI // 基本UI组件，不带业务。
-    ├─ 资源 // 图像或本地化文件。
+    ├─ Resource // 图像或本地化文件。
     ├─ Component // 包含具体业务的UI模块。 聊天室UIKit中的一些功能性UI组件。
     │ ├─ Room // 所有聊天室子视图的容器。
-    │ ├─ 聊天 // 聊天室中的弹幕组件和底部功能区。
-    │ ├─ 礼物 // 聊天室的礼物弹幕区、礼物箱等组件。
+    │ ├─ Chat // 聊天室中的弹幕组件和底部功能区。
+    │ ├─ Gift // 聊天室的礼物弹幕区、礼物箱等组件。
     │ └─ Input // 聊天室中的输入组件，例如表情符号。
-    └─ 核心
+    └─ Core
        ├─ UIKit // 一些常见的UIKit组件和自定义组件。
        ├─ Theme // 主题相关组件，包括颜色、字体、换肤协议及其组件。
        └─ Extension // 一些方便的系统类扩展。
@@ -155,7 +155,8 @@ class AppDelegate：UIResponder，UIApplicationDelegate {
      func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
          // 您可以在应用程序加载时或使用之前初始化 ChatroomUIKit。
          // 需要传入App Key。
-         // 获取App Key，请访问https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E8%8E%B7%E5%8F%96%E7%8E%AF%E4%BF%A1%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF-im-%E7%9A%84%E4%BF%A1%E6%81%AF
+         // 获取App Key，请访问
+         // https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E8%8E%B7%E5%8F%96%E7%8E%AF%E4%BF%A1%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF-im-%E7%9A%84%E4%BF%A1%E6%81%AF
          let error = ChatroomUIKitClient.shared.setup（with: "Appkey"）
      }
 }
@@ -164,21 +165,26 @@ class AppDelegate：UIResponder，UIApplicationDelegate {
 ### 第2步：登录
 
 ```
-// 使用当前用户对象符合`UserInfoProtocol`协议的用户信息登录ChatroomUIKit。建议在进入列表前登录
 // 需要从您的应用服务器获取token。 您也可以使用控制台生成的临时Token登录。
-// 在控制台生成用户和临时用户 token，请参见 https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA-im-%E7%94%A8%E6%88%B7。
-ChatroomUIKitClient.shared.login(with userId: "user id", token: "token", completion: <#T##(ChatError?) -> Void#>)
+// 在控制台生成用户和临时用户 token，请参见 
+// https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA-im-%E7%94%A8%E6%88%B7。
+
+        ChatroomUIKitClient.shared.login(userId: "user id", token: "token") { error in
+            
+        }
 ```
 
 ### 第三步：创建聊天室视图
 
 ```
 // 1. 获取聊天室列表并加入聊天室。 或者，在 Agora 控制台上创建聊天室。
-// 选择“项目管理 > 运营管理 > 聊天室”，单击“创建聊天室”，在弹出的对话框中设置参数，创建聊天室。 获取聊天室 ID，将其传递给以下 `launchRoomView` 方法。参见https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E5%AE%A4
+// 选择“项目管理 > 运营管理 > 聊天室”，单击“创建聊天室”，在弹出的对话框中设置参数，创建聊天室。 获取聊天室 ID，将其传递给以下 `launchRoomView` 方法。
+// 参见https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E5%AE%A4
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
 // 建议ChatroomView的宽度初始化为屏幕的宽度，高度不小于屏幕的高度减去导航的高度。
 let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: CGRect, is owner: Bool)    
 // 3. 添加视图。
+addSubView(roomView)
 // 4. 通过控制台将用户添加到聊天室。
 // 选择项目管理 > 运营管理 > 聊天室。 在聊天室的操作栏中选择查看聊天室成员，然后在弹出的对话框中将用户添加到聊天室。
 ```
@@ -187,7 +193,7 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
 
 # 注意事项
 
-在调用`ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame:CGRect, isowner:Bool)`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
+在调用`ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "")`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
 
 例如，如果您有一个播放视频流的视图，请务必在此视图上方添加 ChatroomView。
 
@@ -198,7 +204,7 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
 ## 1.初始化聊天室UIKit
 
 ```
-    let error = ChatroomUIKitClient.shared.setup(with: <#T##String#>,option: <#T##ChatroomUIKitInitialOptions.ChatOptions#>)
+    let error = ChatroomUIKitClient.shared.setup(with: "Your appkey",option: ChatroomUIKitInitialOptions.ChatOptions())
 ```
 
 ## 2.登录
@@ -221,22 +227,27 @@ let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: C
         public var gender: Int = 1
         
     }
-// 使用当前用户对象符合UserInfoProtocol协议的用户信息登录ChatroomUIKit。
+// 使用当前用户对象符合`UserInfoProtocol`协议的用户信息登录ChatroomUIKit。
 // token生成参见快速开始中登录步骤中链接。
-ChatroomUIKitClient.shared.login(with: YourAppUser(), token: "token", completion: <#T##(ChatError?) -> Void#>)
+ ChatroomUIKitClient.shared.login(user: YourAppUser(), token: ExampleRequiredConfig.chatToken) {
 ```
 
 ## 3.初始化聊天室视图
 ```
 //1. 获取聊天室列表并加入聊天室或者控制台上创建聊天室。
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
-ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: "chatroom id", frame: destination, ownerId: "Chatroom's owner id") 
+    let options  = ChatroomUIKitInitialOptions.UIOptions()
+    options.bottomDataSource = self.bottomBarDatas()
+    options.showGiftsBarrage = true
+    options.chatBarrageAreaShowGift = false
+    let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "Chatroom's owner id", options: options)
 //3. 添加视图
+    addSubView(roomView)
 ```
 
 ## 4.监听ChatroomUIKit事件和错误
 
-您可以调用“registerRoomEventsListener”方法来侦听 ChatroomUIKit 事件和错误。
+您可以调用`registerRoomEventsListener`方法来侦听 ChatroomUIKit 事件和错误。
 
 ```Swift
 ChatroomUIKitClient.shared.registerRoomEventsListener（listener：self）
