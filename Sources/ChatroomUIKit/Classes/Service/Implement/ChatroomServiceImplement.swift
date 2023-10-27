@@ -103,7 +103,7 @@ extension ChatroomServiceImplement: ChatroomService {
                 completion(error == nil,error)
             })
         case .mute:
-            ChatClient.shared().roomManager?.muteMembers([userId], muteMilliseconds: 999999, fromChatroom: roomId,completion: { room, error in
+            ChatClient.shared().roomManager?.muteMembers([userId], muteMilliseconds: -1, fromChatroom: roomId,completion: { room, error in
                 completion(error == nil,error)
             })
         case .unmute:
