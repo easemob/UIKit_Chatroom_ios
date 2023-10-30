@@ -1,11 +1,11 @@
 # [GiftsViewController](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Gift/Controllers/GiftsViewController.swift)
 
-This is a container containing a gift list. You can inherit this class to implement additional UI definitions and business processing. After clicking the Send button, decide whether to close the gift pop-up window after a gift is delivered to display some animation effects and display special effects. It is recommended to use Tencent libpag, or go to the server to call the gift interface in your business, and then send the gift message to the chat room after the call is successful.
+这是一个礼物容器Controller。您可以继承这个类在发送礼物之后调用您服务器的送礼api成功后再去调用`GiftsViewController`中原有的发送礼物消息到聊天室的api，并在可以在发送一些大额礼物的时候决定是否让礼物容器收起并展示礼物特效。礼物特效的话我们推荐腾讯的libpag动效库。
 
-## 1. How to add other operation UI under the gift list?
+## 1. 如何添加额外的UI?
 
-You can add your new UI below the gift list and change the layout size of the gift list.
+您可以在礼物列表上面或者下面添加您的自定义view.
 
-## 2. How to make your own business request first when clicking the gift button?
+## 2. 如何在单个礼物上加一些标识?
 
-You can inherit GiftsViewController and overload the ``GiftsViewController.onGiftSendClick`` method. You can refer to the implementation logic of the previous class, but do not call super to handle your own business here.
+您可以集成`GiftEntityCell`后，新增UI属性，在调用`super init`后添加在UI上，重载`refresh`方法并调用`super.refresh`后进行您的新增UI的刷新.
