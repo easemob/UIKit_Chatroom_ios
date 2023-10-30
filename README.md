@@ -292,14 +292,6 @@ ComponentsRegister.shared.GiftBarragesViewCell = CustomGiftBarragesViewCell.self
 
 详情请参见[ComponentsRegister](./Documentation/ComponentRegister.md)
 
-## 3.切换默认或自定义主题
-
-- 切换到 ChatroomUIKit 附带的浅色或深色主题。
-
-````
-Theme.switchTheme(style: .dark)` 或 `Theme.switchTheme(style: .light)
-````
-
 ## 3.切换原创或自定义主题
 - 切换到 ChatroomUIKit 附带的浅色或深色主题。
 
