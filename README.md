@@ -198,7 +198,7 @@ addSubView(roomView)
 以下是进阶用法的三个示例。
 
 ## 1.初始化聊天室UIKit
-
+相比于上面快速开始的聊天室UIKit初始化这里多了ChatOptions的参数，主要是对SDK中是否打印log以及是否自动登录，是否默认使用用户属性的开关配置。
 ```
     let error = ChatroomUIKitClient.shared.setup(with: "Your appkey",option: ChatroomUIKitInitialOptions.ChatOptions())
 ```
@@ -293,7 +293,7 @@ ComponentsRegister.shared.GiftBarragesViewCell = CustomGiftBarragesViewCell.self
 详情请参见[ComponentsRegister](./Documentation/ComponentRegister.md)
 
 ## 3.切换原创或自定义主题
-- 切换到 ChatroomUIKit 附带的浅色或深色主题。
+- 切换到 ChatroomUIKit 附带的浅色或深色主题。在初始化聊天室UIKit视图之前切换主题切换主题即可更改默认主题，在视图使用中也可以切换由开发者判断系统当前主题后切换你想对应的主题即可。
 
 ````
 Theme.switchTheme(style: .dark)` 或 `Theme.switchTheme(style: .light)
