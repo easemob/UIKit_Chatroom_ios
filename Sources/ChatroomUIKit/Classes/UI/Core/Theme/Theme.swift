@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Contain light and dark themes of the chat room UIKit.If you want to switch custom theme,you'll modify primary&secondary&error&neutral&neutralSpecial hues properties in ``Appearance``.Then all `Theme.switchTheme(style: .custom)` method
+/// Contain light and dark themes of the chat room UIKit.If you want to switch custom theme,you'll modify primary&secondary&error&neutral&neutralSpecial hues properties in ``Appearance``.Then call `Theme.switchTheme(style: .custom)` method
 @objc public enum ThemeStyle: UInt {
     case light
     case dark
