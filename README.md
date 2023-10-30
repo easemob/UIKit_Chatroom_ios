@@ -327,8 +327,6 @@ Appearance.neutralSpecialHue = 199/360.0
 Theme.switchTheme(style: .custom)
 ```
 
-请注意，自定义主题和内置主题是互斥的。
-
 # 业务流程图
 下图展示了业务请求和回调的整个逻辑。
 ![业务逻辑整体流程图](/Documentation/BusinessFlowchart.png)
