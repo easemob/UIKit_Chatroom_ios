@@ -175,9 +175,4 @@ extension ChatBottomFunctionBar: ThemeSwitchProtocol {
         self.toolBar.reloadData()
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .dark)
-    }
-    
-    
 }

@@ -70,10 +70,4 @@ extension PageContainersDialogController: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.container.backgroundColor(style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98)
     }
-    
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
-    
 }

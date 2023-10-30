@@ -332,7 +332,7 @@ Appearance.secondaryHue = 210/360.0
 Appearance.errorHue = 189/360.0
 Appearance.neutralHue = 191/360.0
 Appearance.neutralSpecialHue = 199/360.0
-Theme.switchHues()
+Theme.switchTheme(style: .custom)
 ```
 
 请注意，自定义主题和内置主题是互斥的。

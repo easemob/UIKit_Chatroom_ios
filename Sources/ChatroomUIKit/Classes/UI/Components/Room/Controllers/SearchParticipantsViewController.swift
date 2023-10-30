@@ -159,9 +159,5 @@ extension SearchParticipantsViewController: ThemeSwitchProtocol {
         self.tableView.reloadData()
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
     
 }

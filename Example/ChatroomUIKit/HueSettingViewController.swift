@@ -49,7 +49,7 @@ final class HueSettingViewController: UIViewController {
         default:
             break
         }
-        Theme.switchHues()
+        Theme.switchTheme(style: .custom)
     }
     
     override class func setValue(_ value: Any?, forUndefinedKey key: String) {

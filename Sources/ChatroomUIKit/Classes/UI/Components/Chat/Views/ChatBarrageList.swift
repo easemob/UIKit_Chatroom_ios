@@ -224,12 +224,6 @@ extension ChatBarrageList: ThemeSwitchProtocol {
         self.moreMessages.textColor(style == .dark ? UIColor.theme.primaryColor6:UIColor.theme.primaryColor5, .normal)
         self.moreMessages.image(UIImage(named: "more_messages", in: .chatroomBundle, with: nil)?.withTintColor(style == .dark ? UIColor.theme.primaryColor6:UIColor.theme.primaryColor5), .normal)
     }
-    
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
-    
 }
 
 extension ChatBarrageList: IChatBarrageListDrive {

@@ -57,9 +57,4 @@ extension SearchBar: ThemeSwitchProtocol {
         self.searchField.backgroundColor(style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor95).textColor(style == .dark ? UIColor.theme.neutralColor4:UIColor.theme.neutralColor6, .normal).image(image, .normal)
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
-    
 }

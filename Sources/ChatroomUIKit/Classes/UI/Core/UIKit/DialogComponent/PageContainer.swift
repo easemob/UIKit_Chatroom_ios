@@ -131,8 +131,4 @@ extension PageContainer: ThemeSwitchProtocol {
         self.toolBar.backgroundColor(style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98)
         self.backgroundColor(style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98)
     }
-    
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
 }

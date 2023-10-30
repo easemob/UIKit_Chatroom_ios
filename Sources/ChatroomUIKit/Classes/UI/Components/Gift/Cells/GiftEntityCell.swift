@@ -99,10 +99,6 @@ extension GiftEntityCell: ThemeSwitchProtocol {
         self.displayValue.textColor(style == .dark ? UIColor.theme.neutralColor6:UIColor.theme.neutralColor5, .normal)
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
     
 }
 

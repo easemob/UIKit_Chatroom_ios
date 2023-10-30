@@ -110,10 +110,6 @@ extension PageContainerTitleBar: ThemeSwitchProtocol {
         self.indicator.backgroundColor(style == .dark ? UIColor.theme.primaryColor6:UIColor.theme.primaryColor5)
         self.choicesBar.reloadData()
     }
-    
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
 }
 
 
@@ -155,10 +151,6 @@ extension PageContainerTitleBar: ThemeSwitchProtocol {
 extension ChoiceItemCell: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.content.textColor = style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1
-    }
-    
-    public func switchHues() {
-        self.switchTheme(style: .light)
     }
     
 }

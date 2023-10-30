@@ -57,9 +57,5 @@ extension ReportOptionCell: ThemeSwitchProtocol {
         self.normalImage = style == .dark ? self.normalImage?.withTintColor(UIColor.theme.neutralColor8, renderingMode: .automatic):self.normalImage
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
     
 }

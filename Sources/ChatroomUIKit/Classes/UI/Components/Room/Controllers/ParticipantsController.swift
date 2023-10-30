@@ -228,9 +228,5 @@ extension ParticipantsController: ThemeSwitchProtocol {
         self.tableView.backgroundColor(style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1)
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
 }
 

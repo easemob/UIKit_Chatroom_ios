@@ -129,10 +129,6 @@ extension ActionSheet: ThemeSwitchProtocol {
         self.menuList.separatorColor(style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor9)
         self.menuList.reloadData()
     }
-    
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
 }
 
 extension ActionSheet: UITableViewDelegate,UITableViewDataSource {

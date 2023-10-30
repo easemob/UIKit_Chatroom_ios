@@ -74,10 +74,6 @@ extension ChatEmojiView: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.deleteEmoji.setImage(UIImage(named: style == .dark ? "delete_emoji_dark":"delete_emoji_light", in: .chatroomBundle, with: nil), for: .normal)
     }
-    
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
 }
 
 open class ChatEmojiCell: UICollectionViewCell {

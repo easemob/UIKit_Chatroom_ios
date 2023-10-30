@@ -71,9 +71,6 @@ import UIKit
 
 
 extension LoadingView: ThemeSwitchProtocol {
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
     
     public func switchTheme(style: ThemeStyle) {
         self.blur.effect = style == .dark ? self.darkEffect:self.lightEffect

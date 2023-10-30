@@ -101,10 +101,6 @@ import UIKit
 
 
 extension GiftBarrageCell: ThemeSwitchProtocol {
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
     public func switchTheme(style: ThemeStyle) {
         self.blur.effect = style == .dark ? self.darkEffect:self.lightEffect
         self.container.backgroundColor = style == .dark ? UIColor.theme.barrageLightColor2:UIColor.theme.barrageDarkColor1

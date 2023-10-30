@@ -210,7 +210,6 @@ extension UIComponentsExampleViewController {
         self.style = ThemeStyle(rawValue: UInt(sender.selectedSegmentIndex)) ?? .light
         Theme.switchTheme(style: self.style)
         self.background.image = Theme.style == .dark ? UIImage(named: "background_dark"):UIImage(named: "background_light")
-//        Theme.switchHues()
     }
     
     @objc func switchSpeakerIcon(sender: UISegmentedControl) {

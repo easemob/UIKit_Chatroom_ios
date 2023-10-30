@@ -112,9 +112,4 @@ extension ChatroomParticipantsCell: ThemeSwitchProtocol {
 //        self.separateLine.backgroundColor(Theme.style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor9)
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
-    
 }

@@ -7,10 +7,11 @@
 
 import Foundation
 
-/// Contain light and dark themes of the chat room UIKit.
+/// Contain light and dark themes of the chat room UIKit.If you want to switch custom theme,you'll modify primary&secondary&error&neutral&neutralSpecial hues properties in ``Appearance``.Then all `Theme.switchTheme(style: .custom)` method
 @objc public enum ThemeStyle: UInt {
     case light
     case dark
+    case custom
 }
 
 /// When the system theme changes, you can use this static method to switch between the light and dark themes of the chat room UIKit.
@@ -19,9 +20,6 @@ import Foundation
     /// When some view Implement the protocol method,you can use `Theme.switchTheme(style: .dark)` to switch theme.
     /// - Parameter style: ``ThemeStyle``
     func switchTheme(style: ThemeStyle)
-    
-    /// After the custom view implements this protocol method, you can use this method to switch the custom theme color, which includes the following five hue values: primary, secondary, error, neutral, and neutral special. The designer recommends that the hue values of primary and neutral are the same. The hue values ​​of neutral and neutral special are similar.
-    func switchHues()
 }
 
 
@@ -30,8 +28,6 @@ import Foundation
 /// A view conform ThemeSwitchProtocol.Then Implement protocol methods.When you want switch theme that light and dark themes provided by default chatroom UIKit  `theme` .
 /// Call `Theme.switchTheme(style: .dark)` method
 /// A view conform ThemeSwitchProtocol.Then Implement protocol methods.When you want switch themes provided by customer .
-/// Call `Theme.switchHues(hues: [0.56,0.66,0.76,0.56,0.54])` method.
-/// Only one of the above two methods can be called.
 @objcMembers open class Theme: NSObject {
     
     public static var style: ThemeStyle = .light
@@ -60,17 +56,14 @@ import Foundation
     /// `Theme.switchTheme(style: .dark)`
     @MainActor public static func switchTheme(style: ThemeStyle) {
         self.style = style
+        if style == .custom {
+            UIColor.ColorTheme.switchHues(hues: [Appearance.primaryHue,Appearance.secondaryHue,Appearance.errorHue,Appearance.neutralHue,Appearance.neutralSpecialHue])
+        }
         for view in self.registerViews.allObjects {
             view.switchTheme(style: style)
         }
     }
-    /// After the custom view implements this protocol method, you can use this method to switch the custom theme color, which includes the following five hue values: primary, secondary, error, neutral, and neutral special. The designer recommends that the hue values of primary and neutral are the same. The hue values ​​of neutral and neutral special are similar.
-    @MainActor public static func switchHues() {
-        UIColor.ColorTheme.switchHues(hues: [Appearance.primaryHue,Appearance.secondaryHue,Appearance.errorHue,Appearance.neutralHue,Appearance.neutralSpecialHue])
-        for view in self.registerViews.allObjects {
-            view.switchHues()
-        }
-    }
+    
         
 }
 

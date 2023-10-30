@@ -132,9 +132,6 @@ extension ChatBarrageCell: ThemeSwitchProtocol {
         self.container.backgroundColor(style == .dark ? UIColor.theme.barrageLightColor2:UIColor.theme.barrageDarkColor1)
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .dark)
-    }
 }
 
 

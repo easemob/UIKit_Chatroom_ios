@@ -93,8 +93,4 @@ extension ReportOptionsController: ThemeSwitchProtocol {
         self.optionsList.reloadData()
     }
     
-    public func switchHues() {
-        self.switchTheme(style: .light)
-    }
-    
 }
