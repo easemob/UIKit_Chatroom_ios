@@ -55,7 +55,7 @@ import UIKit
     }()
     
     lazy var content: UILabel = {
-        return UILabel(frame: CGRect(x: 10, y: 7, width: self.container.frame.width - 20, height: self.container.frame.height - 18)).backgroundColor(.clear).numberOfLines(0).lineBreakMode(.byCharWrapping)
+        return UILabel(frame: CGRect(x: 10, y: 7, width: self.container.frame.width - 20, height: self.container.frame.height - 18)).backgroundColor(.clear).numberOfLines(0).lineBreakMode(.byWordWrapping)
     }()
     
     lazy var giftIcon: ImageView = {
@@ -114,8 +114,8 @@ import UIKit
         self.time.text = chat.showTime
         self.identity.image(with: chat.message.user?.identity ?? "", placeHolder: Appearance.identityPlaceHolder)
         self.avatar.image(with: chat.message.user?.avatarURL ?? "", placeHolder: Appearance.avatarPlaceHolder)
-        self.container.frame = CGRect(x: 15, y: 6, width: chat.width + 30, height: chat.height - 6)
         self.content.attributedText = chat.attributeText
+        self.container.frame = CGRect(x: 15, y: 6, width: chat.width + 30, height: chat.height - 6)
         self.content.preferredMaxLayoutWidth =  self.container.frame.width - 24
         self.content.frame = CGRect(x: self.content.frame.minX, y: self.content.frame.minY, width:  self.container.frame.width - 24, height:  self.container.frame.height - 16)
         self.giftIcon.frame = CGRect(x: self.content.frame.width-16, y: (self.container.frame.height-18)/2.0, width: 18, height: 18)
@@ -165,18 +165,19 @@ fileprivate let gift_tail_indent: CGFloat = 26
     lazy public var attributeText: NSAttributedString = self.convertAttribute()
         
     /// The height of the chat entity, calculated based on the attributed text and the width of the chat view.
-    lazy public var height: CGFloat =  UILabel(frame: CGRect(x: 0, y: 0, width: chatViewWidth - 54, height: 15)).numberOfLines(0).lineBreakMode(.byWordWrapping).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).height + 26
+    lazy public var height: CGFloat =  UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).height + 26
     
     /// The width of the chat entity, calculated based on the attributed text and the width of the chat view.
-    lazy public var width: CGFloat = UILabel(frame: CGRect(x: 0, y: 0, width: chatViewWidth - 54, height: 15)).numberOfLines(0).lineBreakMode(.byWordWrapping).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).width+(self.gift != nil ? gift_tail_indent:0)
+    lazy public var width: CGFloat = (self.gift == nil ? UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 18)).width:self.attributeText.size().width+self.firstLineHeadIndent())+(self.gift != nil ? gift_tail_indent:0)
     
     /// Chat barrage display gift info.Need to set it.``GiftEntityProtocol``
     lazy public var gift: GiftEntityProtocol? = nil
     
     /// Converts the message text into an attributed string, including the user's nickname, message text, and emojis.
     func convertAttribute() -> NSAttributedString {
+        let userId = self.message.user?.userId ?? ""
         var text = NSMutableAttributedString {
-            AttributedText((self.message.user?.nickName ?? "")).foregroundColor(Color.theme.primaryColor8).font(UIFont.theme.labelMedium).paragraphStyle(self.paragraphStyle())
+            AttributedText((self.message.user?.nickName ?? userId)).foregroundColor(Color.theme.primaryColor8).font(UIFont.theme.labelMedium).paragraphStyle(self.paragraphStyle())
         }
         if self.message.body.type == .custom,let body = self.message.body as? ChatCustomMessageBody {
             switch body.event {
@@ -223,11 +224,11 @@ fileprivate let gift_tail_indent: CGFloat = 26
         paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent()
         paragraphStyle.lineHeightMultiple = 1.08
         paragraphStyle.alignment = .natural
-        if self.gift != nil {
-            paragraphStyle.tailIndent = self.lastLineHeadIndent()
-        } else {
-            paragraphStyle.tailIndent = 0
-        }
+//        if self.gift != nil {
+//            paragraphStyle.tailIndent = self.lastLineHeadIndent()
+//        } else {
+//            paragraphStyle.tailIndent = 0
+//        }
         return paragraphStyle
     }
     

@@ -41,8 +41,8 @@ extension GiftServiceImplement: GiftService {
     public func sendGift(gift: GiftEntityProtocol, completion: @escaping (ChatMessage?,ChatError?) -> Void) {
         let gift = gift
         let user =  ChatroomContext.shared?.currentUser
-        let userMap = user?.toJsonObject()
-        let message = ChatMessage(conversationID: self.currentRoomId, body: ChatCustomMessageBody(event: chatroom_UIKit_gift, customExt: ["chatroom_uikit_gift" : gift.toJsonObject().chatroom.jsonString]), ext: userMap)
+        let userMap = ["chatroom_uikit_userInfo":user?.toJsonObject()]
+        let message = ChatMessage(conversationID: self.currentRoomId, body: ChatCustomMessageBody(event: chatroom_UIKit_gift, customExt: ["chatroom_uikit_gift" : gift.toJsonObject().chatroom.jsonString]), ext: userMap as [AnyHashable : Any])
         message.chatType = .chatRoom
         ChatClient.shared().chatManager?.send(message, progress: nil,completion: { chatMessage, error in
             completion(chatMessage,error)
@@ -71,7 +71,7 @@ extension GiftServiceImplement: ChatManagerDelegate {
                 switch message.body.type {
                 case .custom:
                     if let body = message.body as? ChatCustomMessageBody {
-                        if body.event == chatroom_UIKit_gift,let json = message.ext as? [String:Any] {
+                        if body.event == chatroom_UIKit_gift,let json = message.ext?["chatroom_uikit_userInfo"] as? [String:Any] {
                             let user = User()
                             user.setValuesForKeys(json)
                             if !body.customExt.isEmpty,let jsonString = body.customExt["chatroom_uikit_gift"] {

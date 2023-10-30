@@ -121,7 +121,7 @@ extension GiftsBarrageList: UITableViewDelegate, UITableViewDataSource {
             self.giftList.reloadData()
             var indexPath = IndexPath(row: 0, section: 0)
             if self.gifts.count >= 2 {
-                indexPath = IndexPath(row: self.gifts.count - 2, section: 0)
+                indexPath = IndexPath(row: self.giftList.numberOfRows(inSection: 0) - 2, section: 0)
             }
             if self.gifts.count > 1 {
                 let cell = self.giftList.cellForRow(at: indexPath) as? GiftBarrageCell
