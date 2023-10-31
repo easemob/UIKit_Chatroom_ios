@@ -18,11 +18,11 @@ final class UIComponentsExampleViewController: UIViewController {
     }()
     
     lazy var giftBarrages: GiftsBarrageList = {
-        GiftsBarrageList(frame: CGRect(x: 10, y: 400, width: self.view.frame.width-100, height: Appearance.giftBarrageRowHeight*2),source:nil)
+        GiftsBarrageList(frame: CGRect(x: 10, y: ScreenHeight-BottomBarHeight-54-5-Appearance.giftBarrageRowHeight*2-200, width: self.view.frame.width-100, height: Appearance.giftBarrageRowHeight*2),source:nil)
     }()
     
     lazy var barrageList: ChatBarrageList = {
-        ChatBarrageList(frame: CGRect(x: 0, y: 500, width: self.view.frame.width-50, height: 170))
+        ChatBarrageList(frame: CGRect(x: 0, y: ScreenHeight-BottomBarHeight-54-5, width: self.view.frame.width-50, height: 200))
     }()
     
     lazy var bottomBar: ChatBottomFunctionBar = {
