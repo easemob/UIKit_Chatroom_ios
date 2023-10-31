@@ -22,7 +22,7 @@ final class UIComponentsExampleViewController: UIViewController {
     }()
     
     lazy var barrageList: ChatBarrageList = {
-        ChatBarrageList(frame: CGRect(x: 0, y: 500, width: self.view.frame.width-50, height: 200))
+        ChatBarrageList(frame: CGRect(x: 0, y: 500, width: self.view.frame.width-50, height: 170))
     }()
     
     lazy var bottomBar: ChatBottomFunctionBar = {
