@@ -30,7 +30,7 @@ public class ExampleRequiredConfig {
         }
         
         //请参看文档  https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA-im-%E7%94%A8%E6%88%B7
-        public var userId: String = <#appkey下的Username(userId)#>
+        public var userId: String = <#用户登录需要的userId#>
         
         public var nickName: String = "Jack"
         
