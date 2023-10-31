@@ -137,6 +137,13 @@ python3 -m http.server 8080
 
 本指南提供了不同 ChatroomUIKit 组件的多个使用示例。 请参阅“示例”文件夹以获取显示各种用例的详细代码片段和项目。
 
+参考以下步骤在 Xcode 中创建一个 iOS 平台下的App，创建设置如下：
+
+* Product Name 填入ChatroomUIKitQuickStart。
+* Organization Identifier 设为 您的identifier。
+* User Interface 选择 Storyboard。
+* Language 选择 你的常用开发语言。
+
 ### 第一步：初始化ChatroomUIKit
 
 ````
