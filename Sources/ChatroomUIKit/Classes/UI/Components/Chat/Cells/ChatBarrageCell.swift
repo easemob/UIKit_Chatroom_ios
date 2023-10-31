@@ -219,16 +219,17 @@ fileprivate let gift_tail_indent: CGFloat = 26
     }
     
     /// Returns a paragraph style object with the first line head indent set based on the appearance of the chat cell.
+    /// Returns a paragraph style object with the first line head indent set based on the appearance of the chat cell.
     func paragraphStyle() -> NSMutableParagraphStyle {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent()
         paragraphStyle.lineHeightMultiple = 1.08
         paragraphStyle.alignment = .natural
-//        if self.gift != nil {
-//            paragraphStyle.tailIndent = self.lastLineHeadIndent()
-//        } else {
-//            paragraphStyle.tailIndent = 0
-//        }
+        if self.gift != nil {
+            paragraphStyle.tailIndent = self.lastLineHeadIndent()
+        } else {
+            paragraphStyle.tailIndent = 0
+        }
         return paragraphStyle
     }
     
