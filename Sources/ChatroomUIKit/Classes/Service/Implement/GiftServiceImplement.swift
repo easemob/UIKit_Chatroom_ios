@@ -79,7 +79,11 @@ extension GiftServiceImplement: ChatManagerDelegate {
                                 let entity = GiftEntity()
                                 entity.setValuesForKeys(json)
                                 entity.sendUser = user
-                                response.receiveGift(roomId: self.currentRoomId, gift: entity,message: message)
+                                if ChatroomUIKitClient.shared.option.option_UI.chatBarrageAreaShowGift {
+                                    response.receiveGift(roomId: self.currentRoomId, gift: entity,message: message)
+                                } else {
+                                    response.receiveGift(roomId: self.currentRoomId, gift: entity)
+                                }
 
                             }
                         }
