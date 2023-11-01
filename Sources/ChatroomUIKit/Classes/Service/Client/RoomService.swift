@@ -8,7 +8,7 @@
 import UIKit
 
 /// All business service errors
-@objc public enum RoomEventsError: UInt {
+@objc public enum RoomEventsType: UInt {
     case join
     case leave
     case destroyed
@@ -20,6 +20,7 @@ import UIKit
     case report
     case fetchParticipants
     case fetchMutes
+    case sendMessage
 }
 
 /// The chat room event listener.
@@ -107,9 +108,9 @@ import UIKit
     /// Occurs when a chat room event error is reported.
     /// The current user receives the event.
     /// - Parameters:
-    ///   - error: ChatError
-    ///   - type: RoomEventsError
-    func onErrorOccur(error: ChatError,type: RoomEventsError)
+    ///   - error: ``ChatError``.If error is empty, it means success, otherwise it fails.
+    ///   - type: ``RoomEventsType``
+    func onEventResultChanged(error: ChatError?,type: RoomEventsType)
 }
 
 /// Chat room request & response wrapper class in the chat room UIKit.
@@ -202,9 +203,9 @@ import UIKit
         ChatroomContext.shared?.muteMap?.removeAll()
     }
     
-    private func handleError(type: RoomEventsError,error: ChatError) {
+    private func handleError(type: RoomEventsType,error: ChatError?) {
         for handler in self.eventsListener.allObjects {
-            handler.onErrorOccur(error: error,type: type)
+            handler.onEventResultChanged(error: error,type: type)
         }
     }
     
@@ -236,10 +237,10 @@ import UIKit
                 if !success {
                     let errorInfo = "Joined chatroom error:\(error?.errorDescription ?? "")"
                     consoleLogInfo(errorInfo, type: .error)
-                    self.handleError(type: .join, error: error!)
                 } else {
                     _ = self.giftService
                 }
+                self.handleError(type: .join, error: error)
                 completion(error)
             }
         }
@@ -249,9 +250,8 @@ import UIKit
         self.roomService?.chatroomOperating(roomId: self.roomId, userId: ChatClient.shared().currentUsername ?? "", type: .leave, completion: { [weak self] success, error in
             if success {
                 self?.cleanCache()
-            } else {
-                self?.handleError(type: .leave, error: error!)
             }
+            self?.handleError(type: .leave, error: error)
         })
     }
     
@@ -259,42 +259,38 @@ import UIKit
         self.roomService?.chatroomOperating(roomId: self.roomId, userId: ChatClient.shared().currentUsername ?? "", type: .destroyed, completion: { [weak self] success, error in
             if success {
                 self?.cleanCache()
-            } else {
-                self?.handleError(type: .destroyed, error: error!)
             }
+            self?.handleError(type: .destroyed, error: error)
         })
     }
     
     //MARK: - Participants operation
     @objc public func kick(userId: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.operatingUser(roomId: self.roomId, userId: userId, type: .kick, completion: { [weak self] success, error in
-            if error != nil {
-                self?.handleError(type: .kick, error: error!)
-            } else {
+            if error == nil {
                 ChatroomContext.shared?.usersMap?.removeValue(forKey: userId)
             }
             completion(error)
+            self?.handleError(type: .kick, error: error)
         })
     }
     
     @objc public func mute(userId: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.operatingUser(roomId: self.roomId, userId: userId, type: .mute, completion: { [weak self] success, error in
-            if error != nil {
-                self?.handleError(type: .mute, error: error!)
-            } else {
+            if error == nil {
                 ChatroomContext.shared?.muteMap?[userId] = true
             }
             completion(error)
+            self?.handleError(type: .mute, error: error!)
         })
     }
     
     @objc public func unmute(userId: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.operatingUser(roomId: self.roomId, userId: userId, type: .unmute, completion: { [weak self] success, error in
-            if error != nil {
-                self?.handleError(type: .unmute, error: error!)
-            } else {
+            if error == nil {
                 ChatroomContext.shared?.muteMap?.removeValue(forKey: userId)
             }
+            self?.handleError(type: .unmute, error: error)
             completion(error)
         })
     }
@@ -349,11 +345,8 @@ import UIKit
                     }
                     completion(users,error)
                 }
-            } else {
-                if error != nil {
-                    self.handleError(type: .fetchParticipants, error: error!)
-                }
             }
+            self.handleError(type: .fetchParticipants, error: error)
         })
     }
     
@@ -398,12 +391,8 @@ import UIKit
                     }
                     completion(users,error)
                 }
-            } else {
-                if error != nil {
-                    self.handleError(type: .fetchMutes, error: error!)
-                }
-                completion(nil,error)
             }
+            self.handleError(type: .fetchMutes, error: error)
         })
     }
     
@@ -452,29 +441,25 @@ import UIKit
         self.roomService?.translateMessage(message: message, completion: { [weak self] translateResult, error in
             if error == nil,let translation = translateResult {
                 self?.chatDrive?.refreshMessage(message: translation)
-            } else {
-                self?.handleError(type: .translate, error: error!)
             }
+            self?.handleError(type: .translate, error: error)
             completion(error)
         })
     }
     
     @objc public func recall(message: ChatMessage,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.recall(messageId: message.messageId, completion: { [weak self] error in
-            if error != nil {
-                self?.handleError(type: .recall, error: error!)
-            } else {
+            if error == nil {
                 self?.chatDrive?.removeMessage(message: message)
             }
+            self?.handleError(type: .translate, error: error)
             completion(error)
         })
     }
     
     @objc public func report(message: ChatMessage,tag: String, reason: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.report(messageId: message.messageId, tag: tag, reason: reason, completion: { [weak self] error in
-            if error != nil {
-                self?.handleError(type: .report, error: error!)
-            }
+            self?.handleError(type: .report, error: error)
             completion(error)
         })
     }

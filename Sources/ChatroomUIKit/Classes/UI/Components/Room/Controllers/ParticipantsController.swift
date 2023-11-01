@@ -87,8 +87,11 @@ open class ParticipantsController: UITableViewController {
                     if error == nil {
                         self?.users.append(contentsOf: datas ?? [])
                         self?.tableView.reloadData()
-                    } else {
-                        self?.showToast(toast: "fetch mute error:\(error?.errorDescription ?? "")", duration: 3)
+                    }
+                    if let eventsListeners =  self?.roomService.eventsListener.allObjects {
+                        for listener in eventsListeners {
+                            listener.onEventResultChanged(error: error, type: .fetchMutes)
+                        }
                     }
                 }
             }
@@ -110,8 +113,11 @@ open class ParticipantsController: UITableViewController {
                             }
                         }
                         self?.tableView.reloadData()
-                    } else {
-                        self?.showToast(toast: "fetch participants error:\(error?.errorDescription ?? "")", duration: 3)
+                    }
+                    if let eventsListeners =  self?.roomService.eventsListener.allObjects {
+                        for listener in eventsListeners {
+                            listener.onEventResultChanged(error: error, type: .fetchParticipants)
+                        }
                     }
                 }
             }
@@ -196,7 +202,7 @@ open class ParticipantsController: UITableViewController {
                         self?.tableView.reloadRows(at: self?.tableView.indexPathsForVisibleRows ?? [], with: .none)
                     }
                 } else {
-                    self?.showToast(toast: "fetchThenCacheUserInfosOnEndScroll error:\(error?.errorDescription ?? "")", duration: 3)
+                    consoleLogInfo("fetchThenCacheUserInfosOnEndScroll error:\(error?.errorDescription ?? "")", type: .error)
                 }
             }
         }

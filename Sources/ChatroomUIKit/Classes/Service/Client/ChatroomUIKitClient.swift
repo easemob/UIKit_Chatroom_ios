@@ -230,7 +230,7 @@ extension ChatroomUIKitClient: UserStateChangedListener {
                 self.roomService?.enterRoom(completion: { error in
                     if let service = self.roomService,let error = error {
                         for listener in service.eventsListener.allObjects {
-                            listener.onErrorOccur(error: error, type: .join)
+                            listener.onEventResultChanged(error: error, type: .join)
                         }
                     }
                 })

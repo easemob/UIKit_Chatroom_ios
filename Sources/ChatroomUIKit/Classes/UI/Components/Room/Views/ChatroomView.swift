@@ -100,7 +100,11 @@ import UIKit
             } else {
                 let errorInfo = "Send message failure!\n\(error?.errorDescription ?? "")"
                 consoleLogInfo(errorInfo, type: .error)
-                UIViewController.currentController?.showToast(toast: errorInfo, duration: 3)
+            }
+            if let eventsListeners =  self?.service?.eventsListener.allObjects {
+                for listener in eventsListeners {
+                    listener.onEventResultChanged(error: error, type: .sendMessage)
+                }
             }
         })
     }
@@ -118,11 +122,15 @@ import UIKit
         }
         service.enterRoom(completion: { [weak self] error in
             if error == nil,ChatroomContext.shared?.owner ?? false {
-                self?.service?.fetchMuteUsers(pageSize: 100, completion: { _, error in
+                self?.service?.fetchMuteUsers(pageSize: 100, completion: { [weak self] _, error in
                     if error != nil {
                         let errorInfo = "SDK fetch mute users failure!\nError:\(error?.errorDescription ?? "")"
                         consoleLogInfo(errorInfo, type: .error)
-                        UIViewController.currentController?.showToast(toast: errorInfo, duration: 3)
+                        if let eventsListeners =  self?.service?.eventsListener.allObjects {
+                            for listener in eventsListeners {
+                                listener.onEventResultChanged(error: error, type: .fetchMutes)
+                            }
+                        }
                     }
                 })
             }
@@ -138,7 +146,11 @@ import UIKit
             } else {
                 let errorInfo = "SDK leave chatroom failure!\nError:\(error?.errorDescription ?? "")"
                 consoleLogInfo(errorInfo, type: .error)
-                UIViewController.currentController?.showToast(toast: errorInfo, duration: 3)
+                if let eventsListeners =  self?.service?.eventsListener.allObjects {
+                    for listener in eventsListeners {
+                        listener.onEventResultChanged(error: error, type: .leave)
+                    }
+                }
             }
         })
     }
@@ -230,12 +242,12 @@ extension ChatroomView: ChatBarrageActionEventsHandler {
                 self?.service?.unmute(userId: message.from, completion: { _ in })
             case "Report":
                 DialogManager.shared.showReportDialog(message: message) { error in
-                    var result = "Report successful!"
-                    if error != nil {
-                        result = "\(error?.errorDescription ?? "")"
-                    }
                     DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
-                        UIViewController.currentController?.showToast(toast: result, duration: 2)
+                        if let eventsListeners =  self?.service?.eventsListener.allObjects {
+                            for listener in eventsListeners {
+                                listener.onEventResultChanged(error: error, type: .recall)
+                            }
+                        }
                     }
                 }
             default:
