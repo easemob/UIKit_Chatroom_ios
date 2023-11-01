@@ -206,7 +206,7 @@ extension ChatroomServiceImplement: ChatroomService {
     }
 }
 //MARK: - ChatRoomManagerDelegate
-extension ChatroomServiceImplement: ChatroomManagerDelegate {
+extension ChatroomServiceImplement: ChatroomEventsListener {
     
     public func didDismiss(from aChatroom: ChatRoom, reason aReason: ChatroomBeKickedReason) {
         for response in self.responseDelegates.allObjects {
@@ -268,7 +268,7 @@ extension ChatroomServiceImplement: ChatroomManagerDelegate {
     
 }
 //MARK: - ChatManagerDelegate
-extension ChatroomServiceImplement: ChatManagerDelegate {
+extension ChatroomServiceImplement: ChatEventsListener {
     
     public func messagesDidReceive(_ aMessages: [ChatMessage]) {
         for message in aMessages {

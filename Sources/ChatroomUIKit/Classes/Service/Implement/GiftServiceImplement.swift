@@ -63,7 +63,7 @@ extension GiftServiceImplement: GiftService {
     }
 }
 //MARK: - ChatManagerDelegate
-extension GiftServiceImplement: ChatManagerDelegate {
+extension GiftServiceImplement: ChatEventsListener {
     
     public func messagesDidReceive(_ aMessages: [ChatMessage]) {
         for message in aMessages {

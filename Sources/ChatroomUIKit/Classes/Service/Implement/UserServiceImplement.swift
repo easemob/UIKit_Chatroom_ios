@@ -23,19 +23,20 @@ import UIKit
             if !success {
                 let errorInfo = error?.errorDescription ?? ""
                 consoleLogInfo(errorInfo, type: .error)
-                UIViewController.currentController?.showToast(toast: errorInfo, duration: 3)
+                completion(error)
             } else {
                 if userProperty {
                     self?.updateUserInfo(userInfo: userInfo, completion: { success, error in
                         if !success {
                             let errorInfo = "update user info failure:\(error?.errorDescription ?? "")"
                             consoleLogInfo(errorInfo, type: .error)
-                            UIViewController.currentController?.showToast(toast: errorInfo, duration: 3)
                         }
+                        completion(error)
                     })
+                } else {
+                    completion(error)
                 }
             }
-            completion(error)
         }
     }
     
@@ -135,7 +136,7 @@ extension UserServiceImplement:UserServiceProtocol {
 }
 
 //MARK: - ChatClientDelegate
-extension UserServiceImplement: ChatClientDelegate {
+extension UserServiceImplement: ChatClientListener {
     public func tokenDidExpire(_ aErrorCode: ChatErrorCode) {
         for response in self.responseDelegates.allObjects {
             response.onUserTokenDidExpired()

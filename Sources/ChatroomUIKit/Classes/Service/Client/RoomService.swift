@@ -228,7 +228,6 @@ import UIKit
                     let errorInfo = "Joined chatroom error:\(error?.errorDescription ?? "")"
                     consoleLogInfo(errorInfo, type: .error)
                     self.handleError(type: .join, error: error!)
-                    UIViewController.currentController?.showToast(toast: errorInfo, duration: 3)
                 } else {
                     _ = self.giftService
                 }
