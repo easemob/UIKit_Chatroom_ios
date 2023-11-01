@@ -165,6 +165,24 @@ extension UserServiceImplement: ChatClientListener {
             response.onSocketConnectionStateChanged(state: aConnectionState)
         }
     }
+    
+    public func userDidForbidByServer() {
+        for response in self.responseDelegates.allObjects {
+            response.userDidForbidden()
+        }
+    }
+    
+    public func userAccountDidRemoveFromServer() {
+        for response in self.responseDelegates.allObjects {
+            response.userAccountDidRemoved()
+        }
+    }
+    
+    public func userAccountDidForced(toLogout aError: ChatError?) {
+        for response in self.responseDelegates.allObjects {
+            response.userAccountDidForcedToLogout(error: aError)
+        }
+    }
 }
 
 @objcMembers final public class User:NSObject, UserInfoProtocol {

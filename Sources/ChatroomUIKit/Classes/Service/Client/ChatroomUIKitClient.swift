@@ -171,6 +171,30 @@ import UIKit
 }
 
 extension ChatroomUIKitClient: UserStateChangedListener {
+    public func userAccountDidRemoved() {
+        if let service = self.roomService {
+            for listener in service.eventsListener.allObjects {
+                listener.userAccountDidRemoved()
+            }
+        }
+    }
+    
+    public func userDidForbidden() {
+        if let service = self.roomService {
+            for listener in service.eventsListener.allObjects {
+                listener.userDidForbidden()
+            }
+        }
+    }
+    
+    public func userAccountDidForcedToLogout(error: ChatError?) {
+        if let service = self.roomService {
+            for listener in service.eventsListener.allObjects {
+                listener.userAccountDidForcedToLogout(error: error)
+            }
+        }
+    }
+    
     
     public func onUserLoginOtherDevice(device: String) {
         //User will be kick by UIKit.

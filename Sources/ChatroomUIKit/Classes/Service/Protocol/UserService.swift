@@ -86,5 +86,14 @@ import Foundation
     /// Chatroom socket connection state changed listener.
     /// - Parameter state: ConnectionState
     func onSocketConnectionStateChanged(state: ConnectionState)
+    
+    /// The user account did removed by server.
+    func userAccountDidRemoved()
+    
+    /// The method called on user did forbid by server.
+    func userDidForbidden()
+    
+    /// The user account logout by server.
+    func userAccountDidForcedToLogout(error: ChatError?)
         
 }

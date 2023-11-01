@@ -44,6 +44,15 @@ import UIKit
     /// - Parameter device: The name of another device.
     func onUserLoginOtherDevice(device: String)
     
+    /// The user account did removed by server.
+    func userAccountDidRemoved()
+    
+    /// The method called on user did forbid by server.
+    func userDidForbidden()
+    
+    /// The user account logout by server.
+    func userAccountDidForcedToLogout(error: ChatError?)
+    
     /// Occurs when a member is unmuted.
     /// The unmuted member, administrators, and the owner of the chat room receive this event.
     /// - Parameters:
