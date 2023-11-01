@@ -210,10 +210,7 @@ extension ChatroomServiceImplement: ChatroomEventsListener {
     
     public func didDismiss(from aChatroom: ChatRoom, reason aReason: ChatroomBeKickedReason) {
         for response in self.responseDelegates.allObjects {
-            if let roomId = aChatroom.chatroomId,let userMap = ChatroomContext.shared?.usersMap {
-                if userMap.keys.contains(where: { $0 == ChatroomContext.shared?.currentUser?.userId ?? "" }) {
-                    ChatroomContext.shared?.usersMap?.removeValue(forKey: ChatroomContext.shared?.currentUser?.userId ?? "")
-                }
+            if let roomId = aChatroom.chatroomId {
                 response.onUserBeKicked(roomId: roomId, reason: aReason)
             }
         }

@@ -77,6 +77,7 @@ import UIKit
     @objc public func login(user: UserInfoProtocol,token: String,completion: @escaping (ChatError?) -> Void) {
         ChatroomContext.shared?.currentUser = user
         self.userImplement = UserServiceImplement(userInfo: user, token: token, use: self.option.option_chat.useProperties, completion: completion)
+        self.userImplement?.bindUserStateChangedListener(listener: self)
     }
     
     /// Login user id.
@@ -89,11 +90,13 @@ import UIKit
         user.userId = userId
         ChatroomContext.shared?.currentUser = user
         self.userImplement = UserServiceImplement(userInfo: user, token: token, use: false, completion: completion)
+        self.userImplement?.bindUserStateChangedListener(listener: self)
     }
     
     /// Logout user
     @objc public func logout() {
         self.userImplement?.logout(completion: { _, _ in })
+        self.userImplement?.unBindUserStateChangedListener(listener: self)
     }
     
     /// Launches a chat room view of ChatroomUIKit.
