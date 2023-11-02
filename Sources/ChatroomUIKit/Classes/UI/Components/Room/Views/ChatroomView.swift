@@ -69,12 +69,12 @@ import UIKit
     ///   - hiddenChat: `Bool` hiddenChat value
     @objc public required convenience init(respondTouch frame: CGRect) {
         if ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage {
-            if frame.height < ScreenHeight/3.0+BottomBarHeight+(Appearance.giftBarrageRowHeight*2) {
-                assert(false,"The lower limit of the entire view height must not be less than `ScreenHeight/3.0+BottomBarHeight+(Appearance.giftBarrageRowHeight*2)`.")
+            if frame.height < ScreenHeight/5.0+(Appearance.giftBarrageRowHeight*2)+54 {
+                assert(false,"The lower limit of the entire view height must not be less than `ScreenHeight/5.0+(Appearance.giftBarrageRowHeight*2)+54`.")
             }
         } else {
-            if frame.height < ScreenHeight/3.0 + (Appearance.giftBarrageRowHeight*2) {
-                assert(false,"The lower limit of the chat view height must not be less than `ScreenHeight/3.0 + (Appearance.giftBarrageRowHeight*2`.")
+            if frame.height < ScreenHeight/5.0+54 {
+                assert(false,"The lower limit of the chat view height must not be less than `ScreenHeight/5.0+54`.")
             }
         }
         self.init(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: ScreenHeight))
