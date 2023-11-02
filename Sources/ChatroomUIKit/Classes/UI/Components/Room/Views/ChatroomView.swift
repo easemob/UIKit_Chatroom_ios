@@ -121,18 +121,18 @@ import UIKit
             service.bindGiftDrive(Drive: self.giftBarrages)
         }
         service.enterRoom(completion: { [weak self] error in
-            if error == nil,ChatroomContext.shared?.owner ?? false {
-                self?.service?.fetchMuteUsers(pageSize: 100, completion: { [weak self] _, error in
-                    if error != nil {
-                        let errorInfo = "SDK fetch mute users failure!\nError:\(error?.errorDescription ?? "")"
-                        consoleLogInfo(errorInfo, type: .error)
-                        if let eventsListeners =  self?.service?.eventsListener.allObjects {
-                            for listener in eventsListeners {
-                                listener.onEventResultChanged(error: error, type: .fetchMutes)
-                            }
-                        }
-                    }
-                })
+//            if error == nil,ChatroomContext.shared?.owner ?? false {
+//                self?.service?.fetchMuteUsers(pageSize: 100, completion: { [weak self] _, error in
+//                    if error != nil {
+//                        let errorInfo = "SDK fetch mute users failure!\nError:\(error?.errorDescription ?? "")"
+//                        consoleLogInfo(errorInfo, type: .error)
+//                    }
+//                })
+//            }
+            if let eventsListeners =  self?.service?.eventsListener.allObjects {
+                for listener in eventsListeners {
+                    listener.onEventResultChanged(error: error, type: .join)
+                }
             }
         })
     }
