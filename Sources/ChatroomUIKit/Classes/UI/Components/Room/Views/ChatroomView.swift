@@ -69,12 +69,12 @@ import UIKit
     ///   - hiddenChat: `Bool` hiddenChat value
     @objc public required convenience init(respondTouch frame: CGRect) {
         if ChatroomUIKitClient.shared.option.option_UI.showGiftsBarrage {
-            if frame.height < ScreenHeight/2.0 {
-                assert(false,"The lower limit of the entire view height must not be less than `ScreenHeight/2.0`.")
+            if frame.height < ScreenHeight/3.0+BottomBarHeight+(Appearance.giftBarrageRowHeight*2) {
+                assert(false,"The lower limit of the entire view height must not be less than `ScreenHeight/3.0+BottomBarHeight+(Appearance.giftBarrageRowHeight*2)`.")
             }
         } else {
-            if frame.height < ScreenHeight/2.0 - (Appearance.giftBarrageRowHeight*2) {
-                assert(false,"The lower limit of the chat view height must not be less than `ScreenHeight/2.0 - (Appearance.giftBarrageRowHeight*2)`.")
+            if frame.height < ScreenHeight/3.0 + (Appearance.giftBarrageRowHeight*2) {
+                assert(false,"The lower limit of the chat view height must not be less than `ScreenHeight/3.0 + (Appearance.giftBarrageRowHeight*2`.")
             }
         }
         self.init(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: ScreenHeight))
@@ -215,6 +215,17 @@ extension ChatroomView: ChatBarrageActionEventsHandler {
                     }) {
                         Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
                     }
+                }
+            }
+            if message.from == ChatroomContext.shared?.ownerId ?? "" {
+                if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "Mute"
+                }) {
+                    Appearance.defaultMessageActions.remove(at: index)
+                }
+            } else {
+                let muteItem = Appearance.defaultMessageActions.first { $0.tag == "Mute" }
+                if muteItem == nil {
+                    Appearance.defaultMessageActions.insert(ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute"), at: 2)
                 }
             }
         } else {
