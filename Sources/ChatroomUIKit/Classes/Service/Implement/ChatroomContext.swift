@@ -28,9 +28,9 @@ import UIKit
     public var owner: Bool {
         if self.ownerId.isEmpty {
             let chatroom = ChatRoom(id: self.roomId ?? "")
-            return (chatroom?.owner ?? "" == ChatClient.shared().currentUsername)
+            return (chatroom?.owner?.lowercased() ?? "" == ChatClient.shared().currentUsername?.lowercased())
         } else {
-            return (self.ownerId == ChatClient.shared().currentUsername)
+            return (self.ownerId == ChatClient.shared().currentUsername?.lowercased() ?? "")
         }
     }
     
