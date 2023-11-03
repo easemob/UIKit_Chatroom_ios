@@ -112,7 +112,7 @@ extension UserServiceImplement:UserServiceProtocol {
     private func convertToUser(info: UserInfo) -> User {
         let user = User()
         user.userId = info.userId ?? ""
-        user.nickName = info.nickname ?? ""
+        user.nickName = info.nickname ?? user.userId
         user.avatarURL = info.avatarUrl ?? ""
         user.gender = info.gender
         if let ext = info.ext{
@@ -127,7 +127,7 @@ extension UserServiceImplement:UserServiceProtocol {
     private func convertToUserInfo(user: UserInfoProtocol) -> UserInfo {
         let info = UserInfo()
         info.userId = user.userId
-        info.nickname = user.nickName
+        info.nickname = user.nickName.isEmpty ? user.userId:user.nickName
         info.avatarUrl = user.avatarURL
         info.gender = user.gender
         //In addition to the existing user attribute fields in the UserInfo object of the SDK, other extended fields are placed in the ext map and serialized into json string to interact with other terminals.

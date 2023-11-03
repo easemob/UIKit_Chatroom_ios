@@ -68,7 +68,7 @@ import UIKit
         self.user = user
         self.userLevel.image(with: user.identity, placeHolder: Appearance.identityPlaceHolder)
         self.userAvatar.image(with: user.avatarURL, placeHolder: Appearance.avatarPlaceHolder)
-        self.userName.text = user.nickName
+        self.userName.text = user.nickName.isEmpty ? user.userId:user.nickName
         self.hiddenUserIdentity(hidden: hiddenUserIdentity)
         self.updateUserDetail(text: detail)
     }
