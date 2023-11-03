@@ -60,7 +60,7 @@ import UIKit
     
     /// Initializes the chat room UIKit.
     /// - Parameters:
-    ///   - appKey: The unique identifier that Chat assigns to each app. For details, see https://docs.agora.io/en/agora-chat/get-started/enable?platform=ios#get-chat-project-information.
+    ///   - appKey: The unique identifier that Chat assigns to each app. 
     /// Returns the initialization success or an error that includes the description of the cause of the failure.
     @objc public func setup(with appKey: String,option: ChatroomUIKitInitialOptions.ChatOptions = ChatroomUIKitInitialOptions.ChatOptions()) -> ChatError? {
         let option = ChatSDKOptions(appkey: appKey)

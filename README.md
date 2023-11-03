@@ -180,7 +180,7 @@ class AppDelegate：UIResponder，UIApplicationDelegate {
 ### 第三步：创建聊天室视图
 
 ```
-// 1. 获取聊天室列表并加入聊天室。 或者，在 Agora 控制台上创建聊天室。
+// 1. 获取聊天室列表并加入聊天室。 或者，在 环信 控制台上创建聊天室。
 // 选择“项目管理 > 运营管理 > 聊天室”，单击“创建聊天室”，在弹出的对话框中设置参数，创建聊天室。 获取聊天室 ID，将其传递给以下 `launchRoomView` 方法。
 // 参见https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E5%AE%A4
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。

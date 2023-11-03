@@ -59,7 +59,7 @@ import Foundation
     /// Login SDK
     /// - Parameters:
     ///   - userId: user id
-    ///   - token: chat token(https://console.agora.io/project/WLRRH-ir6/extension?id=Chat or https://console.easemob.com/app/applicationOverview/userManagement  can build temp token)
+    ///   - token: chat token
     ///   - completion: Callback,success or failure
     func login(userId: String, token: String, completion: @escaping (Bool,ChatError?) -> Void)
     
