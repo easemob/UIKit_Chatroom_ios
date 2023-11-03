@@ -53,7 +53,12 @@ import UIKit
             }
         vc = PageContainersDialogController(pageTitles: ["barrage_long_press_menu_report".chatroom.localize], childControllers: [report], constraintsSize: Appearance.pageContainerConstraintsSize)
         
-        UIViewController.currentController?.presentingViewController?.presentViewController(vc)
+        let current = UIViewController.currentController
+        if current?.presentingViewController != nil {
+            current?.presentingViewController?.presentViewController(vc)
+        } else {
+            current?.presentViewController(vc)
+        }
     }
     
     /// Shows message operations.
@@ -82,7 +87,12 @@ import UIKit
         }
         let vc = DialogContainerViewController(custom: actionSheet,constraintsSize: actionSheet.frame.size)
         actionSheet.frame = CGRect(x: 0, y: 0, width: actionSheet.frame.width, height: actionSheet.frame.height)
-        UIViewController.currentController?.presentingViewController?.presentViewController(vc)
+        let current = UIViewController.currentController
+        if current?.presentingViewController != nil {
+            current?.presentingViewController?.presentViewController(vc)
+        } else {
+            current?.presentViewController(vc)
+        }
     }
     
     // Shows the alert view.
@@ -102,6 +112,11 @@ import UIKit
             }.rightButton(title: "Confirm".chatroom.localize)
         }
         let alertVC = AlertViewController(custom: alert)
-        UIViewController.currentController?.presentingViewController?.presentViewController(alertVC)
+        let vc = UIViewController.currentController
+        if vc?.presentingViewController != nil {
+            vc?.presentingViewController?.presentViewController(alertVC)
+        } else {
+            vc?.presentViewController(alertVC)
+        }
     }
 }
