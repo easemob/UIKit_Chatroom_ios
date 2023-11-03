@@ -94,7 +94,7 @@ extension UserServiceImplement:UserServiceProtocol {
             self.logout { _, _ in }
         }
         if token.hasPrefix("00") {
-            ChatClient.shared().login(withUsername: userId, agoraToken: token) { user_id, error in
+            ChatClient.shared().login(withUsername: userId.lowercased(), agoraToken: token) { user_id, error in
                 completion(error == nil,error)
             }
         } else {
