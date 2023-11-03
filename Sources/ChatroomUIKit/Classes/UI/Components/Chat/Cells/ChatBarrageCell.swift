@@ -264,6 +264,6 @@ public extension ChatMessage {
     
     /// Translation of the text message.
     var translation: String? {
-        (self.body as? ChatTextMessageBody)?.translations?[Appearance.targetLanguage.rawValue]
+        (self.body as? ChatTextMessageBody)?.translations?[Appearance.messageTranslationLanguage.rawValue]
     }
 }

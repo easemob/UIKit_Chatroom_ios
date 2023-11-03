@@ -16,7 +16,7 @@ import UIKit
     /// The size of ``PageContainersDialogController`` constraints.
     public static var pageContainerConstraintsSize = CGSize(width: ScreenWidth, height: ScreenHeight*(3.0/5.0))
     
-    /// The size of constraints of the gift page controller.``DialogContainerViewController``
+    /// The size of the ``DialogContainerViewController`` page.
     public static var giftDialogContainerConstraintsSize = CGSize(width: ScreenWidth, height: ScreenHeight/2.0)
     
     /// The size of alert container constraints.``AlertViewController``
@@ -54,7 +54,7 @@ import UIKit
     public static var emojiMap: Dictionary<String,UIImage> = Dictionary<String,UIImage>()
     
     /// The mirror type of the language code of LanguageType.``LanguageType``
-    public static var targetLanguage: LanguageType = .English
+    public static var messageTranslationLanguage: LanguageType = .English
     
     /// ActionSheet data source of the message being long pressed.``ActionSheetItemProtocol``
     public static var defaultMessageActions: [ActionSheetItemProtocol] = [ActionSheetItem(title: "barrage_long_press_menu_translate".chatroom.localize, type: .normal,tag: "Translate"),ActionSheetItem(title: "barrage_long_press_menu_delete".chatroom.localize, type: .normal,tag: "Delete"),ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute"),ActionSheetItem(title: "barrage_long_press_menu_report".chatroom.localize, type: .destructive,tag: "Report")]
