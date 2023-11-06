@@ -281,7 +281,7 @@ import UIKit
                 ChatroomContext.shared?.muteMap?[userId] = true
             }
             completion(error)
-            self?.handleError(type: .mute, error: error!)
+            self?.handleError(type: .mute, error: error)
         })
     }
     
@@ -391,6 +391,8 @@ import UIKit
                     }
                     completion(users,error)
                 }
+            } else {
+                completion([],error)
             }
             self.handleError(type: .fetchMutes, error: error)
         })
