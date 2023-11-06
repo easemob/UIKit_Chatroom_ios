@@ -55,7 +55,6 @@ import UIKit
         self.backgroundColor = .clear
         self.contentView.addSubview(self.container)
         self.container.addSubViews([self.blur,self.avatar, self.userName, self.giftName, self.giftIcon, self.giftNumbers])
-        
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
     }
@@ -75,7 +74,7 @@ import UIKit
         self.avatar.frame = CGRect(x: 5, y: 5, width: self.container.frame.height - 10, height: self.container.frame.height - 10)
         self.avatar.cornerRadius(Appearance.avatarRadius)
         self.userName.frame = CGRect(x: self.avatar.frame.maxX + 6, y: self.container.frame.height/2.0 - 15, width: frame.width / 5.0 * 2 - 12, height: 15)
-        self.giftName.frame = CGRect(x: self.avatar.frame.maxX + 6, y: self.container.frame.height/2.0 , width: frame.width / 5.0 * 2 - 12, height: 15)
+        self.giftName.frame = CGRect(x: self.avatar.frame.maxX + 6, y: self.container.frame.height/2.0 , width: frame.width / 5.0 * 2, height: 15)
         self.giftIcon.frame = CGRect(x: frame.width / 5.0 * 3, y: 0, width: self.container.frame.height, height: self.container.frame.height)
         self.giftNumbers.frame = CGRect(x: self.giftIcon.frame.maxX + 5, y: 5, width: self.container.frame.width - self.giftIcon.frame.maxX - 5, height: self.container.frame.height - 5)
     }

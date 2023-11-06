@@ -99,7 +99,7 @@ import UIKit
     public static var avatarRadius: CornerRadius = .large
     
     /// The default height of ``ChatBarrageCell``.
-    public static var giftBarrageRowHeight: CGFloat = 58
+    public static var giftBarrageRowHeight: CGFloat = 44
     
     /// The label for message reporting types.
     public static var reportTags: [String] = ["violation_reason_1".chatroom.localize,"violation_reason_2".chatroom.localize,"violation_reason_3".chatroom.localize,"violation_reason_4".chatroom.localize,"violation_reason_5".chatroom.localize,"violation_reason_6".chatroom.localize,"violation_reason_7".chatroom.localize,"violation_reason_8".chatroom.localize,"violation_reason_9".chatroom.localize]

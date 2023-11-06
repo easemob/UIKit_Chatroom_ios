@@ -41,7 +41,7 @@ import UIKit
         
     /// Gift list on receive gift.
     public private(set) lazy var giftBarrages: GiftsBarrageList = {
-        GiftsBarrageList(frame: CGRect(x: 10, y: self.touchFrame.minY, width: self.touchFrame.width-160, height: Appearance.giftBarrageRowHeight*2),source:self)
+        GiftsBarrageList(frame: CGRect(x: 10, y: self.touchFrame.minY, width: self.touchFrame.width-120, height: Appearance.giftBarrageRowHeight*2),source:self)
     }()
     
     /// Chat barrages list.
