@@ -297,15 +297,22 @@ extension ChatroomServiceImplement: ChatEventsListener {
     
     private func notifyJoin(message: ChatMessage, response: ChatroomResponseListener?) {
         if let body = message.body as? ChatCustomMessageBody{
-            if body.event == chatroom_UIKit_user_join,let json = message.ext as? [String:Any],let userInfo = json["chatroom_uikit_userInfo"] as? [String:Any] {
-                let user = User()
-                user.setValuesForKeys(userInfo)
-                ChatroomContext.shared?.usersMap?[user.userId] = user
-                if response != nil {
-                    response?.onUserJoined(roomId: message.to, message: message)
-                } else {
-                    for response in self.responseDelegates.allObjects {
-                        response.onUserJoined(roomId: message.to, message: message)
+            if let event = body.event {
+                if event == chatroom_UIKit_user_join {
+                    if let json = message.ext as? [String:Any] {
+                        if let userInfo = json["chatroom_uikit_userInfo"] as? [String:Any]  {
+                            let user = User()
+                            user.setValuesForKeys(userInfo)
+                            ChatroomContext.shared?.usersMap?[user.userId] = user
+                            if response != nil {
+                                response?.onUserJoined(roomId: message.to, message: message)
+                            } else {
+                                for response in self.responseDelegates.allObjects {
+                                    response.onUserJoined(roomId: message.to, message: message)
+                                }
+                            }
+                        }
+                        
                     }
                 }
             }

@@ -74,17 +74,19 @@ extension GiftServiceImplement: ChatEventsListener {
                         if body.event == chatroom_UIKit_gift,let json = message.ext?["chatroom_uikit_userInfo"] as? [String:Any] {
                             let user = User()
                             user.setValuesForKeys(json)
-                            if !body.customExt.isEmpty,let jsonString = body.customExt["chatroom_uikit_gift"] {
-                                let json = jsonString.chatroom.jsonToDictionary()
-                                let entity = GiftEntity()
-                                entity.setValuesForKeys(json)
-                                entity.sendUser = user
-                                if ChatroomUIKitClient.shared.option.option_UI.chatBarrageAreaShowGift {
-                                    response.receiveGift(roomId: self.currentRoomId, gift: entity,message: message)
-                                } else {
-                                    response.receiveGift(roomId: self.currentRoomId, gift: entity)
-                                }
+                            if let customExt = body.customExt {
+                                if !customExt.isEmpty,let jsonString = customExt["chatroom_uikit_gift"] {
+                                    let json = jsonString.chatroom.jsonToDictionary()
+                                    let entity = GiftEntity()
+                                    entity.setValuesForKeys(json)
+                                    entity.sendUser = user
+                                    if ChatroomUIKitClient.shared.option.option_UI.chatBarrageAreaShowGift {
+                                        response.receiveGift(roomId: self.currentRoomId, gift: entity,message: message)
+                                    } else {
+                                        response.receiveGift(roomId: self.currentRoomId, gift: entity)
+                                    }
 
+                                }
                             }
                         }
                     }
