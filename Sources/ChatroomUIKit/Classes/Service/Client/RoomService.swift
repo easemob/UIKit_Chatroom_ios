@@ -268,6 +268,7 @@ import UIKit
     @objc public func kick(userId: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.operatingUser(roomId: self.roomId, userId: userId, type: .kick, completion: { [weak self] success, error in
             if error == nil {
+                NotificationCenter.default.post(name: NSNotification.Name("ChatroomUIKitKickUserSuccess"), object: userId)
                 ChatroomContext.shared?.usersMap?.removeValue(forKey: userId)
             }
             completion(error)

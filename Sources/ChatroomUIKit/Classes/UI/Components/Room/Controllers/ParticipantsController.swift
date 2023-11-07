@@ -138,7 +138,7 @@ open class ParticipantsController: UITableViewController {
         }
         // Configure the cell...
         if let user = self.users[safe: indexPath.row] {
-            cell?.refresh(user: user,hiddenUserIdentity: Appearance.barrageCellStyle == .hideUserIdentity)
+            cell?.refresh(user: user)
         }
         cell?.more.isHidden = !(ChatroomContext.shared?.owner ?? false)
         cell?.moreClosure = { [weak self] user in

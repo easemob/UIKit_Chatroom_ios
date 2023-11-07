@@ -87,6 +87,13 @@ import UIKit
         }
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("ChatroomUIKitKickUserSuccess"), object: self, queue: .main) { [weak self] notify in
+            if let userId = notify.object as? String {
+                self?.rawSources.removeAll { $0.userId == userId }
+                self?.searchResults.removeAll { $0.userId == userId }
+                self?.tableView.reloadData()
+            }
+        }
     }
     
     deinit {

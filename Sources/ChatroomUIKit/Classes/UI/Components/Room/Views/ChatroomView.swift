@@ -203,8 +203,7 @@ extension ChatroomView: ChatBarrageActionEventsHandler {
             return
         }
         if let owner = ChatroomContext.shared?.owner,owner {
-            if let map = ChatroomContext.shared?.muteMap {
-                let mute = map[message.from] ?? false
+            if let map = ChatroomContext.shared?.muteMap,let mute = map[message.from] {
                 if mute {
                     if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "Mute"
                     }) {
@@ -216,20 +215,23 @@ extension ChatroomView: ChatBarrageActionEventsHandler {
                         Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
                     }
                 }
-            }
-            if message.from == ChatroomContext.shared?.ownerId ?? "" {
-                if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "Mute"
-                }) {
-                    Appearance.defaultMessageActions.remove(at: index)
-                }
             } else {
-                let muteItem = Appearance.defaultMessageActions.first { $0.tag == "Mute" }
-                if muteItem == nil {
-                    Appearance.defaultMessageActions.insert(ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute"), at: 2)
+                if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "unMute"
+                }) {
+                    Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
+                } else {
+                    let item = Appearance.defaultMessageActions.first { $0.tag == "Mute" }
+                    if item == nil {
+                        Appearance.defaultMessageActions.insert(ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute"), at: 2)
+                    }
                 }
             }
         } else {
             if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "Mute"
+            }) {
+                Appearance.defaultMessageActions.remove(at: index)
+            }
+            if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "unMute"
             }) {
                 Appearance.defaultMessageActions.remove(at: index)
             }
@@ -249,7 +251,7 @@ extension ChatroomView: ChatBarrageActionEventsHandler {
                 self?.service?.recall(message: message, completion: { _ in })
             case "Mute":
                 self?.service?.mute(userId: message.from, completion: { _ in })
-            case "unmute":
+            case "unMute":
                 self?.service?.unmute(userId: message.from, completion: { _ in })
             case "Report":
                 DialogManager.shared.showReportDialog(message: message) { error in
