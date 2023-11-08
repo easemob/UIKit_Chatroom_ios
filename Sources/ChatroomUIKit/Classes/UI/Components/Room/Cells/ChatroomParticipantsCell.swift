@@ -54,7 +54,7 @@ import UIKit
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        self.userLevel.frame = CGRect(x: 12, y: self.contentView.center.y-13, width: 26, height: 26)
+        self.userLevel.frame = self.userLevel.isHidden ? .zero:CGRect(x: 12, y: self.contentView.center.y-13, width: 26, height: 26)
         self.userAvatar.frame = CGRect(x: self.userLevel.frame.maxX+12, y: self.contentView.center.y-20, width: 40, height: 40)
         if self.userDetail.text == nil {
             self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY+10, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
@@ -75,8 +75,8 @@ import UIKit
     
     @objc public func hiddenUserIdentity(hidden: Bool) {
         self.userLevel.isHidden = hidden
-        self.userLevel.frame = CGRect(x: 12, y: self.contentView.center.y-13, width: 26, height: 26)
-        self.userAvatar.frame = CGRect(x: self.userLevel.frame.maxX+12, y: self.contentView.center.y-20, width: 40, height: 40)
+        self.userLevel.frame = hidden ? .zero:CGRect(x: 12, y: self.contentView.center.y-13, width: 26, height: 26)
+        self.userAvatar.frame = CGRect(x: hidden ? 12:self.userLevel.frame.maxX+12, y: self.contentView.center.y-20, width: 40, height: 40)
         if self.userDetail.text == nil {
             self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY+10, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
         } else {
