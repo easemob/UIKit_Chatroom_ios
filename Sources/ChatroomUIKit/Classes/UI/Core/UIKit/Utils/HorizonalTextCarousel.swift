@@ -1,5 +1,5 @@
 //
-//  HorizonalTextCarousel.swift
+//  GlobalBoardcastView.swift
 //  ChatroomUIKit
 //
 //  Created by 朱继超 on 2023/9/13.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-@objc public protocol IHorizontalTextCarouselDrive: NSObjectProtocol {
+@objc public protocol IGlobalBoardcastViewDrive: NSObjectProtocol {
     
     /// Display text on received global notify message.
     /// - Parameter text: show text
     func showNewNotify(text: String)
 }
 
-@objc public class HorizontalTextCarousel: UIView {
+@objc public class GlobalBoardcastView: UIView {
         
     private var queue: AnimationQueue = AnimationQueue()
     
@@ -43,12 +43,12 @@ import UIKit
         super.init(frame: frame)
     }
     
-    /// HorizontalTextCarousel init method
+    /// GlobalBoardcastView init method
     /// - Parameters:
-    ///   - originPoint: HorizontalTextCarousel's origin point.
-    ///   - width: HorizontalTextCarousel's width.
-    ///   - font: HorizontalTextCarousel's text font.
-    ///   - textColor: HorizontalTextCarousel's text color.
+    ///   - originPoint: GlobalBoardcastView's origin point.
+    ///   - width: GlobalBoardcastView's width.
+    ///   - font: GlobalBoardcastView's text font.
+    ///   - textColor: GlobalBoardcastView's text color.
     ///   - hiddenIcon: Whether hidden icon or not.
     @objc public required convenience init(originPoint: CGPoint ,width: CGFloat, font: UIFont, textColor: UIColor, hiddenIcon: Bool = false) {
         self.init(frame: CGRect(x: originPoint.x, y: originPoint.y, width: width, height: font.lineHeight+4))
@@ -148,7 +148,7 @@ import UIKit
     
 }
 
-extension HorizontalTextCarousel: IHorizontalTextCarouselDrive {
+extension GlobalBoardcastView: IGlobalBoardcastViewDrive {
     public func showNewNotify(text: String) {
         self.addTask(text: text)
     }

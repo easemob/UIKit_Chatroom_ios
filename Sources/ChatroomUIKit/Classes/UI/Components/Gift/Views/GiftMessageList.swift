@@ -1,5 +1,5 @@
 //
-//  GiftsBarrageList.swift
+//  GiftMessageList.swift
 //  ChatroomUIKit
 //
 //  Created by 朱继超 on 2023/9/1.
@@ -8,28 +8,28 @@
 import UIKit
 
 
-@objc public protocol IGiftsBarrageListDrive {
+@objc public protocol IGiftMessageListDrive {
     /// Refresh the UI after receiving the gift
     /// - Parameter gift: GiftEntityProtocol
     func receiveGift(gift: GiftEntityProtocol)
 }
 
-/// A protocol that defines optional methods for transforming animations in the GiftsBarrageList.
-@objc public protocol GiftsBarrageListTransformAnimationDataSource: NSObjectProtocol {
+/// A protocol that defines optional methods for transforming animations in the GiftMessageList.
+@objc public protocol GiftMessageListTransformAnimationDataSource: NSObjectProtocol {
     
-    /// An optional method that returns the row height for the GiftsBarrageList.
+    /// An optional method that returns the row height for the GiftMessageList.
     @objc optional func rowHeight() -> CGFloat
     
-    /// An optional method that returns the zoom scale for the x-axis of the GiftsBarrageList.
+    /// An optional method that returns the zoom scale for the x-axis of the GiftMessageList.
     @objc optional func zoomScaleX() -> CGFloat
     
-    /// An optional method that returns the zoom scale for the y-axis of the GiftsBarrageList.
+    /// An optional method that returns the zoom scale for the y-axis of the GiftMessageList.
     @objc optional func zoomScaleY() -> CGFloat
 }
 
-@objc open class GiftsBarrageList: UIView {
+@objc open class GiftMessageList: UIView {
     
-    public var dataSource: GiftsBarrageListTransformAnimationDataSource?
+    public var dataSource: GiftMessageListTransformAnimationDataSource?
     
     public var gifts = [GiftEntityProtocol]() {
         didSet {
@@ -62,8 +62,8 @@ import UIKit
     /// Init method.
     /// - Parameters:
     ///   - frame: Layout coordinates
-    ///   - source: GiftsBarrageListDataSource
-    @objc public convenience init(frame: CGRect, source: GiftsBarrageListTransformAnimationDataSource? = nil) {
+    ///   - source: ``GiftMessageListTransformAnimationDataSource``
+    @objc public convenience init(frame: CGRect, source: GiftMessageListTransformAnimationDataSource? = nil) {
         self.init(frame: frame)
         self.dataSource = source
         self.backgroundColor = .clear
@@ -83,7 +83,7 @@ import UIKit
 }
 
 
-extension GiftsBarrageList: UITableViewDelegate, UITableViewDataSource {
+extension GiftMessageList: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.gifts.count
@@ -104,14 +104,14 @@ extension GiftsBarrageList: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(with: ComponentsRegister.shared.GiftBarragesViewCell, reuseIdentifier: "GiftBarrageCell")
+        var cell = tableView.dequeueReusableCell(with: ComponentsRegister.shared.GiftMessagesViewCell, reuseIdentifier: "GiftBarrageCell")
         if cell == nil {
-            cell = ComponentsRegister.shared.GiftBarragesViewCell.init(style: .default, reuseIdentifier: "GiftBarrageCell")
+            cell = ComponentsRegister.shared.GiftMessagesViewCell.init(style: .default, reuseIdentifier: "GiftBarrageCell")
         }
         if let entity = self.gifts[safe: indexPath.row] {
             cell?.refresh(item: entity)
         }
-        return cell ?? GiftBarrageCell()
+        return cell ?? GiftMessageCell()
     }
 
     internal func cellAnimation() {
@@ -124,7 +124,7 @@ extension GiftsBarrageList: UITableViewDelegate, UITableViewDataSource {
                 indexPath = IndexPath(row: self.giftList.numberOfRows(inSection: 0) - 2, section: 0)
             }
             if self.gifts.count > 1 {
-                let cell = self.giftList.cellForRow(at: indexPath) as? GiftBarrageCell
+                let cell = self.giftList.cellForRow(at: indexPath) as? GiftMessageCell
                 UIView.animate(withDuration: 0.3) {
                     cell?.alpha = 0.75
                     cell?.contentView.transform = CGAffineTransform(scaleX: self.dataSource?.zoomScaleX?() ?? 0.75, y: self.dataSource?.zoomScaleY?() ?? 0.75)
@@ -155,7 +155,7 @@ extension GiftsBarrageList: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension GiftsBarrageList: GiftsBarrageListTransformAnimationDataSource {
+extension GiftMessageList: GiftMessageListTransformAnimationDataSource {
     public func rowHeight() -> CGFloat {
         58
     }
@@ -169,7 +169,7 @@ extension GiftsBarrageList: GiftsBarrageListTransformAnimationDataSource {
     }
 }
 
-extension GiftsBarrageList: IGiftsBarrageListDrive {
+extension GiftMessageList: IGiftMessageListDrive {
     public func receiveGift(gift: GiftEntityProtocol) {
         self.gifts.append(gift)
     }

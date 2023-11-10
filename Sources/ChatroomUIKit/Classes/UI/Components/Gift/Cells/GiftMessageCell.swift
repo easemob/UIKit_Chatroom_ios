@@ -1,5 +1,5 @@
 //
-//  GiftBarrageCell.swift
+//  GiftMessageCell.swift
 //  ChatroomUIKit
 //
 //  Created by 朱继超 on 2023/9/1.
@@ -8,11 +8,11 @@
 import UIKit
 
 /**
- A UITableViewCell subclass used to display a gift item in a barrage view.
+ A UITableViewCell subclass used to display a gift item in a  view.
  
  This cell contains the avatar, username, gift name, gift icon, and gift count of the gift item.
  */
-@objcMembers open class GiftBarrageCell: UITableViewCell {
+@objcMembers open class GiftMessageCell: UITableViewCell {
 
     var gift: GiftEntityProtocol?
     
@@ -99,7 +99,7 @@ import UIKit
 }
 
 
-extension GiftBarrageCell: ThemeSwitchProtocol {
+extension GiftMessageCell: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.blur.effect = style == .dark ? self.darkEffect:self.lightEffect
         self.container.backgroundColor = style == .dark ? UIColor.theme.barrageLightColor2:UIColor.theme.barrageDarkColor1

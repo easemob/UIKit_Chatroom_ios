@@ -20,8 +20,8 @@ final class UIWithBusinessViewController: UIViewController {
     var option: ChatroomUIKitInitialOptions.UIOptions {
         let options  = ChatroomUIKitInitialOptions.UIOptions()
         options.bottomDataSource = self.bottomBarDatas()
-        options.showGiftsBarrage = true
-        options.chatBarrageAreaShowGift = false
+        options.showGiftMessageArea = true
+        options.chatAreaShowGift = false
         return options
     }
     
@@ -105,7 +105,7 @@ extension UIWithBusinessViewController {
     }
     
     @objc func switchValueChanged(sender: UISwitch) {
-        ChatroomUIKitClient.shared.option.option_UI.chatBarrageAreaShowGift = sender.isOn
+        ChatroomUIKitClient.shared.option.option_UI.chatAreaShowGift = sender.isOn
     }
     
     @objc func showParticipants() {
@@ -197,11 +197,11 @@ extension UIWithBusinessViewController {
 
 //MARK: - When you called `self.roomView.addActionHandler(actionHandler: self)`.You'll receive chatroom view's click action events callback.
 extension UIWithBusinessViewController : ChatroomViewActionEventsDelegate {
-    func onMessageBarrageClicked(message: ChatroomUIKit.ChatMessage) {
+    func onMessageClicked(message: ChatroomUIKit.ChatMessage) {
         //Statistical data
     }
     
-    func onMessageListBarrageLongPressed(message: ChatroomUIKit.ChatMessage) {
+    func onMessageLongPressed(message: ChatroomUIKit.ChatMessage) {
         //Statistical data
     }
     

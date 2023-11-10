@@ -1,5 +1,5 @@
 //
-//  ChatBarrageList.swift
+//  MessageList.swift
 //  ChatroomUIKit
 //
 //  Created by 朱继超 on 2023/9/5.
@@ -9,8 +9,8 @@ import UIKit
 
 var chatViewWidth: CGFloat = 0
 
-/// ChatBarrageList's Drive.
-@objc public protocol IChatBarrageListDrive: NSObjectProtocol {
+/// MessageList's Drive.
+@objc public protocol IMessageListDrive: NSObjectProtocol {
     
     /// When you receive or will send a message.
     /// - Parameter message: ``ChatMessage``
@@ -29,25 +29,25 @@ var chatViewWidth: CGFloat = 0
     func cleanMessages()
 }
 
-/// ChatBarrageList action events handler.
-@objc public protocol ChatBarrageActionEventsHandler: NSObjectProtocol {
+/// MessageList action events handler.
+@objc public protocol MessageListActionEventsHandler: NSObjectProtocol {
     
-    /// The method called on message barrage long pressed.
+    /// The method called on message  long pressed.
     /// - Parameter message: ``ChatMessage``
-    func onMessageBarrageLongPressed(message: ChatMessage)
+    func onMessageLongPressed(message: ChatMessage)
     
-    /// The method called on message barrage clicked.
+    /// The method called on message  clicked.
     /// - Parameter message: ``ChatMessage``
     func onMessageClicked(message: ChatMessage)
 }
 
-@objcMembers open class ChatBarrageList: UIView {
+@objcMembers open class MessageList: UIView {
     
-    lazy private var eventHandlers: NSHashTable<ChatBarrageActionEventsHandler> = NSHashTable<ChatBarrageActionEventsHandler>.weakObjects()
+    lazy private var eventHandlers: NSHashTable<MessageListActionEventsHandler> = NSHashTable<MessageListActionEventsHandler>.weakObjects()
     
     /// Add UI actions handler.
-    /// - Parameter actionHandler: ``ChatBarrageActionEventsHandler``
-    public func addActionHandler(actionHandler: ChatBarrageActionEventsHandler) {
+    /// - Parameter actionHandler: ``MessageListActionEventsHandler``
+    public func addActionHandler(actionHandler: MessageListActionEventsHandler) {
         if self.eventHandlers.contains(actionHandler) {
             return
         }
@@ -55,8 +55,8 @@ var chatViewWidth: CGFloat = 0
     }
     
     /// Remove UI action handler.
-    /// - Parameter actionHandler: ``ChatBarrageActionEventsHandler``
-    public func removeEventHandler(actionHandler: ChatBarrageActionEventsHandler) {
+    /// - Parameter actionHandler: ``MessageListActionEventsHandler``
+    public func removeEventHandler(actionHandler: MessageListActionEventsHandler) {
         self.eventHandlers.remove(actionHandler)
     }
 
@@ -119,7 +119,7 @@ var chatViewWidth: CGFloat = 0
 
 }
 
-extension ChatBarrageList:UITableViewDelegate, UITableViewDataSource {
+extension MessageList:UITableViewDelegate, UITableViewDataSource {
     
     @objc public func scrollTableViewToBottom() {
         if self.messages?.count ?? 0 > 1 {
@@ -141,11 +141,11 @@ extension ChatBarrageList:UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(with: ComponentsRegister.shared.ChatBarragesCell, reuseIdentifier: "ChatBarragesCell")
+        var cell = tableView.dequeueReusableCell(with: ComponentsRegister.shared.ChatsCell, reuseIdentifier: "ChatBarragesCell")
         if cell == nil {
-            cell = ComponentsRegister.shared.ChatBarragesCell.init(barrageStyle: Appearance.barrageCellStyle, reuseIdentifier: "ChatBarrageCell")
+            cell = ComponentsRegister.shared.ChatsCell.init(displayStyle: Appearance.messageDisplayStyle, reuseIdentifier: "ChatBarrageCell")
         }
-        guard let entity = self.messages?[safe: indexPath.row] else { return ChatBarrageCell() }
+        guard let entity = self.messages?[safe: indexPath.row] else { return ChatMessageCell() }
         cell?.refresh(chat: entity)
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
@@ -206,10 +206,10 @@ extension ChatBarrageList:UITableViewDelegate, UITableViewDataSource {
     @objc func longGesture(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             let touchPoint = gesture.location(in: self.chatView)
-            if let indexPath = self.chatView.indexPathForRow(at: touchPoint),let _ = self.chatView.cellForRow(at: indexPath) as? ChatBarrageCell {
+            if let indexPath = self.chatView.indexPathForRow(at: touchPoint),let _ = self.chatView.cellForRow(at: indexPath) as? ChatMessageCell {
                 for handler in self.eventHandlers.allObjects {
                     if let message = self.messages?[safe: indexPath.row]?.message {
-                        handler.onMessageBarrageLongPressed(message: message)
+                        handler.onMessageLongPressed(message: message)
                     }
                 }
             }
@@ -218,7 +218,7 @@ extension ChatBarrageList:UITableViewDelegate, UITableViewDataSource {
 
 }
 
-extension ChatBarrageList: ThemeSwitchProtocol {
+extension MessageList: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.moreMessages.backgroundColor(style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98)
         self.moreMessages.textColor(style == .dark ? UIColor.theme.primaryColor6:UIColor.theme.primaryColor5, .normal)
@@ -226,7 +226,7 @@ extension ChatBarrageList: ThemeSwitchProtocol {
     }
 }
 
-extension ChatBarrageList: IChatBarrageListDrive {
+extension MessageList: IMessageListDrive {
     public func cleanMessages() {
         self.messages?.removeAll()
         self.chatView.reloadData()

@@ -6,32 +6,32 @@ Appearance.swift 是容纳了所有可配项的类，您需要在初始化Chatro
 
 ## 可配项
 
-1. [Appearance.pageContainerTitleBarItemWidth](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift). 修改它可以改变PageContainerTitleBar的单个条目宽度.
+1. [Appearance.pageContainerTitleBarItemWidth](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift). 修改它可以改变PageContainerTitleBar的单个条目宽度.
 
 ![位置示意图](./pageContainerTitleBarItemWidth.png).
 
 
-2. [Appearance.pageContainerConstraintsSize](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift).修改它可以改变整个PageContainer弹窗的整体Size
+2. [Appearance.pageContainerConstraintsSize](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift).修改它可以改变整个PageContainer弹窗的整体Size
 
 ![位置示意图](pageContainerTitleBarItemWidth.png).
 
 
-3. [Appearance.giftContainerConstraintsSize](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift).修改它可以改变礼物弹窗的整体大小
+3. [Appearance.giftContainerConstraintsSize](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift).修改它可以改变礼物弹窗的整体大小
 
 ![位置示意图](giftContainerConstraintsSize.png).
 
 
-4. [Appearance.barrageCellStyle](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift).修改它可以选择弹幕区域Cell的展示样式，前三项可以隐藏。
+4. [Appearance.messageDisplayStyle](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift).修改它可以选择弹幕区域Cell的展示样式，前三项可以隐藏。
 
 ![位置示意图](custom%20chat%20barrage.png).
 
 
-5. [Appearance.emojiMap](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Convertor/ChatEmojiConvertor.swift).如果您想替换全部的表情可以改变这个map，key按照既定的key，value可以传入不同的image图片。
+5. [Appearance.emojiMap](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Convertor/ChatEmojiConvertor.swift).如果您想替换全部的表情可以改变这个map，key按照既定的key，value可以传入不同的image图片。
 
 ![位置示意图](custom%20chat%20barrage.png).
 
 
-6. [Appearance.targetLanguage](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/LanguageConvertor.swift).您可以根据您用户的设备的语言环境设置对应的目标翻译语言，前提是需要在环信控制台开通翻译功能，目前聊天室UIKit内置支持中文简繁，英文，俄语，德语，法语，日语，韩语。
+6. [Appearance.targetLanguage](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/LanguageConvertor.swift).您可以根据您用户的设备的语言环境设置对应的目标翻译语言，前提是需要在环信控制台开通翻译功能，目前聊天室UIKit内置支持中文简繁，英文，俄语，德语，法语，日语，韩语。
 
 
 7. `Appearance.defaultMessageActions`.长按消息后弹起弹窗的数据源，您可以进行一定配置。
@@ -54,12 +54,12 @@ Appearance.swift 是容纳了所有可配项的类，您需要在初始化Chatro
 ![位置示意图](giftPlaceHolder.png).
 
 
-11. [Appearance.avatarPlaceHolder](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Chat/Cells/ChatBarrageCell.swift).头像默认图
+11. [Appearance.avatarPlaceHolder](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Chat/Cells/ChatMessageCell.swift).头像默认图
 
 ![位置示意图](avatarPlaceHolder.png)
 
 
-12. [Appearance.userIdentifyPlaceHolder]((https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Chat/Cells/ChatBarrageCell.swift)).用户身份标识默认图
+12. [Appearance.userIdentifyPlaceHolder]((https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Chat/Cells/ChatMessageCell.swift)).用户身份标识默认图
 
 ![位置示意图](userIdentifyPlaceHolder.png)
 
@@ -69,17 +69,17 @@ Appearance.swift 是容纳了所有可配项的类，您需要在初始化Chatro
 ![位置示意图](notifyMessageIcon.png)
 
 
-14. [Appearance.maxInputHeight](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).输入框最大高度
+14. [Appearance.maxInputHeight](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).输入框最大高度
 
 ![位置示意图](maxInputHeight.png)
 
 
-15. [Appearance.inputPlaceHolder](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).输入框默认显示文字
+15. [Appearance.inputPlaceHolder](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).输入框默认显示文字
 
 ![位置示意图](inputCorner.png) 默认是 Aa.
 
 
-17. [Appearance.inputBarCorner](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).
+17. [Appearance.inputBarCorner](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).
 
 ![位置示意图](inputCorner.png) 圆角默认是最大也就是高度一半.
 

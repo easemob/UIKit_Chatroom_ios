@@ -1,5 +1,5 @@
 //
-//  ChatBarrageCell.swift
+//  ChatMessageCell.swift
 //  ChatroomUIKit
 //
 //  Created by 朱继超 on 2023/9/5.
@@ -9,15 +9,15 @@ import UIKit
 
 
 /**
- A UITableViewCell subclass used to display chat messages as a barrage-style cell.
+ A UITableViewCell subclass used to display chat messages as a content display style of the cell.
  
- This cell contains a container view, a time label, a user identity image view, an avatar image view, and a content label. The appearance of these subviews can be customized by setting the ``ChatBarrageCellStyle`` of the cell.
+ This cell contains a container view, a time label, a user identity image view, an avatar image view, and a content label. The appearance of these subviews can be customized by setting the ``ChatMessageDisplayContentStyle`` of the cell.
  
  Use the ``refresh(chat:)`` method to update the content of the cell with a ``ChatEntity`` object.
  */
-@objcMembers open class ChatBarrageCell: UITableViewCell {
+@objcMembers open class ChatMessageCell: UITableViewCell {
     
-    public private(set) var style: ChatBarrageCellStyle = Appearance.barrageCellStyle
+    public private(set) var style: ChatMessageDisplayContentStyle = Appearance.messageDisplayStyle
     
     lazy var container: UIView = {
         UIView(frame: CGRect(x: 15, y: 6, width: self.contentView.frame.width - 30, height: self.frame.height - 6)).backgroundColor( UIColor.theme.barrageLightColor2).cornerRadius(.small)
@@ -70,13 +70,13 @@ import UIKit
     
     /// ChatBarrageCell init method
     /// - Parameters:
-    ///   - barrageStyle: ``ChatBarrageCellStyle``
+    ///   - displayStyle: ``ChatMessageDisplayContentStyle``
     ///   - reuseIdentifier: reuse identifier
-    @objc required public convenience init(barrageStyle: ChatBarrageCellStyle, reuseIdentifier: String?) {
+    @objc required public convenience init(displayStyle: ChatMessageDisplayContentStyle, reuseIdentifier: String?) {
         self.init(style: .default, reuseIdentifier: reuseIdentifier)
-        self.style = barrageStyle
+        self.style = displayStyle
         self.contentView.addSubview(self.container)
-        switch barrageStyle {
+        switch displayStyle {
         case .all:
             self.container.addSubViews([self.time,self.identity,self.avatar,self.content])
         case .hideTime:
@@ -127,7 +127,7 @@ import UIKit
 }
 
 
-extension ChatBarrageCell: ThemeSwitchProtocol {
+extension ChatMessageCell: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.container.backgroundColor(style == .dark ? UIColor.theme.barrageLightColor2:UIColor.theme.barrageDarkColor1)
     }
@@ -137,8 +137,8 @@ extension ChatBarrageCell: ThemeSwitchProtocol {
 
 fileprivate let gift_tail_indent: CGFloat = 26
 
-/// An enumeration that represents the different styles of a chat barrage cell.Time,level and avatar can be hidden
-@objc public enum ChatBarrageCellStyle: UInt {
+/// An enumeration that represents the different styles of a chat  cell.Time,level and avatar can be hidden
+@objc public enum ChatMessageDisplayContentStyle: UInt {
     case all = 1
     case hideTime
     case hideAvatar
@@ -170,7 +170,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
     /// The width of the chat entity, calculated based on the attributed text and the width of the chat view.
     lazy public var width: CGFloat = (self.gift == nil ? UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 18)).width:self.attributeText.size().width+self.firstLineHeadIndent())+(self.gift != nil ? gift_tail_indent:0)
     
-    /// Chat barrage display gift info.Need to set it.``GiftEntityProtocol``
+    /// Chat cell display gift info.Need to set it.``GiftEntityProtocol``
     lazy public var gift: GiftEntityProtocol? = nil
     
     /// Converts the message text into an attributed string, including the user's nickname, message text, and emojis.
@@ -235,7 +235,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
     /// Returns the distance of the first line head indent based on the appearance of the chat cell.
     func firstLineHeadIndent() -> CGFloat {
         var distance:CGFloat = 0
-        switch Appearance.barrageCellStyle {
+        switch Appearance.messageDisplayStyle {
         case .all: distance = 90
         case .hideTime: distance = 50
         case .hideUserIdentityAndAvatar: distance = 46

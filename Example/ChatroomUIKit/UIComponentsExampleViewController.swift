@@ -17,16 +17,16 @@ final class UIComponentsExampleViewController: UIViewController {
         UIImageView(frame: self.view.frame).image(UIImage(named: "background_light"))
     }()
     
-    lazy var giftBarrages: GiftsBarrageList = {
-        GiftsBarrageList(frame: CGRect(x: 10, y: ScreenHeight-BottomBarHeight-54-5-Appearance.giftBarrageRowHeight*2-200, width: self.view.frame.width-100, height: Appearance.giftBarrageRowHeight*2),source:nil)
+    lazy var giftBarrages: GiftMessageList = {
+        GiftMessageList(frame: CGRect(x: 10, y: ScreenHeight-BottomBarHeight-54-5-Appearance.giftAreaRowHeight*2-200, width: self.view.frame.width-100, height: Appearance.giftAreaRowHeight*2),source:nil)
     }()
     
-    lazy var barrageList: ChatBarrageList = {
-        ChatBarrageList(frame: CGRect(x: 0, y: ScreenHeight-BottomBarHeight-54-5, width: self.view.frame.width-50, height: 200))
+    lazy var barrageList: MessageList = {
+        MessageList(frame: CGRect(x: 0, y: ScreenHeight-BottomBarHeight-54-5, width: self.view.frame.width-50, height: 200))
     }()
     
-    lazy var bottomBar: ChatBottomFunctionBar = {
-        ChatBottomFunctionBar(frame: CGRect(x: 0, y: self.view.frame.height-54-BottomBarHeight, width: self.view.frame.width, height: 54), datas: self.bottomBarDatas())
+    lazy var bottomBar: BottomAreaToolBar = {
+        BottomAreaToolBar(frame: CGRect(x: 0, y: self.view.frame.height-54-BottomBarHeight, width: self.view.frame.width, height: 54), datas: self.bottomBarDatas())
     }()
     
     lazy var inputBar: ChatInputBar = {
@@ -42,8 +42,8 @@ final class UIComponentsExampleViewController: UIViewController {
     }()
     
     /// Global notify container
-    lazy var carouselTextView: HorizontalTextCarousel = {
-        HorizontalTextCarousel(originPoint: CGPoint(x: 20, y: 85), width: self.view.frame.width-40, font: .systemFont(ofSize: 16, weight: .semibold), textColor: UIColor.theme.neutralColor98).cornerRadius(.large).backgroundColor(UIColor.theme.primaryColor6)
+    lazy var carouselTextView: GlobalBoardcastView = {
+        GlobalBoardcastView(originPoint: CGPoint(x: 20, y: 85), width: self.view.frame.width-40, font: .systemFont(ofSize: 16, weight: .semibold), textColor: UIColor.theme.neutralColor98).cornerRadius(.large).backgroundColor(UIColor.theme.primaryColor6)
     }()
     
     /// Switch theme
@@ -110,7 +110,7 @@ final class UIComponentsExampleViewController: UIViewController {
         self.view.addSubview(button)
         self.carouselTextView.alpha = 0
         
-        // Switch ChatBarrageCellStyle
+        // Switch ChatmessageDisplayStyle
         let switchCellStyle = UIButton(type: .custom).frame(CGRect(x: 100, y: self.speakerSegment.frame.maxY+5, width: 150, height: 40)).textColor(.white, .normal).backgroundColor(UIColor.theme.primaryColor6).cornerRadius(.small).title(".all", .normal).title("长按切换", .normal).font(.systemFont(ofSize: 16, weight: .semibold))
         switchCellStyle.addInteraction(UIContextMenuInteraction(delegate: self))
         self.view.addSubview(switchCellStyle)
@@ -126,42 +126,42 @@ extension UIComponentsExampleViewController: UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
             let action1 = UIAction(title: ".all", image: UIImage(systemName: "bookmark.fill")) { (_) in
-                Appearance.barrageCellStyle = .all
+                Appearance.messageDisplayStyle = .all
                 self.barrageList.messages?.removeAll()
                 self.barrageList.chatView.reloadData()
             }
             let action2 = UIAction(title: ".hideTime", image: UIImage(systemName: "bookmark.fill")) { (_) in
-                Appearance.barrageCellStyle = .hideTime
+                Appearance.messageDisplayStyle = .hideTime
                 self.barrageList.messages?.removeAll()
                 self.barrageList.chatView.reloadData()
             }
             let action3 = UIAction(title: ".hideUserIdentity", image: UIImage(systemName: "bookmark.fill")) { (_) in
-                Appearance.barrageCellStyle = .hideUserIdentity
+                Appearance.messageDisplayStyle = .hideUserIdentity
                 self.barrageList.messages?.removeAll()
                 self.barrageList.chatView.reloadData()
             }
             let action4 = UIAction(title: ".hideAvatar", image: UIImage(systemName: "bookmark.fill")) { (_) in
-                Appearance.barrageCellStyle = .hideAvatar
+                Appearance.messageDisplayStyle = .hideAvatar
                 self.barrageList.messages?.removeAll()
                 self.barrageList.chatView.reloadData()
             }
             let action5 = UIAction(title: ".hideTimeAndUserIdentity", image: UIImage(systemName: "bookmark.fill")) { (_) in
-                Appearance.barrageCellStyle = .hideTimeAndUserIdentity
+                Appearance.messageDisplayStyle = .hideTimeAndUserIdentity
                 self.barrageList.messages?.removeAll()
                 self.barrageList.chatView.reloadData()
             }
             let action6 = UIAction(title: ".hideTimeAndAvatar", image: UIImage(systemName: "bookmark.fill")) { (_) in
-                Appearance.barrageCellStyle = .hideTimeAndAvatar
+                Appearance.messageDisplayStyle = .hideTimeAndAvatar
                 self.barrageList.messages?.removeAll()
                 self.barrageList.chatView.reloadData()
             }
             let action7 = UIAction(title: ".hideUserIdentityAndAvatar", image: UIImage(systemName: "bookmark.fill")) { (_) in
-                Appearance.barrageCellStyle = .hideUserIdentityAndAvatar
+                Appearance.messageDisplayStyle = .hideUserIdentityAndAvatar
                 self.barrageList.messages?.removeAll()
                 self.barrageList.chatView.reloadData()
             }
             let action8 = UIAction(title: ".hideTimeAndUserIdentityAndAvatar", image: UIImage(systemName: "bookmark.fill")) { (_) in
-                Appearance.barrageCellStyle = .hideTimeAndUserIdentityAndAvatar
+                Appearance.messageDisplayStyle = .hideTimeAndUserIdentityAndAvatar
                 self.barrageList.messages?.removeAll()
                 self.barrageList.chatView.reloadData()
             }
@@ -172,7 +172,7 @@ extension UIComponentsExampleViewController: UIContextMenuInteractionDelegate {
     }
 }
 
-extension UIComponentsExampleViewController: ChatBottomFunctionBarActionEvents,GiftsViewActionEventsDelegate {
+extension UIComponentsExampleViewController: BottomAreaToolBarActionEvents,GiftsViewActionEventsDelegate {
     func onGiftSendClick(item: ChatroomUIKit.GiftEntityProtocol) {
         let gift = item
         gift.sendUser = ChatroomContext.shared?.currentUser

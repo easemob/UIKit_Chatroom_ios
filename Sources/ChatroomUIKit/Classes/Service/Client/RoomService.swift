@@ -149,27 +149,27 @@ import UIKit
     }()
     
     /// ``ChatroomView``  UI Drive.
-    public private(set) weak var chatDrive: IChatBarrageListDrive?
+    public private(set) weak var chatDrive: IMessageListDrive?
     
-    /// ``GiftsBarrageList`` UI Drive
-    public private(set) weak var giftDrive: IGiftsBarrageListDrive?
+    /// ``GiftMessageList`` UI Drive
+    public private(set) weak var giftDrive: IGiftMessageListDrive?
     
     /// ``HorizontalTextCarousel`` UI Drive
-    public private(set) weak var notifyDrive: IHorizontalTextCarouselDrive?
+    public private(set) weak var notifyDrive: IGlobalBoardcastViewDrive?
     
     @objc public required init(roomId: String) {
         self.roomId = roomId
     }
     
-    func bindChatDrive(Drive: IChatBarrageListDrive) {
+    func bindChatDrive(Drive: IMessageListDrive) {
         self.chatDrive = Drive
     }
     
-    func bindGiftDrive(Drive: IGiftsBarrageListDrive) {
+    func bindGiftDrive(Drive: IGiftMessageListDrive) {
         self.giftDrive = Drive
     }
     
-    func bindGlobalNotifyDrive(Drive: IHorizontalTextCarouselDrive) {
+    func bindGlobalNotifyDrive(Drive: IGlobalBoardcastViewDrive) {
         self.notifyDrive = Drive
     }
     

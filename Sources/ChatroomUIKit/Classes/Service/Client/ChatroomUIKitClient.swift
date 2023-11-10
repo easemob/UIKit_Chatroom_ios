@@ -17,14 +17,14 @@ import UIKit
     public var option_chat: ChatOptions = ChatOptions()
     
     @objcMembers public class UIOptions: NSObject {
-        /// Whether to show a gift barrage.
-        @objc public var showGiftsBarrage = true
+        /// Whether to show a gift message area..
+        @objc public var showGiftMessageArea = true
         
         /// Data source of ``ChatBottomBar``.
         @objc public var bottomDataSource: [ChatBottomItemProtocol] = []
         
-        /// Whether to show the gift information in the chat barrage area.
-        @objc public var chatBarrageAreaShowGift = false
+        /// Whether to show the gift information in the chat  area.
+        @objc public var chatAreaShowGift = false
     }
     
     @objcMembers public class ChatOptions: NSObject {
@@ -111,8 +111,8 @@ import UIKit
         ChatroomContext.shared?.roomId = roomId
         ChatroomContext.shared?.ownerId = ownerId
         self.option.option_UI.bottomDataSource = options.bottomDataSource
-        self.option.option_UI.showGiftsBarrage = options.showGiftsBarrage
-        self.option.option_UI.chatBarrageAreaShowGift = options.chatBarrageAreaShowGift
+        self.option.option_UI.showGiftMessageArea = options.showGiftMessageArea
+        self.option.option_UI.chatAreaShowGift = options.chatAreaShowGift
         let room = ChatroomView(respondTouch: frame)
         let service = RoomService(roomId: roomId)
         self.roomService = service

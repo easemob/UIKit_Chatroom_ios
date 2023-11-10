@@ -25,8 +25,8 @@ import UIKit
     /// The corner radius of the alert view.``AlertView``
     public static var alertCornerRadius: CornerRadius = .medium
     
-    /// You can change the overall cell layout style of the barrage area by setting the current properties.``ChatBarrageCellStyle``
-    public static var barrageCellStyle: ChatBarrageCellStyle = .all
+    /// You can change the overall cell layout style of the chat area by setting the current properties.``ChatMessageDisplayContentStyle``
+    public static var messageDisplayStyle: ChatMessageDisplayContentStyle = .all
     
     /// You can change the hue of the base color, and then change the thirteen UIColor objects of the related color series. The UI components that use the relevant color series in the chat room UIKit will also change accordingly. The default value is 203/360.0.
     public static var primaryHue: CGFloat = 203/360.0
@@ -74,7 +74,7 @@ import UIKit
     /// The default image of the gift price of the gift list cell ``GiftEntityCell``.
     public static var giftPriceIcon: UIImage? = UIImage(named: "dollar", in: .chatroomBundle, with: nil)
     
-    /// The placeholder image of the avatar image view of ``ChatBarrageCell``.
+    /// The placeholder image of the avatar image view of ``ChatMessageCell``.
     public static var avatarPlaceHolder: UIImage? = UIImage(named: "default_avatar", in: .chatroomBundle, with: nil)
     
     /// The default icon of ``HorizontalTextCarousel``.
@@ -83,7 +83,7 @@ import UIKit
     /// The origin point of the global notification message.
     public static var notifyMessageOriginPoint: CGPoint = CGPoint(x: 20, y: NavigationHeight+10)
         
-    /// The placeholder image of the user-level image view of ``ChatBarrageCell``.
+    /// The placeholder image of the user-level image view of ``ChatMessageCell``.
     public static var identityPlaceHolder: UIImage? = UIImage(named: "achievement", in: .chatroomBundle, with: nil)
     
     /// The height limit of the input box in ``ChatInputBar``.
@@ -98,8 +98,8 @@ import UIKit
     /// The corner radius of the avatar image view of ``ChatInputBar``.
     public static var avatarRadius: CornerRadius = .large
     
-    /// The default height of ``ChatBarrageCell``.
-    public static var giftBarrageRowHeight: CGFloat = 44
+    /// The default height of ``GiftBarrageCell``.
+    public static var giftAreaRowHeight: CGFloat = 44
     
     /// The label for message reporting types.
     public static var reportTags: [String] = ["violation_reason_1".chatroom.localize,"violation_reason_2".chatroom.localize,"violation_reason_3".chatroom.localize,"violation_reason_4".chatroom.localize,"violation_reason_5".chatroom.localize,"violation_reason_6".chatroom.localize,"violation_reason_7".chatroom.localize,"violation_reason_8".chatroom.localize,"violation_reason_9".chatroom.localize]

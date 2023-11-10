@@ -241,8 +241,8 @@ addSubView(roomView)
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
     let options  = ChatroomUIKitInitialOptions.UIOptions()
     options.bottomDataSource = self.bottomBarDatas()
-    options.showGiftsBarrage = true
-    options.chatBarrageAreaShowGift = false
+    options.showGiftMessageArea = true
+    options.chatAreaShowGift = false
     let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "Chatroom's owner id", options: options)
 //3. 添加视图
     addSubView(roomView)
@@ -264,7 +264,7 @@ ChatroomUIKitClient.shared.registerRoomEventsListener（listener：self）
 
 ````
 // 可以通过设置属性来改变弹幕区域的整体单元格布局风格。
-Appearance.barrageCellStyle = .hideUserIdentity
+Appearance.messageDisplayStyle = .hideUserIdentity
 // 创建ChatroomView，传入布局参数、底部工具栏扩展按钮模型协议数组等参数。
 let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: "聊天室 ID",frame: <#T##CGRect#>)
 self.view.addSubView(roomView)
@@ -277,7 +277,7 @@ self.view.addSubView(roomView)
 下面展示如何自定义礼物弹幕视图cell。
 
 ````
-class CustomGiftBarragesViewCell: GiftBarrageCell {
+class CustomGiftMessageViewCell: GiftMessageCell {
     lazy var redDot: UIView = {
         UIView().backgroundColor(.red).cornerRadius(.large)
     }()
@@ -294,7 +294,7 @@ class CustomGiftBarragesViewCell: GiftBarrageCell {
 }
 //在ChatroomUIKit中注册继承原有类的自定义类来替换原来的类。
 //在创建ChatroomView或使用其他UI组件之前调用此方法。
-ComponentsRegister.shared.GiftBarragesViewCell = CustomGiftBarragesViewCell.self
+ComponentsRegister.shared.GiftMessageViewCell = CustomGiftMessageViewCell.self
 ````
 
 详情请参见[ComponentsRegister](./Documentation/ComponentRegister.md)

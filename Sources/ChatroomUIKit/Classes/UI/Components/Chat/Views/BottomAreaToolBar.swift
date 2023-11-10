@@ -8,7 +8,7 @@
 import UIKit
 
 /// ChatBottomFunctionBar‘s Drive.
-@objc public protocol IChatBottomFunctionBarDrive: NSObjectProtocol {
+@objc public protocol IBottomAreaToolBarDrive: NSObjectProtocol {
     
     /// You can call the method update item select state.
     /// - Parameters:
@@ -28,7 +28,7 @@ import UIKit
 }
 
 /// ChatBottomFunctionBar actions delegate.
-@objc public protocol ChatBottomFunctionBarActionEvents: NSObjectProtocol {
+@objc public protocol BottomAreaToolBarActionEvents: NSObjectProtocol {
     
     /// ChatBottomFunctionBar each item click event.
     /// - Parameter item: ChatBottomItemProtocol
@@ -38,14 +38,14 @@ import UIKit
     func onKeyboardWillWakeup()
 }
 
-@objcMembers open class ChatBottomFunctionBar: UIView {
+@objcMembers open class BottomAreaToolBar: UIView {
 
-    lazy private var eventHandlers: NSHashTable<ChatBottomFunctionBarActionEvents> = NSHashTable<ChatBottomFunctionBarActionEvents>.weakObjects()
+    lazy private var eventHandlers: NSHashTable<BottomAreaToolBarActionEvents> = NSHashTable<BottomAreaToolBarActionEvents>.weakObjects()
     
     
     /// Add UI action handler.
     /// - Parameter actionHandler: ``ChatBottomFunctionBarActionEvents``
-    public func addActionHandler(actionHandler: ChatBottomFunctionBarActionEvents) {
+    public func addActionHandler(actionHandler: BottomAreaToolBarActionEvents) {
         if self.eventHandlers.contains(actionHandler) {
             return
         }
@@ -54,7 +54,7 @@ import UIKit
     
     /// Remove UI action handler.
     /// - Parameter actionHandler: ``ChatBottomFunctionBarActionEvents``
-    public func removeEventHandler(actionHandler: ChatBottomFunctionBarActionEvents) {
+    public func removeEventHandler(actionHandler: BottomAreaToolBarActionEvents) {
         self.eventHandlers.remove(actionHandler)
     }
     
@@ -124,7 +124,7 @@ import UIKit
 
 }
 
-extension ChatBottomFunctionBar: UICollectionViewDelegate, UICollectionViewDataSource {
+extension BottomAreaToolBar: UICollectionViewDelegate, UICollectionViewDataSource {
     
     @objc func raiseAction() {
         for handler in self.eventHandlers.allObjects {
@@ -154,7 +154,7 @@ extension ChatBottomFunctionBar: UICollectionViewDelegate, UICollectionViewDataS
     }
 }
 
-extension ChatBottomFunctionBar: IChatBottomFunctionBarDrive {
+extension BottomAreaToolBar: IBottomAreaToolBarDrive {
     public func updateItemSelectState(index: UInt, select: Bool) {
         self.datas[safe: Int(index)]?.selected = select
     }
@@ -169,7 +169,7 @@ extension ChatBottomFunctionBar: IChatBottomFunctionBarDrive {
     
 }
 
-extension ChatBottomFunctionBar: ThemeSwitchProtocol {
+extension BottomAreaToolBar: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.chatRaiser.backgroundColor(style == .dark ? UIColor.theme.barrageLightColor2:UIColor.theme.barrageDarkColor1)
         self.toolBar.reloadData()

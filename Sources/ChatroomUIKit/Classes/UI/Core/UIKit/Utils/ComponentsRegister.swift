@@ -16,8 +16,8 @@ fileprivate let component = ComponentsRegister()
         component
     }
     
-    /// Gift barrage list cell class.
-    public var GiftBarragesViewCell: GiftBarrageCell.Type = GiftBarrageCell.self
+    /// Gift message area list cell class.
+    public var GiftMessagesViewCell: GiftMessageCell.Type = GiftMessageCell.self
     
     /// Gifts view cell class.
     public var GiftsCell: GiftEntityCell.Type = GiftEntityCell.self
@@ -25,8 +25,8 @@ fileprivate let component = ComponentsRegister()
     /// Chat input bar class.
     public var InputBar: ChatInputBar.Type = ChatInputBar.self
     
-    /// Chatroom barrages list cell class.
-    public var ChatBarragesCell: ChatBarrageCell.Type = ChatBarrageCell.self
+    /// Chatroom chat list cell class.
+    public var ChatsCell: ChatMessageCell.Type = ChatMessageCell.self
     
     /// Report message controller
     public var ReportViewController: ReportOptionsController.Type = ReportOptionsController.self
