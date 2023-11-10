@@ -45,7 +45,7 @@ public extension UIView {
     func cornerRadius(_ value: CornerRadius , _ corners: [UIRectCorner] , _ color: UIColor , _ width: CGFloat) -> Self {
         let view = self
         view.clipsToBounds = true
-        var radius = self.frame.height/2.0
+        var radius = min(self.frame.height, self.frame.width)/2.0
         if value != .large {
             radius = CGFloat(value.rawValue)
         }
@@ -60,7 +60,7 @@ public extension UIView {
     @discardableResult
     func cornerRadius(_ value: CornerRadius) -> Self  {
         let view = self
-        var radius = self.frame.height/2.0
+        var radius = min(self.frame.height, self.frame.width)/2.0
         if value != .large {
             radius = CGFloat(value.rawValue)
         }
@@ -73,7 +73,7 @@ public extension UIView {
     func cornerRadiusMask(_ value: CornerRadius,_ mask: Bool) -> Self {
         let view = self
         view.layer.masksToBounds = mask
-        var radius = self.frame.height/2.0
+        var radius = min(self.frame.height, self.frame.width)/2.0
         if value != .large {
             radius = CGFloat(value.rawValue)
         }
