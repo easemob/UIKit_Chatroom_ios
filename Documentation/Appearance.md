@@ -69,17 +69,17 @@ Appearance.swift 是容纳了所有可配项的类，您需要在初始化Chatro
 ![位置示意图](notifyMessageIcon.png)
 
 
-14. [Appearance.maxInputHeight](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).输入框最大高度
+14. [Appearance.maxInputHeight](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/MessageInputBar.swift).输入框最大高度
 
 ![位置示意图](maxInputHeight.png)
 
 
-15. [Appearance.inputPlaceHolder](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).输入框默认显示文字
+15. [Appearance.inputPlaceHolder](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/MessageInputBar.swift).输入框默认显示文字
 
 ![位置示意图](inputCorner.png) 默认是 Aa.
 
 
-17. [Appearance.inputBarCorner](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/ChatInputBar.swift).
+17. [Appearance.inputBarCorner](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Input/Views/MessageInputBar.swift).
 
 ![位置示意图](inputCorner.png) 圆角默认是最大也就是高度一半.
 

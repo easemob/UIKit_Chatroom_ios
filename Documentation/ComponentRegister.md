@@ -14,7 +14,7 @@
 ![Schematic diagram](giftPlaceHolder.png).
 
 
-3. [ComponentsRegister.shared.ChatInputBar](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Gift/Cells/GiftEntityCell.swift).
+3. [ComponentsRegister.shared.ChatInputBar](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Components/Gift/Cells/MessageInputBar.swift).
 
 ![Schematic diagram](inputBar.png).
 
