@@ -55,8 +55,8 @@ import UIKit
     }()
     
     /// Input text menu bar.
-    public private(set) lazy var inputBar: ChatInputBar = {
-        ChatInputBar(frame: CGRect(x: 0, y: self.frame.height, width: self.touchFrame.width, height: 52),text: nil,placeHolder: Appearance.inputPlaceHolder)
+    public private(set) lazy var inputBar: MessageInputBar = {
+        MessageInputBar(frame: CGRect(x: 0, y: self.frame.height, width: self.touchFrame.width, height: 52),text: nil,placeHolder: Appearance.inputPlaceHolder)
     }()
     
     private var touchFrame = CGRect.zero

@@ -86,16 +86,16 @@ import UIKit
     /// The placeholder image of the user-level image view of ``ChatMessageCell``.
     public static var identityPlaceHolder: UIImage? = UIImage(named: "achievement", in: .chatroomBundle, with: nil)
     
-    /// The height limit of the input box in ``ChatInputBar``.
+    /// The height limit of the input box in ``MessageInputBar``.
     public static var maxInputHeight: CGFloat = 88
     
-    /// The placeholder text in ``ChatInputBar``.
+    /// The placeholder text in ``MessageInputBar``.
     public static var inputPlaceHolder = "Aa"
     
-    /// The corner radius of ``ChatInputBar``.
+    /// The corner radius of ``MessageInputBar``.
     public static var inputBarCorner: CornerRadius = .medium
     
-    /// The corner radius of the avatar image view of ``ChatInputBar``.
+    /// The corner radius of the avatar image view of ``MessageInputBar``.
     public static var avatarRadius: CornerRadius = .large
     
     /// The default height of ``GiftBarrageCell``.

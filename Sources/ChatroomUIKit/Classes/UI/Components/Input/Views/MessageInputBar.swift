@@ -1,5 +1,5 @@
 //
-//  ChatInputBar.swift
+//  MessageInputBar.swift
 //  ChatroomUIKit
 //
 //  Created by 朱继超 on 2023/9/4.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objcMembers open class ChatInputBar: UIView {
+@objcMembers open class MessageInputBar: UIView {
     
     /// The height of the keyboard.
     public private(set) var keyboardHeight = CGFloat(0)
@@ -54,7 +54,7 @@ import UIKit
         super.init(frame: frame)
     }
     
-    /// ChatInputBar init method
+    /// MessageInputBar init method
     /// - Parameters:
     ///   - frame: CGRect
     ///   - text: `String` value
@@ -106,7 +106,7 @@ import UIKit
    
 }
 
-extension ChatInputBar: UITextViewDelegate {
+extension MessageInputBar: UITextViewDelegate {
     
     
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -293,7 +293,7 @@ extension ChatInputBar: UITextViewDelegate {
     }
 }
 
-extension ChatInputBar: ThemeSwitchProtocol {
+extension MessageInputBar: ThemeSwitchProtocol {
     
     public func switchTheme(style: ThemeStyle) {
         self.rightView.setImage(UIImage(named: "emojiKeyboard", in: .chatroomBundle, with: nil)?.withTintColor(style == .dark ? UIColor.theme.neutralColor95:UIColor.theme.neutralColor3, renderingMode: .automatic), for: .normal)

@@ -23,7 +23,7 @@ fileprivate let component = ComponentsRegister()
     public var GiftsCell: GiftEntityCell.Type = GiftEntityCell.self
     
     /// Chat input bar class.
-    public var InputBar: ChatInputBar.Type = ChatInputBar.self
+    public var InputBar: MessageInputBar.Type = MessageInputBar.self
     
     /// Chatroom chat list cell class.
     public var ChatsCell: ChatMessageCell.Type = ChatMessageCell.self
