@@ -29,8 +29,8 @@ final class UIComponentsExampleViewController: UIViewController {
         BottomAreaToolBar(frame: CGRect(x: 0, y: self.view.frame.height-54-BottomBarHeight, width: self.view.frame.width, height: 54), datas: self.bottomBarDatas())
     }()
     
-    lazy var inputBar: ChatInputBar = {
-        ChatInputBar(frame: CGRect(x: 0, y: ScreenHeight, width: ScreenWidth, height: 52),text: nil,placeHolder: "说点什么!.")
+    lazy var inputBar: MessageInputBar = {
+        MessageInputBar(frame: CGRect(x: 0, y: ScreenHeight, width: ScreenWidth, height: 52),text: nil,placeHolder: "说点什么!.")
     }()
     
     lazy var gift1: GiftsViewController = {
