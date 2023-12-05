@@ -36,7 +36,7 @@ import UIKit
     lazy private var eventHandlers: NSHashTable<ChatroomViewActionEventsDelegate> = NSHashTable<ChatroomViewActionEventsDelegate>.weakObjects()
         
     public private(set) lazy var carouselTextView: GlobalBoardcastView = {
-        GlobalBoardcastView(originPoint: Appearance.notifyMessageOriginPoint, width: self.frame.width-40, font: UIFont.theme.headlineExtraSmall, textColor: UIColor.theme.neutralColor98).cornerRadius(.large)
+        GlobalBoardcastView(originPoint: Appearance.notifyMessageOriginPoint, width: self.frame.width-40, font: UIFont.theme.headlineExtraSmall, textColor: UIColor.theme.neutralColor98).cornerRadius(.large).backgroundColor(Appearance.notifyBackgroundColor)
     }()
         
     /// Gift list on receive gift.
@@ -56,7 +56,7 @@ import UIKit
     
     /// Input text menu bar.
     public private(set) lazy var inputBar: MessageInputBar = {
-        MessageInputBar(frame: CGRect(x: 0, y: self.frame.height, width: self.touchFrame.width, height: 52),text: nil,placeHolder: Appearance.inputPlaceHolder)
+        ComponentsRegister.shared.InputBar.init(frame: CGRect(x: 0, y: self.frame.height, width: self.touchFrame.width, height: 52),text: nil,placeHolder: Appearance.inputPlaceHolder)
     }()
     
     private var touchFrame = CGRect.zero
@@ -117,15 +117,9 @@ import UIKit
         if ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea {
             service.bindGiftDrive(Drive: self.giftArea)
         }
+        service.bindGlobalNotifyDrive(Drive: self.carouselTextView)
         service.enterRoom(completion: { [weak self] error in
-//            if error == nil,ChatroomContext.shared?.owner ?? false {
-//                self?.service?.fetchMuteUsers(pageSize: 100, completion: { [weak self] _, error in
-//                    if error != nil {
-//                        let errorInfo = "SDK fetch mute users failure!\nError:\(error?.errorDescription ?? "")"
-//                        consoleLogInfo(errorInfo, type: .error)
-//                    }
-//                })
-//            }
+
             if let eventsListeners =  self?.service?.eventsListener.allObjects {
                 for listener in eventsListeners {
                     listener.onEventResultChanged(error: error, type: .join)

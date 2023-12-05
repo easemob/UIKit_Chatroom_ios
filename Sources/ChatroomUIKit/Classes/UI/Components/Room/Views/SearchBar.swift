@@ -29,7 +29,7 @@ import UIKit
     }
     
     lazy var searchField: UIButton = {
-        UIButton(type: .custom).frame(CGRect(x: 16, y: 4, width: self.frame.width-32, height: self.frame.height-8)).backgroundColor(UIColor.theme.neutralColor95).textColor(UIColor.theme.neutralColor6, .normal).cornerRadius(.large).title(" Search".chatroom.localize, .normal).image(UIImage(named: "search", in: .chatroomBundle, with: nil), .normal).addTargetFor(self, action: #selector(clickSearch), for: .touchUpInside)
+        UIButton(type: .custom).frame(CGRect(x: 16, y: 4, width: self.frame.width-32, height: self.frame.height-8)).backgroundColor(UIColor.theme.neutralColor95).textColor(UIColor.theme.neutralColor6, .normal).cornerRadius(.large).title("Search".chatroom.localize, .normal).image(UIImage(named: "search", in: .chatroomBundle, with: nil), .normal).addTargetFor(self, action: #selector(clickSearch), for: .touchUpInside)
     }()
 
     public override init(frame: CGRect) {

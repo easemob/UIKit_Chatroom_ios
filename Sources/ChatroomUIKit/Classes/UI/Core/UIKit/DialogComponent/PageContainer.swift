@@ -83,7 +83,9 @@ public final class PageContainer:  UIView {
         self.pageController.view.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         self.pageController.view.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         self.pageController.view.topAnchor.constraint(equalTo: topAnchor,constant: self.toolBar.frame.maxY).isActive = true
-        
+        if viewControllers.count <= 1 {
+            self.toolBar.isUserInteractionEnabled = false
+        }
         self.toolBar.backgroundColor(UIColor.theme.neutralColor98)
         self.backgroundColor(UIColor.theme.neutralColor98)
         Theme.registerSwitchThemeViews(view: self)

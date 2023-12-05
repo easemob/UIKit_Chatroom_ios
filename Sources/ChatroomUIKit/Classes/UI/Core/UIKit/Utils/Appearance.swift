@@ -80,6 +80,10 @@ import UIKit
     /// The default icon of ``HorizontalTextCarousel``.
     public static var notifyMessageIcon: UIImage? = UIImage(named: "speaker", in: .chatroomBundle, with: nil)
     
+    public static var notifyTextColor = UIColor.theme.barrageLightColor100
+    
+    public static var notifyBackgroundColor = UIColor.theme.primaryColor5
+    
     /// The origin point of the global notification message.
     public static var notifyMessageOriginPoint: CGPoint = CGPoint(x: 20, y: NavigationHeight+10)
         

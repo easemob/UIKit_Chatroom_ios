@@ -299,9 +299,6 @@ import UIKit
     @objc public func fetchParticipants(pageSize: UInt, completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
         self.roomService?.fetchParticipants(roomId: self.roomId, pageSize: pageSize, completion: { [weak self] userIds, error in
             guard let `self` = self else { return  }
-            if error == nil {
-                self.pageNum += 1
-            }
             if let ids = userIds {
                 var unknownUserIds = [String]()
                 for userId in ids {
@@ -346,6 +343,10 @@ import UIKit
                     }
                     completion(users,error)
                 }
+            }
+            
+            if error == nil {
+                self.pageNum += 1
             }
             self.handleError(type: .fetchParticipants, error: error)
         })

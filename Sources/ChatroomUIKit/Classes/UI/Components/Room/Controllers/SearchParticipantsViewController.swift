@@ -14,6 +14,11 @@ import UIKit
         search.searchResultsUpdater = self
         search.searchBar.placeholder = "Search".chatroom.localize
         search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.showsCancelButton = true
+        search.searchBar.delegate = self
+        if let cancelButton = search.searchBar.value(forKey: "cancelButton") as? UIButton {
+            cancelButton.setTitle("barrage_long_press_menu_cancel".chatroom.localize, for: .normal)
+        }
         return search
     }()
     
@@ -157,6 +162,20 @@ import UIKit
     
 }
 
+extension SearchParticipantsViewController: UISearchBarDelegate {
+    public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        searchBar.showsCancelButton = true
+//        searchBar.setShowsCancelButton(true, animated: true)
+        
+        if let cancelButton = searchBar.value(forKey: "cancelButton") as? UIButton {
+            cancelButton.setTitle("barrage_long_press_menu_cancel".chatroom.localize, for: .normal)
+        }
+    }
+    
+    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.dismiss(animated: true)
+    }
+}
 
 extension SearchParticipantsViewController: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {

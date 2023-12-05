@@ -101,8 +101,8 @@ import UIKit
     ///   - showCancel: Whether to display the `Cancel` button.
     ///   - showConfirm: Whether to display the `Confirm` button.
     ///   - confirmClosure: Callback upon a click of the `Confirm` button.
-    @objc public func showAlert(content: String,showCancel: Bool,showConfirm: Bool,confirmClosure: @escaping () -> Void) {
-        let alert = AlertView(frame: CGRect(x: 0, y: 0, width: Appearance.alertContainerConstraintsSize.width, height: Appearance.alertContainerConstraintsSize.height)).background(color: Theme.style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98).content(content: content).title(title: "participant_list_button_click_menu_remove".chatroom.localize).titleColor(color: Theme.style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1).contentTextAlignment(textAlignment: .center).contentColor(color: Theme.style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1)
+    @objc public func showAlert(content: String,showCancel: Bool,showConfirm: Bool,title: String = "",confirmClosure: @escaping () -> Void) {
+        let alert = AlertView(frame: CGRect(x: 0, y: 0, width: Appearance.alertContainerConstraintsSize.width, height: Appearance.alertContainerConstraintsSize.height)).background(color: Theme.style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98).content(content: content).title(title: title).titleColor(color: Theme.style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1).contentTextAlignment(textAlignment: .center).contentColor(color: Theme.style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1)
         if showCancel {
             alert.leftButton(color: Theme.style == .dark ? UIColor.theme.neutralColor95:UIColor.theme.neutralColor4).leftButtonBorder(color: Theme.style == .dark ? UIColor.theme.neutralColor4:UIColor.theme.neutralColor7).leftButton(title: "report_button_click_menu_button_cancel".chatroom.localize).leftButtonBackground(color: Theme.style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98)
         }

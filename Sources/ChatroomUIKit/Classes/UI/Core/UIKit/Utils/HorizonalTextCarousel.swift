@@ -36,7 +36,7 @@ import UIKit
     }()
     
     lazy var textCarousel: UILabel = {
-        UILabel(frame: CGRect(x: 0, y: 0, width: .infinity, height: self.frame.height-4)).textColor(UIColor.theme.barrageLightColor100).backgroundColor(.clear)
+        UILabel(frame: CGRect(x: 0, y: 0, width: .infinity, height: self.frame.height-4)).textColor(Appearance.notifyTextColor).backgroundColor(.clear)
     }()
 
     override init(frame: CGRect) {
@@ -62,9 +62,11 @@ import UIKit
         self.originContentOffset = self.scroll.contentOffset
         self.textCarousel.font(font)
         self.textCarousel.textColor = textColor
+        Theme.registerSwitchThemeViews(view: self)
     }
     
     private func textAnimation() {
+        self.switchTheme(style: Theme.style)
         self.alpha = 1
         self.scroll.setContentOffset(self.originContentOffset, animated: false)
 
@@ -146,6 +148,12 @@ import UIKit
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension GlobalBoardcastView: ThemeSwitchProtocol {
+    public func switchTheme(style: ThemeStyle) {
+        self.backgroundColor = style == .dark ? UIColor.theme.primaryColor6:UIColor.theme.primaryColor5
+    }
 }
 
 extension GlobalBoardcastView: IGlobalBoardcastViewDrive {

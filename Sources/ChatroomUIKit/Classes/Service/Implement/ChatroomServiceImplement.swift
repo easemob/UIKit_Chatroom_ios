@@ -270,26 +270,27 @@ extension ChatroomServiceImplement: ChatEventsListener {
     public func messagesDidReceive(_ aMessages: [ChatMessage]) {
         for message in aMessages {
             for response in self.responseDelegates.allObjects {
-                switch message.body.type {
-                case .text:
+                if message.broadcast {
                     if let json = message.ext as? [String:Any],let userInfo = json["chatroom_uikit_userInfo"] as? [String:Any] {
                         let user = User()
                         user.setValuesForKeys(userInfo)
                         ChatroomContext.shared?.usersMap?[user.userId] = user
                     }
-                    response.onMessageReceived(roomId: message.to, message: message)
-                case .custom:
-                    self.notifyJoin(message: message, response: response)
-                default:
-                    if message.broadcast {
+                    response.onGlobalNotifyReceived(roomId: message.to, notifyMessage: message)
+                } else {
+                    switch message.body.type {
+                    case .text:
                         if let json = message.ext as? [String:Any],let userInfo = json["chatroom_uikit_userInfo"] as? [String:Any] {
                             let user = User()
                             user.setValuesForKeys(userInfo)
                             ChatroomContext.shared?.usersMap?[user.userId] = user
                         }
-                        response.onGlobalNotifyReceived(roomId: message.to, notifyMessage: message)
+                        response.onMessageReceived(roomId: message.to, message: message)
+                    case .custom:
+                        self.notifyJoin(message: message, response: response)
+                    default:
+                        break
                     }
-                    break
                 }
             }
         }
