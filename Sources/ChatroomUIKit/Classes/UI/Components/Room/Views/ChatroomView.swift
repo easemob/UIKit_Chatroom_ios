@@ -193,48 +193,55 @@ extension ChatroomView: MessageListActionEventsHandler {
         if message.body.type == .custom {
             return
         }
+        var messageActions = [ActionSheetItemProtocol]()
         if let owner = ChatroomContext.shared?.owner,owner {
+            messageActions.append(contentsOf: Appearance.defaultMessageActions)
             if let map = ChatroomContext.shared?.muteMap,let mute = map[message.from] {
                 if mute {
-                    if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "Mute"
+                    if let index = messageActions.firstIndex(where: { $0.tag == "Mute"
                     }) {
-                        Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_unmute".chatroom.localize, type: .normal,tag: "unMute")
+                        messageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_unmute".chatroom.localize, type: .normal,tag: "unMute")
                     }
                 } else {
-                    if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "unMute"
+                    if let index = messageActions.firstIndex(where: { $0.tag == "unMute"
                     }) {
-                        Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
+                        messageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
                     }
                 }
             } else {
-                if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "unMute"
+                if let index = messageActions.firstIndex(where: { $0.tag == "unMute"
                 }) {
-                    Appearance.defaultMessageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
+                    messageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute")
                 } else {
-                    let item = Appearance.defaultMessageActions.first { $0.tag == "Mute" }
+                    let item = messageActions.first { $0.tag == "Mute" }
                     if item == nil {
-                        Appearance.defaultMessageActions.insert(ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute"), at: 2)
+                        messageActions.insert(ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal, tag: "Mute"), at: 2)
                     }
                 }
             }
         } else {
-            if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "Mute"
+            messageActions.append(contentsOf: Appearance.defaultMessageActions)
+            if let index = messageActions.firstIndex(where: { $0.tag == "Mute"
             }) {
-                Appearance.defaultMessageActions.remove(at: index)
+                messageActions.remove(at: index)
             }
-            if let index = Appearance.defaultMessageActions.firstIndex(where: { $0.tag == "unMute"
+            if let index = messageActions.firstIndex(where: { $0.tag == "unMute"
             }) {
-                Appearance.defaultMessageActions.remove(at: index)
+                messageActions.remove(at: index)
+            }
+            if let index = messageActions.firstIndex(where: { $0.tag == "Delete"
+            }) {
+                messageActions.remove(at: index)
             }
         }
-        self.showLongPressDialog(message: message)
+        self.showLongPressDialog(message: message, messageActions: messageActions)
         for delegate in self.eventHandlers.allObjects {
             delegate.onMessageLongPressed(message: message)
         }
     }
     
-    private func showLongPressDialog(message: ChatMessage) {
-        DialogManager.shared.showMessageActions(actions: Appearance.defaultMessageActions) { [weak self] item in
+    private func showLongPressDialog(message: ChatMessage,messageActions: [ActionSheetItemProtocol]) {
+        DialogManager.shared.showMessageActions(actions: messageActions) { [weak self] item in
             switch item.tag {
             case "Translate":
                 self?.service?.translate(message: message, completion: { _ in })

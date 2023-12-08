@@ -138,18 +138,18 @@ import UIKit
         return cell ?? ChatroomParticipantsCell()
     }
     
-    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.searchController.isActive {
-            if let item = self.searchResults[safe: indexPath.row] {
-                self.action?(item)
-            }
-        } else {
-            if let item = self.rawSources[safe: indexPath.row] {
-                self.action?(item)
-            }
-        }
-        
-    }
+//    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if self.searchController.isActive {
+//            if let item = self.searchResults[safe: indexPath.row] {
+//                self.action?(item)
+//            }
+//        } else {
+//            if let item = self.rawSources[safe: indexPath.row] {
+//                self.action?(item)
+//            }
+//        }
+//        
+//    }
     
     public func updateSearchResults(for searchController: UISearchController) { searchController.searchResultsController?.view.isHidden = false
         if let searchText = searchController.searchBar.text {

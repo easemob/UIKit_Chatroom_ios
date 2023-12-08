@@ -59,8 +59,8 @@ import UIKit
     ///   - frame: CGRect
     ///   - text: `String` value
     ///   - placeHolder: `String` value
-    @objc required public convenience init(frame: CGRect,text: String? = nil,placeHolder: String? = nil) {
-        self.init(frame: frame)
+    @objc required public init(frame: CGRect,text: String? = nil,placeHolder: String? = nil) {
+        super.init(frame: frame)
         self.rawHeight = frame.height
         self.rawTextHeight = self.rawHeight-16
         self.rawFrame = frame

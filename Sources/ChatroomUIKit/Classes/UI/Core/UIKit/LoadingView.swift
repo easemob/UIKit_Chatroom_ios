@@ -15,7 +15,6 @@ import UIKit
     
     private let activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView = UIActivityIndicatorView(style: .large)
-        activityIndicatorView.color = .systemGray
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicatorView
     }()
@@ -75,5 +74,6 @@ extension LoadingView: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.blur.effect = style == .dark ? self.darkEffect:self.lightEffect
         self.backgroundColor = style == .dark ? UIColor.theme.barrageLightColor2:UIColor.theme.barrageDarkColor1
+        self.activityIndicatorView.color = style == .dark ? UIColor.theme.neutralColor7:UIColor.theme.neutralColor98
     }
 }

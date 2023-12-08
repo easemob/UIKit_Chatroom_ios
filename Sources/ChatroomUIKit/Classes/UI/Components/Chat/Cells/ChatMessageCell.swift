@@ -64,16 +64,16 @@ import UIKit
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .clear
-        self.contentView.backgroundColor = .clear
     }
     
     /// ChatBarrageCell init method
     /// - Parameters:
     ///   - displayStyle: ``ChatMessageDisplayContentStyle``
     ///   - reuseIdentifier: reuse identifier
-    @objc required public convenience init(displayStyle: ChatMessageDisplayContentStyle, reuseIdentifier: String?) {
-        self.init(style: .default, reuseIdentifier: reuseIdentifier)
+    @objc required public init(displayStyle: ChatMessageDisplayContentStyle, reuseIdentifier: String?) {
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
         self.style = displayStyle
         self.contentView.addSubview(self.container)
         switch displayStyle {
