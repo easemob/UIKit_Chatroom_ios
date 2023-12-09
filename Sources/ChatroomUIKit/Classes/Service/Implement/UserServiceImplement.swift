@@ -188,7 +188,7 @@ extension UserServiceImplement: ChatClientListener {
 @objcMembers final public class User:NSObject, UserInfoProtocol {
     
     public func toJsonObject() -> Dictionary<String, Any>? {
-        ["userId":self.userId,"nickName":self.nickName,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
+        ["userId":self.userId,"nickname":self.nickName,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
     }
     
     public var identity: String = ""
