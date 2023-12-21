@@ -46,13 +46,13 @@
 
 在podfile中添加如下依赖
 
-```
+```ruby
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '13.0'
 
 target 'YourTarget' do
   use_frameworks!
-  
+
   pod 'ChatroomUIKit'
 end
 
@@ -80,7 +80,7 @@ end
 
 ### ChatroomUIKit 基本项目结构
 
-````
+```
 聊天室UI套件
 ├─ Service // 基础服务组件。
 │ ├─ Protocol // 业务协议组件。
@@ -101,7 +101,7 @@ end
        ├─ UIKit // 一些常见的UIKit组件和自定义组件。
        ├─ Theme // 主题相关组件，包括颜色、字体、换肤协议及其组件。
        └─ Extension // 一些方便的系统类扩展。
-````
+```
 
 # 文档
 
@@ -111,9 +111,9 @@ end
 
 另外，您可以右键单击该文件以显示包内容并将其中的所有文件复制到一个文件夹中。 然后将此文件夹拖到“terminal”应用程序中并运行以下命令将其部署到本地IP地址上。
 
-````
+```bash
 python3 -m http.server 8080
-````
+```
 
 部署完成后，您可以在浏览器中访问 http://yourlocalhost:8080/documentation/chatroomuikit   其中`yourlocalhost`是您的本地IP地址。 或者，您可以将此文件夹部署在外部网络地址上。
 
@@ -146,9 +146,9 @@ python3 -m http.server 8080
 
 ### 第一步：初始化ChatroomUIKit
 
-````
+```swift
 import ChatroomUIKit
-    
+
 @UIApplicationMain
 class AppDelegate：UIResponder，UIApplicationDelegate {
 
@@ -163,29 +163,33 @@ class AppDelegate：UIResponder，UIApplicationDelegate {
          let error = ChatroomUIKitClient.shared.setup（with: "Appkey"）
      }
 }
-````
+```
 
 ### 第2步：登录
 
-```
+```swift
 // 需要从您的应用服务器获取token。 您也可以使用控制台生成的临时Token登录。
-// 在控制台生成用户和临时用户 token，请参见 
+// 在控制台生成用户和临时用户 token，请参见
 // https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA-im-%E7%94%A8%E6%88%B7。
 
-        ChatroomUIKitClient.shared.login(userId: "user id", token: "token") { error in
-            
-        }
+ChatroomUIKitClient.shared.login(
+    userId: "user id", token: "token"
+) { error in
+
+}
 ```
 
 ### 第三步：创建聊天室视图
 
-```
+```swift
 // 1. 获取聊天室列表并加入聊天室。 或者，在 环信 控制台上创建聊天室。
 // 选择“项目管理 > 运营管理 > 聊天室”，单击“创建聊天室”，在弹出的对话框中设置参数，创建聊天室。 获取聊天室 ID，将其传递给以下 `launchRoomView` 方法。
 // 参见https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E5%AE%A4
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
 // 建议ChatroomView的宽度初始化为屏幕的宽度，高度不小于屏幕的高度减去导航的高度。
-let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: String,frame: CGRect, is owner: Bool)    
+let roomView = ChatroomUIKitClient.shared.launchRoomView(
+    roomId: String, frame: CGRect, isOwner: Bool
+)
 // 3. 添加视图。
 addSubView(roomView)
 // 4. 通过控制台将用户添加到聊天室。
@@ -206,37 +210,45 @@ addSubView(roomView)
 
 ## 1.初始化聊天室UIKit
 相比于上面快速开始的聊天室UIKit初始化这里多了ChatOptions的参数，主要是对SDK中是否打印log以及是否自动登录，是否默认使用用户属性的开关配置。
-```
-    let error = ChatroomUIKitClient.shared.setup(with: "Your appkey",option: ChatroomUIKitInitialOptions.ChatOptions())
+```swift
+let error = ChatroomUIKitClient.shared.setup(
+    with: "Your appkey",
+    option: ChatroomUIKitInitialOptions.ChatOptions()
+)
 ```
 
 ## 2.登录
 
-```Swift
-    public final class YourAppUser: NSObject,UserInfoProtocol {
-        public var identity: String = ""//user level picture url
-        
-        public func toJsonObject() -> Dictionary<String, Any>? {
-            ["userId":self.userId,"nickName":self.nickName,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
-        }
-        
-        
-        public var userId: String = <#T##String#>
-        
-        public var nickName: String = "Jack"
-        
-        public var avatarURL: String = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_1.png"
-        
-        public var gender: Int = 1
-        
+```swift
+public final class YourAppUser: NSObject, UserInfoProtocol {
+    public var identity: String = ""//user level picture url
+
+    public func toJsonObject() -> Dictionary<String, Any>? {
+        [
+            "userId": self.userId,
+            "nickName": self.nickName,
+            "avatarURL": self.avatarURL,
+            "identity": self.identity,
+            "gender": self.gender
+        ]
     }
+
+    public var userId: String = <#T##String#>
+
+    public var nickName: String = "Jack"
+
+    public var avatarURL: String = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_1.png"
+
+    public var gender: Int = 1
+}
 // 使用当前用户对象符合`UserInfoProtocol`协议的用户信息登录ChatroomUIKit。
 // token生成参见快速开始中登录步骤中链接。
- ChatroomUIKitClient.shared.login(user: YourAppUser(), token: ExampleRequiredConfig.chatToken) {
+ ChatroomUIKitClient.shared.login(user: YourAppUser(), token: ExampleRequiredConfig.chatToken)
 ```
 
 ## 3.初始化聊天室视图
-```
+
+```swift
 //1. 获取聊天室列表并加入聊天室或者控制台上创建聊天室。
 // 2. 通过传入布局参数和底部工具栏的扩展按钮模型协议数组等参数，使用`ChatroomView`创建聊天室视图。
     let options  = ChatroomUIKitInitialOptions.UIOptions()
@@ -252,8 +264,8 @@ addSubView(roomView)
 
 您可以调用`registerRoomEventsListener`方法来侦听 ChatroomUIKit 事件和错误。
 
-```Swift
-ChatroomUIKitClient.shared.registerRoomEventsListener（listener：self）
+```swift
+ChatroomUIKitClient.shared.registerRoomEventsListener(listener: self)
 ```
 
 # 自定义
@@ -262,13 +274,13 @@ ChatroomUIKitClient.shared.registerRoomEventsListener（listener：self）
 
 下面展示如何更改弹幕区域的整体单元格布局风格以及如何创建ChatroomView。
 
-````
+```swift
 // 可以通过设置属性来改变弹幕区域的整体单元格布局风格。
 Appearance.messageDisplayStyle = .hideUserIdentity
 // 创建ChatroomView，传入布局参数、底部工具栏扩展按钮模型协议数组等参数。
 let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: "聊天室 ID",frame: <#T##CGRect#>)
 self.view.addSubView(roomView)
-````
+```
 
 详情请参见[Appearance](./Documentation/Appearance.md)。
 
@@ -276,17 +288,17 @@ self.view.addSubView(roomView)
 
 下面展示如何自定义礼物弹幕视图cell。
 
-````
+```swift
 class CustomGiftMessageViewCell: GiftMessageCell {
     lazy var redDot: UIView = {
         UIView().backgroundColor(.red).cornerRadius(.large)
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(redDot)
     }
-    
+
     override func refresh(item: GiftEntityProtocol) {
         super.refresh(item: item)
         self.redDot.isHidden = item.selected
@@ -295,20 +307,22 @@ class CustomGiftMessageViewCell: GiftMessageCell {
 //在ChatroomUIKit中注册继承原有类的自定义类来替换原来的类。
 //在创建ChatroomView或使用其他UI组件之前调用此方法。
 ComponentsRegister.shared.GiftMessageViewCell = CustomGiftMessageViewCell.self
-````
+```
 
 详情请参见[ComponentsRegister](./Documentation/ComponentRegister.md)
 
 ## 3.切换原创或自定义主题
 - 切换到 ChatroomUIKit 附带的浅色或深色主题。在初始化聊天室UIKit视图之前切换主题切换主题即可更改默认主题，在视图使用中也可以切换由开发者判断系统当前主题后切换你想对应的主题即可。
 
-````
-Theme.switchTheme(style: .dark)` 或 `Theme.switchTheme(style: .light)
-````
+```swift
+Theme.switchTheme(style: .dark)
+// 或
+Theme.switchTheme(style: .light)
+```
 
 - 切换到自定义主题。
 
-```Swift
+```swift
 /**
 如何定制主题？
 
