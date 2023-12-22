@@ -112,7 +112,7 @@ extension UserServiceImplement:UserServiceProtocol {
     private func convertToUser(info: UserInfo) -> User {
         let user = User()
         user.userId = info.userId ?? ""
-        user.nickName = info.nickname ?? user.userId
+        user.nickname = info.nickname ?? user.userId
         user.avatarURL = info.avatarUrl ?? ""
         user.gender = info.gender
         if let ext = info.ext{
@@ -127,7 +127,7 @@ extension UserServiceImplement:UserServiceProtocol {
     private func convertToUserInfo(user: UserInfoProtocol) -> UserInfo {
         let info = UserInfo()
         info.userId = user.userId
-        info.nickname = user.nickName.isEmpty ? user.userId:user.nickName
+        info.nickname = user.nickname.isEmpty ? user.userId:user.nickname
         info.avatarUrl = user.avatarURL
         info.gender = user.gender
         //In addition to the existing user attribute fields in the UserInfo object of the SDK, other extended fields are placed in the ext map and serialized into json string to interact with other terminals.
@@ -188,14 +188,14 @@ extension UserServiceImplement: ChatClientListener {
 @objcMembers final public class User:NSObject, UserInfoProtocol {
     
     public func toJsonObject() -> Dictionary<String, Any>? {
-        ["userId":self.userId,"nickname":self.nickName,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
+        ["userId":self.userId,"nickname":self.nickname,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
     }
     
     public var identity: String = ""
     
     public var userId: String = ""
     
-    public var nickName: String = ""
+    public var nickname: String = ""
     
     public var avatarURL: String = ""
     

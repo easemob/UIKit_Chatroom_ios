@@ -48,10 +48,15 @@ open class ParticipantsController: UITableViewController {
     /// - Parameters:
     ///   - muteTab: `Bool` value,Indicate that is member list or mute list
     ///   - moreClosure: Callback,when click more.
-    @objc required public convenience init(muteTab:Bool = false,moreClosure: @escaping (UserInfoProtocol) -> Void) {
-        self.init()
+    @objc(initWithWhetherMuteTab:moreClosure:)
+    required public init(muteTab:Bool = false,moreClosure: @escaping (UserInfoProtocol) -> Void) {
         self.muteTab = muteTab
         self.userClosure = moreClosure
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     open override func viewDidLoad() {
@@ -189,7 +194,7 @@ open class ParticipantsController: UITableViewController {
         var unknownInfoIds = [String]()
         if let visiblePaths = tableView.indexPathsForVisibleRows {
             for indexPath in visiblePaths {
-                if let nickName = self.users[safe: indexPath.row]?.nickName,nickName.isEmpty {
+                if let nickName = self.users[safe: indexPath.row]?.nickname,nickName.isEmpty {
                     unknownInfoIds.append(self.users[safe: indexPath.row]?.userId ?? "")
                 }
             }

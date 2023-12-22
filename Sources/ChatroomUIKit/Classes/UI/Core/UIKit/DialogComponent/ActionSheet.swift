@@ -60,7 +60,8 @@ import UIKit
      
      - Returns: An initialized ActionSheet object.
      */
-    @objc public convenience init(items:[ActionSheetItemProtocol],title: String? = nil,message: String? = nil,action: @escaping ActionClosure) {
+    @objc(initWithItems:title:message:action:)
+    public init(items:[ActionSheetItemProtocol],title: String? = nil,message: String? = nil,action: @escaping ActionClosure) {
         let messageHeight = (message?.chatroom.sizeWithText(font: UIFont.theme.bodyMedium, size: CGSize(width: ScreenWidth-32, height: ScreenHeight/3.0)).height ?? 0)
         var contentHeight = 11+Int(Appearance.actionSheetRowHeight)*items.count+Int(Appearance.actionSheetRowHeight)+8+Int(BottomBarHeight)
         if messageHeight > 0 {
@@ -76,7 +77,7 @@ import UIKit
         if CGFloat(contentHeight) > ScreenHeight*(2/3.0) {
             contentHeight = Int(ScreenHeight*(2/3.0))
         }
-        self.init(frame: CGRect(x: 0, y: abs(Int(ScreenHeight)-contentHeight), width: Int(ScreenWidth), height: contentHeight))
+        super.init(frame: CGRect(x: 0, y: abs(Int(ScreenHeight)-contentHeight), width: Int(ScreenWidth), height: contentHeight))
         self.backgroundColor(UIColor.theme.neutralColor98)
         self.items.append(contentsOf: items)
         if title != nil,message != nil {

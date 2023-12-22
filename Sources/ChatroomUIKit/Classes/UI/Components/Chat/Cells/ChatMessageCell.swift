@@ -19,15 +19,15 @@ import UIKit
     
     public private(set) var style: ChatMessageDisplayContentStyle = Appearance.messageDisplayStyle
     
-    lazy var container: UIView = {
+    public private(set) lazy var container: UIView = {
         UIView(frame: CGRect(x: 15, y: 6, width: self.contentView.frame.width - 30, height: self.frame.height - 6)).backgroundColor( UIColor.theme.barrageLightColor2).cornerRadius(.small)
     }()
     
-    lazy var time: UILabel = {
+    public private(set) lazy var time: UILabel = {
         UILabel(frame: CGRect(x: 8, y: 10, width: 40, height: 18)).font(UIFont.theme.bodyMedium).textColor(UIColor.theme.secondaryColor8).textAlignment(.center).backgroundColor(.clear)
     }()
     
-    lazy var identity: ImageView = {
+    public private(set) lazy var identity: ImageView = {
         var originX = 6
         switch self.style {
         case .all,.hideAvatar:
@@ -39,7 +39,7 @@ import UIKit
         return ImageView(frame: CGRect(x: originX, y: 10, width: 18, height: 18)).backgroundColor(.clear).cornerRadius(Appearance.avatarRadius)
     }()
     
-    lazy var avatar: ImageView = {
+    public private(set) lazy var avatar: ImageView = {
         var originX = 6
         switch self.style {
         case .all,.hideTime:
@@ -54,11 +54,11 @@ import UIKit
         return ImageView(frame: CGRect(x: originX, y: 10, width: 18, height: 18)).backgroundColor(.clear).cornerRadius(Appearance.avatarRadius)
     }()
     
-    lazy var content: UILabel = {
+    public private(set) lazy var content: UILabel = {
         return UILabel(frame: CGRect(x: 10, y: 7, width: self.container.frame.width - 20, height: self.container.frame.height - 18)).backgroundColor(.clear).numberOfLines(0).lineBreakMode(.byWordWrapping)
     }()
     
-    lazy var giftIcon: ImageView = {
+    public private(set) lazy var giftIcon: ImageView = {
         ImageView(frame: CGRect(x: self.content.frame.width-22, y: self.content.frame.height-10, width: 18, height: 18)).backgroundColor(.clear)
     }()
     
@@ -70,7 +70,8 @@ import UIKit
     /// - Parameters:
     ///   - displayStyle: ``ChatMessageDisplayContentStyle``
     ///   - reuseIdentifier: reuse identifier
-    @objc required public init(displayStyle: ChatMessageDisplayContentStyle, reuseIdentifier: String?) {
+    @objc(initWithDisplayStyle:reuseIdentifier:)
+    required public init(displayStyle: ChatMessageDisplayContentStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
@@ -110,7 +111,8 @@ import UIKit
     
     /// Refresh the entity that renders the chat barrage, which contains height, width and rich text cache.
     /// - Parameter chat: ``ChatEntity``
-    @objc public func refresh(chat: ChatEntity) {
+    @objc(refreshWithChatEntity:)
+    public func refresh(chat: ChatEntity) {
         self.time.text = chat.showTime
         self.identity.image(with: chat.message.user?.identity ?? "", placeHolder: Appearance.identityPlaceHolder)
         self.avatar.image(with: chat.message.user?.avatarURL ?? "", placeHolder: Appearance.avatarPlaceHolder)
@@ -174,10 +176,10 @@ fileprivate let gift_tail_indent: CGFloat = 26
     lazy public var gift: GiftEntityProtocol? = nil
     
     /// Converts the message text into an attributed string, including the user's nickname, message text, and emojis.
-    func convertAttribute() -> NSAttributedString {
+    @objc public func convertAttribute() -> NSAttributedString {
         let userId = self.message.user?.userId ?? ""
         var text = NSMutableAttributedString {
-            AttributedText((self.message.user?.nickName ?? userId)).foregroundColor(Color.theme.primaryColor8).font(UIFont.theme.labelMedium).paragraphStyle(self.paragraphStyle())
+            AttributedText((self.message.user?.nickname ?? userId)).foregroundColor(Color.theme.primaryColor8).font(UIFont.theme.labelMedium).paragraphStyle(self.paragraphStyle())
         }
         if self.message.body.type == .custom,let body = self.message.body as? ChatCustomMessageBody {
             switch body.event {
@@ -219,7 +221,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
     }
     
     /// Returns a paragraph style object with the first line head indent set based on the appearance of the chat cell.
-    func paragraphStyle() -> NSMutableParagraphStyle {
+    @objc public func paragraphStyle() -> NSMutableParagraphStyle {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent()
         paragraphStyle.lineHeightMultiple = 1.08
@@ -233,7 +235,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
     }
     
     /// Returns the distance of the first line head indent based on the appearance of the chat cell.
-    func firstLineHeadIndent() -> CGFloat {
+    @objc public func firstLineHeadIndent() -> CGFloat {
         var distance:CGFloat = 0
         switch Appearance.messageDisplayStyle {
         case .all: distance = 90
@@ -247,23 +249,23 @@ fileprivate let gift_tail_indent: CGFloat = 26
     }
     
     /// Returns the distance of the last line head indent based on the appearance of the chat cell.
-    func lastLineHeadIndent() -> CGFloat { gift_tail_indent }
+    @objc public func lastLineHeadIndent() -> CGFloat { gift_tail_indent }
 }
 
 public extension ChatMessage {
     
     /// ``UserInfoProtocol``
-    var user: UserInfoProtocol? {
+    @objc var user: UserInfoProtocol? {
         ChatroomContext.shared?.usersMap?[self.from]
     }
     
     /// Content of the text message.
-    var text: String {
+    @objc var text: String {
         (self.body as? ChatTextMessageBody)?.text ?? ""
     }
     
     /// Translation of the text message.
-    var translation: String? {
+    @objc var translation: String? {
         (self.body as? ChatTextMessageBody)?.translations?[Appearance.messageTranslationLanguage.rawValue]
     }
 }

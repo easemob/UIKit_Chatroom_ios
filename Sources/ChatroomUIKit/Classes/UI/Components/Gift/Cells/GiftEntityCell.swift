@@ -23,26 +23,26 @@ import UIKit
     private var gift: GiftEntityProtocol?
     
     var eventsDelegate: GiftEntityCellActionEvents?
+    
     public var sendCallback: ((GiftEntityProtocol?)->Void)?
     
-
-    lazy var cover: UIView = {
+    public lazy var cover: UIView = {
         UIView(frame:CGRect(x: 1, y: 5, width: self.contentView.frame.width-2, height: self.contentView.frame.height - 5)).cornerRadius(.small).layerProperties(UIColor.theme.primaryColor5, 1).backgroundColor(UIColor.theme.primaryColor95)
     }()
     
-    lazy var send: UIButton = {
+    public lazy var send: UIButton = {
         UIButton(type: .custom).frame(CGRect(x: 0, y: self.cover.frame.height-28, width: self.cover.frame.width, height: 28)).backgroundColor(UIColor.theme.primaryColor5).title("Send".chatroom.localize, .normal).textColor(UIColor.theme.neutralColor98, .normal).font(UIFont.theme.labelMedium).addTargetFor(self, action: #selector(sendAction), for: .touchUpInside).cornerRadius(.small, [.bottomLeft,.bottomRight], .clear, 0)
     }()
 
-    lazy var icon: ImageView = {
+    public lazy var icon: ImageView = {
         ImageView(frame: CGRect(x: self.contentView.frame.width / 2.0 - 24, y: 16.5, width: 48, height: 48)).contentMode(.scaleAspectFit)
     }()
 
-    lazy var name: UILabel = {
+    public lazy var name: UILabel = {
         UILabel(frame: CGRect(x: 0, y: self.icon.frame.maxY + 4, width: self.contentView.frame.width, height: 18)).textAlignment(.center).font(UIFont.theme.labelMedium).textColor(UIColor.theme.neutralColor1).backgroundColor(.clear)
     }()
 
-    lazy var displayValue: UIButton = {
+    public lazy var displayValue: UIButton = {
         UIButton(type: .custom).frame(CGRect(x: 0, y: self.name.frame.maxY + 1, width: self.contentView.frame.width, height: 15)).font(UIFont.theme.labelExtraSmall).textColor(UIColor.theme.neutralColor5, .normal).isUserInteractionEnabled(false).backgroundColor(.clear).image(Appearance.giftPriceIcon, .normal)
     }()
 

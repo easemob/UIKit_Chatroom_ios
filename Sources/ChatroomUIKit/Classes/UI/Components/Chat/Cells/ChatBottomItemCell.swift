@@ -11,36 +11,36 @@ import UIKit
 @objc public protocol ChatBottomItemProtocol: NSObjectProtocol {
     
     /// Whether show red dot
-    var showRedDot: Bool {set get}
+    @objc var showRedDot: Bool {set get}
     
     /// Whether selected
-    var selected: Bool {set get}
+    @objc var selected: Bool {set get}
     
     /// When `selected` is `true` show image.
-    var selectedImage: UIImage? {set get}
+    @objc var selectedImage: UIImage? {set get}
     
     /// Normal image
-    var normalImage: UIImage? {set get}
+    @objc var normalImage: UIImage? {set get}
     
     /// Tag
-    var type: Int {set get}
+    @objc var type: Int {set get}
     
     /// Action
-    var action: ((ChatBottomItemProtocol) -> Void)? {set get}
+    @objc var action: ((ChatBottomItemProtocol) -> Void)? {set get}
 
 }
 
 @objcMembers open class ChatBottomItemCell: UICollectionViewCell {
 
-    lazy var container: UIImageView = {
+    public lazy var container: UIImageView = {
         UIImageView(frame: CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)).contentMode(.scaleAspectFit).backgroundColor(UIColor.theme.barrageLightColor2).cornerRadius(self.contentView.frame.height / 2.0)
     }()
 
-    lazy var icon: UIImageView = {
+    public lazy var icon: UIImageView = {
         UIImageView(frame: CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)).contentMode(.scaleAspectFill).backgroundColor(.clear)
     }()
 
-    let redDot = UIView().backgroundColor(.red).cornerRadius(3)
+    public let redDot = UIView().backgroundColor(.red).cornerRadius(3)
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,7 +67,8 @@ import UIKit
     
     /// Refresh subviews.
     /// - Parameter item: ``ChatBottomItemProtocol``
-    @objc public func refresh(item: ChatBottomItemProtocol) {
+    @objc(refreshWithItem:)
+    public func refresh(item: ChatBottomItemProtocol) {
         self.icon.image = item.selected ? item.selectedImage:item.normalImage
         self.redDot.isHidden = !item.showRedDot
     }

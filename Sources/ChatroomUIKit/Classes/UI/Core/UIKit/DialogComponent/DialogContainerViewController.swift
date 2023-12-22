@@ -35,12 +35,13 @@ import UIKit
 
      - Returns: A new `DialogContainerViewController` instance.
      */
-    @objc public convenience init(custom: UIView,constraintsSize:CGSize = .zero) {
-        self.init()
+    @objc(initWithCustomView:constraintsSize:)
+    public required init(custom: UIView,constraintsSize:CGSize = .zero) {
         if constraintsSize != .zero {
             self.presentedViewComponent?.contentSize = constraintsSize
         }
         self.customView = custom
+        super.init(nibName: nil, bundle: nil)
     }
 
     override public func viewDidLoad() {

@@ -19,7 +19,7 @@ import Foundation
     
     /// When some view Implement the protocol method,you can use `Theme.switchTheme(style: .dark)` to switch theme.
     /// - Parameter style: ``ThemeStyle``
-    func switchTheme(style: ThemeStyle)
+    @objc func switchTheme(style: ThemeStyle)
 }
 
 

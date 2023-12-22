@@ -59,7 +59,8 @@ import UIKit
     ///   - frame: CGRect
     ///   - text: `String` value
     ///   - placeHolder: `String` value
-    @objc required public init(frame: CGRect,text: String? = nil,placeHolder: String? = nil) {
+    @objc(initWithFrame:text:placeHolder:)
+    required public init(frame: CGRect,text: String? = nil,placeHolder: String? = nil) {
         super.init(frame: frame)
         self.rawHeight = frame.height
         self.rawTextHeight = self.rawHeight-16

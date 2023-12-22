@@ -60,17 +60,23 @@ import UIKit
     ///   - rawSources: Data source
     ///   - cellExtensionAction: `...` action on click.
     ///   - didSelect: Cell did select callback.
-    @objc public required convenience init(rawSources: [UserInfoProtocol],cellExtensionAction: @escaping ((UserInfoProtocol) -> Void),didSelect: @escaping ((UserInfoProtocol) -> Void)) {
-        self.init()
+    @objc(initWithRawSources:cellExtensionAction:didSelect:)
+    public required init(rawSources: [UserInfoProtocol],cellExtensionAction: @escaping ((UserInfoProtocol) -> Void),didSelect: @escaping ((UserInfoProtocol) -> Void)) {
         self.action = cellExtensionAction
         self.rawSources = rawSources
         self.searchResults = rawSources
+        super.init(nibName: nil, bundle: nil)
         Theme.registerSwitchThemeViews(view: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     /// Remove a user.
     /// - Parameter userId: user id
-    @objc public func removeUser(userId: String) {
+    @objc(removeUserWithId:)
+    public func removeUser(userId: String) {
         if self.searchController.isActive {
             self.searchResults.removeAll { $0.userId == userId }
         } else {
@@ -154,7 +160,7 @@ import UIKit
     public func updateSearchResults(for searchController: UISearchController) { searchController.searchResultsController?.view.isHidden = false
         if let searchText = searchController.searchBar.text {
             self.searchResults = self.rawSources.filter({ user in
-                (user.nickName as NSString).range(of: searchText).location != NSNotFound && (user.nickName as NSString).range(of: searchText).length >= 0
+                (user.nickname as NSString).range(of: searchText).location != NSNotFound && (user.nickname as NSString).range(of: searchText).length >= 0
             })
         }
         self.tableView.reloadData()

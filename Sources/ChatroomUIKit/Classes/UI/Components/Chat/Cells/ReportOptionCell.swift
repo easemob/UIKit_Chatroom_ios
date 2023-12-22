@@ -44,7 +44,8 @@ import UIKit
     /// - Parameters:
     ///   - select: Whether select or not.
     ///   - title: title
-    @objc public func refresh(select: Bool ,title: String) {
+    @objc(refreshWithSelected:title:)
+    public func refresh(select: Bool ,title: String) {
         self.stateView.image(select ? self.selectImage:self.normalImage)
         self.content.text = title
     }

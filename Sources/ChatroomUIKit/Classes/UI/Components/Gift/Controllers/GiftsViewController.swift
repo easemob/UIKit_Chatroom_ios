@@ -17,14 +17,20 @@ import UIKit
         GiftsView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height-BottomBarHeight), gifts: self.gifts)
     }()
     
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     /// GiftsViewController init method.
     /// - Parameters:
     ///   - gifts: `Array<GiftEntityProtocol>` data source.
-    @objc required public convenience init(gifts: [GiftEntityProtocol]) {
-        self.init()
+    @objc(initWithGifts:)
+    required public init(gifts: [GiftEntityProtocol]) {
         self.gifts = gifts
+        super.init(nibName: nil, bundle: .main)
     }
-
+    
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

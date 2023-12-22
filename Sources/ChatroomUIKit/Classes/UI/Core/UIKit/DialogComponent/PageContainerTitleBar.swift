@@ -44,14 +44,15 @@ import UIKit
 
      - Returns: A new `PageContainerTitleBar` instance.
      */
-    @objc public convenience init(frame: CGRect, choices: [String], selectedClosure: @escaping (Int)->()) {
-        self.init(frame: frame)
-        self.backgroundColor = UIColor.theme.neutralColor98
+    @objc(initWithFrame:choices:selectedClosure:)
+    public required init(frame: CGRect, choices: [String], selectedClosure: @escaping (Int)->()) {
         self.chooseClosure = selectedClosure
         self.datas = choices.map({ ChoiceItem(text: $0,selected: false) })
         self.datas.first?.selected = true
-        self.addSubViews([self.indicator,self.choicesBar])
+        super.init(frame: frame)
         self.choicesBar.bounces = false
+        self.addSubViews([self.indicator,self.choicesBar])
+        self.backgroundColor = UIColor.theme.neutralColor98
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
         if choices.count == 1 {

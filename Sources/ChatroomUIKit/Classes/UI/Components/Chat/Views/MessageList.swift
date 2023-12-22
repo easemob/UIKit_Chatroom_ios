@@ -15,14 +15,17 @@ var chatViewWidth: CGFloat = 0
     /// When you receive or will send a message.
     /// - Parameter message: ``ChatMessage``
     ///   - gift: ``GiftEntityProtocol``
+    @objc(showWithNewMessage:gift:)
     func showNewMessage(message: ChatMessage,gift: GiftEntityProtocol?)
     
     /// When you want modify or translate a message.
     /// - Parameter message: ``ChatMessage``
+    @objc(refreshWithMessage:)
     func refreshMessage(message: ChatMessage)
     
     /// When you want delete message.
     /// - Parameter message: ``ChatMessage``
+    @objc(removeWithMessage:)
     func removeMessage(message: ChatMessage)
     
     /// Clean data source.

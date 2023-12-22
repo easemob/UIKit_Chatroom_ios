@@ -44,8 +44,8 @@ import UIKit
 
      - Returns: A PageContainersDialogController instance.
      */
-    @objc public required convenience init(pageTitles:[String],childControllers: [UIViewController],constraintsSize: CGSize = .zero) {
-        self.init()
+    @objc(initWithPageTitles:childControllers:constraintsSize:)
+    public required init(pageTitles:[String],childControllers: [UIViewController],constraintsSize: CGSize = .zero) {
         if pageTitles.count != childControllers.count {
             assert(false,"Titles count isn't equal child controllers count.")
         }
@@ -54,6 +54,7 @@ import UIKit
         }
         self.pageTitles = pageTitles
         self.childControllers = childControllers
+        super.init(nibName: nil, bundle: nil)
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
     }

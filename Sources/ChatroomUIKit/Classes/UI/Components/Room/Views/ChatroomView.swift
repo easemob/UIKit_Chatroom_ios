@@ -64,7 +64,8 @@ import UIKit
     /// Chatroom view init method.
     /// - Parameters:
     ///   - frame: CGRect
-    @objc public required convenience init(respondTouch frame: CGRect) {
+    @objc(initWithRespondTouchFrame:)
+    public required init(respondTouch frame: CGRect) {
         if ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea {
             if frame.height < ScreenHeight/5.0+(Appearance.giftAreaRowHeight*2)+54 {
                 assert(false,"The lower limit of the entire view height must not be less than `ScreenHeight/5.0+(Appearance.giftAreaRowHeight*2)+54`.")
@@ -74,8 +75,8 @@ import UIKit
                 assert(false,"The lower limit of the chat view height must not be less than `ScreenHeight/5.0+54`.")
             }
         }
-        self.init(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: ScreenHeight))
         self.touchFrame = frame
+        super.init(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: ScreenHeight))
         if ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea {
             self.addSubViews([self.giftArea,self.bottomBar,self.chatList,self.inputBar,self.carouselTextView])
         } else {
@@ -88,6 +89,10 @@ import UIKit
             self?.sendTextMessage(text: $0)
         }
 
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func sendTextMessage(text: String) {
@@ -108,16 +113,17 @@ import UIKit
     
     /// This method binds your view to the model it serves. A ChatroomView can only call it once. There is judgment in this method. Calling it multiple times is invalid.
     /// - Parameter service: ``RoomService``
-    @objc public func connectService(service: RoomService) {
+    @objc(connectWithService:)
+    public func connectService(_ service: RoomService) {
         if self.service != nil {
             return
         }
         self.service = service
-        service.bindChatDrive(Drive: self.chatList)
+        service.bindChatDriver(self.chatList)
         if ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea {
-            service.bindGiftDrive(Drive: self.giftArea)
+            service.bindGiftDriver(self.giftArea)
         }
-        service.bindGlobalNotifyDrive(Drive: self.carouselTextView)
+        service.bindGlobalNotifyDriver(driver: self.carouselTextView)
         service.enterRoom(completion: { [weak self] error in
 
             if let eventsListeners =  self?.service?.eventsListener.allObjects {
@@ -130,7 +136,8 @@ import UIKit
     
     /// Disconnect room service
     /// - Parameter service: ``RoomService``
-    @objc public func disconnectService(service: RoomService) {
+    @objc(disconnectWithService:)
+    public func disconnectService(_ service: RoomService) {
         self.service?.leaveRoom(completion: { [weak self] error in
             if error == nil {
                 self?.service = nil
@@ -161,7 +168,8 @@ import UIKit
     
     /// When you want receive chatroom view's touch action events.You can called the method.
     /// - Parameter actionHandler: ``ChatroomViewActionEventsDelegate``
-    @objc public func addActionHandler(actionHandler: ChatroomViewActionEventsDelegate) {
+    @objc(addWithActionHandler:)
+    public func addActionHandler(_ actionHandler: ChatroomViewActionEventsDelegate) {
         if self.eventHandlers.contains(actionHandler) {
             return
         }
@@ -170,7 +178,8 @@ import UIKit
     
     /// When you doesn't want receive chatroom view's touch action events.You can called the method.
     /// - Parameter actionHandler: ``ChatroomViewActionEventsDelegate``
-    @objc public func removeEventHandler(actionHandler: ChatroomViewActionEventsDelegate) {
+    @objc(removeWithActionHandler:)
+    public func removeActionHandler(_ actionHandler: ChatroomViewActionEventsDelegate) {
         self.eventHandlers.remove(actionHandler)
     }
     
@@ -229,10 +238,10 @@ extension ChatroomView: MessageListActionEventsHandler {
             }) {
                 messageActions.remove(at: index)
             }
-            if let index = messageActions.firstIndex(where: { $0.tag == "Delete"
-            }) {
-                messageActions.remove(at: index)
-            }
+        }
+        let currentUser = ChatroomContext.shared?.currentUser?.userId ?? ""
+        if message.from.lowercased() != currentUser.lowercased() {
+            messageActions.removeAll { $0.tag == "Delete" }
         }
         self.showLongPressDialog(message: message, messageActions: messageActions)
         for delegate in self.eventHandlers.allObjects {
@@ -241,7 +250,7 @@ extension ChatroomView: MessageListActionEventsHandler {
     }
     
     private func showLongPressDialog(message: ChatMessage,messageActions: [ActionSheetItemProtocol]) {
-        DialogManager.shared.showMessageActions(actions: messageActions) { [weak self] item in
+        DialogManager.shared.showMessageActions(messageActions) { [weak self] item in
             switch item.tag {
             case "Translate":
                 self?.service?.translate(message: message, completion: { _ in })

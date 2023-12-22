@@ -49,12 +49,12 @@ public typealias ActionClosure = ((ActionSheetItemProtocol) -> Void)
 
  - Returns: An `ActionSheetItem` object.
  */
-@objc public convenience init(title: String, type: ActionSheetItemType, tag: String, action: @escaping ActionClosure) {
-    self.init()
+@objc public required init(title: String, type: ActionSheetItemType, tag: String, action: @escaping ActionClosure) {
     self.action = action
     self.title = title
     self.type = type
     self.tag = tag
+    super.init()
 }
 
 /**
@@ -67,11 +67,11 @@ public typealias ActionClosure = ((ActionSheetItemProtocol) -> Void)
 
  - Returns: An `ActionSheetItem` object.
  */
-@objc public convenience init(title: String, type: ActionSheetItemType, tag: String) {
-    self.init()
+@objc public required init(title: String, type: ActionSheetItemType, tag: String) {
     self.title = title
     self.type = type
     self.tag = tag
+    super.init()
 }
 
     public var title: String = ""

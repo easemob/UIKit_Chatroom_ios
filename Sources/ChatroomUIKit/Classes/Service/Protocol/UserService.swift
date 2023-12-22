@@ -14,7 +14,7 @@ import Foundation
     var userId: String { set get }
     
     /// User's nickname
-    var nickName: String { set get }
+    var nickname: String { set get }
     
     /// User's avatar url
     var avatarURL: String { set get }

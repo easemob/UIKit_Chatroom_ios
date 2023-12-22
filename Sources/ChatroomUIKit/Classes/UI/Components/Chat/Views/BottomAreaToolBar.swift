@@ -84,8 +84,9 @@ import UIKit
     /// - Parameters:
     ///   - frame: CGRect
     ///   - datas: Array<ChatBottomItemProtocol>
-    @objc required public convenience init(frame: CGRect, datas: [ChatBottomItemProtocol] = []) {
-        self.init(frame: frame)
+    @objc(initWithFrame:datas:)
+    required public init(frame: CGRect, datas: [ChatBottomItemProtocol] = []) {
+        super.init(frame: frame)
         self.datas = datas
         self.addSubViews([self.chatRaiser, self.toolBar])
         self.chatRaiser.setImage(UIImage(named: "chatraise",in: .chatroomBundle,with: nil), for: .normal)

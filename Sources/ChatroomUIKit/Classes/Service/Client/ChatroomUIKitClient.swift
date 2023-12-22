@@ -74,7 +74,8 @@ import UIKit
     ///   - user: An instance that conforms to ``UserInfoProtocol``.
     ///   - token: The user chat token.
     ///   - userProperties: Whether the user passes in his or her own user information (including the avatar, nickname, and user ID) as user attributes for use in ChatRoom
-    @objc public func login(user: UserInfoProtocol,token: String,completion: @escaping (ChatError?) -> Void) {
+    @objc(loginWithUser:token:completion:)
+    public func login(user: UserInfoProtocol,token: String,completion: @escaping (ChatError?) -> Void) {
         ChatroomContext.shared?.currentUser = user
         self.userImplement = UserServiceImplement(userInfo: user, token: token, use: self.option.option_chat.useProperties, completion: completion)
         self.userImplement?.bindUserStateChangedListener(listener: self)
@@ -85,7 +86,8 @@ import UIKit
     ///   - userId: The user ID.
     ///   - token: The user chat token.
     ///   - completion: Login result.
-    @objc public func login(userId: String,token: String,completion: @escaping (ChatError?) -> Void) {
+    @objc(loginWithUserId:token:completion:)
+    public func login(userId: String,token: String,completion: @escaping (ChatError?) -> Void) {
         let user = User()
         user.userId = userId
         ChatroomContext.shared?.currentUser = user
@@ -106,7 +108,8 @@ import UIKit
     ///   - ownerId: Owner's user id..
     ///   - options: ``UIOptions``
     /// - Returns: ``ChatroomView`` instance.
-    @objc public func launchRoomViewWithOptions(roomId: String,frame: CGRect, ownerId: String , options: ChatroomUIKitInitialOptions.UIOptions = ChatroomUIKitInitialOptions.UIOptions()) -> ChatroomView {
+    @objc(launchRoomViewWithRoomId:frame:ownerId:options:)
+    public func launchRoomView(roomId: String,frame: CGRect, ownerId: String , options: ChatroomUIKitInitialOptions.UIOptions = ChatroomUIKitInitialOptions.UIOptions()) -> ChatroomView {
         self.roomId = roomId
         ChatroomContext.shared?.roomId = roomId
         ChatroomContext.shared?.ownerId = ownerId
@@ -116,7 +119,7 @@ import UIKit
         let room = ChatroomView(respondTouch: frame)
         let service = RoomService(roomId: roomId)
         self.roomService = service
-        room.connectService(service: service)
+        room.connectService(service)
         return room
     }
     
@@ -145,7 +148,8 @@ import UIKit
     /// - Parameters:
     ///   - info: An instance that conforms to ``UserInfoProtocol``.
     ///   - completion: Callback.
-    @objc public func updateUserInfo(info: UserInfoProtocol,completion: @escaping (ChatError?) -> Void) {
+    @objc(updateUserWithInfo:completion:)
+    public func updateUserInfo(_ info: UserInfoProtocol,completion: @escaping (ChatError?) -> Void) {
         self.userImplement?.updateUserInfo(userInfo: info, completion: { success, error in
             completion(error)
         })
@@ -153,19 +157,22 @@ import UIKit
     
     /// Registers a chat room event listener.
     /// - Parameter listener: ``RoomEventsListener``
-    @objc public func registerRoomEventsListener(listener: RoomEventsListener) {
-        self.roomService?.registerListener(listener: listener)
+    @objc(registerRoomEventsWithListener:)
+    public func registerRoomEventsListener(_ listener: RoomEventsListener) {
+        self.roomService?.registerListener(listener)
     }
     
     /// Unregisters a chat room event listener.
     /// - Parameter listener: ``RoomEventsListener``
-    @objc public func unregisterRoomEventsListener(listener: RoomEventsListener) {
-        self.roomService?.unregisterListener(listener: listener)
+    @objc(unregisterRoomEventsWithListener:)
+    public func unregisterRoomEventsListener(_ listener: RoomEventsListener) {
+        self.roomService?.unregisterListener(listener)
     }
     
     ///  Refreshes the user chat token when receiving the ``RoomEventsListener.onUserTokenWillExpired`` callback.
     /// - Parameter token: The user chat token.
-    @objc public func refreshToken(token: String) {
+    @objc(refreshWithToken:)
+    public func refreshToken(_ token: String) {
         ChatClient.shared().renewToken(token)
     }
 }

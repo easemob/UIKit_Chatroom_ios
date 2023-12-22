@@ -33,7 +33,8 @@ import Foundation
      
      - Returns: A new attributed string with the specified ranges replaced with emoji images.
      */
-    @objc public func convertEmoji(input: NSMutableAttributedString, ranges: [NSRange], symbol: String) -> NSMutableAttributedString {
+    @objc(convertEmojiWithInput:ranges:symbol:)
+    public func convertEmoji(input: NSMutableAttributedString, ranges: [NSRange], symbol: String) -> NSMutableAttributedString {
         let text = NSMutableAttributedString(attributedString: input)
         for range in ranges.reversed() {
             if range.location != NSNotFound, range.length != NSNotFound {

@@ -14,37 +14,37 @@ import UIKit
  */
 @objcMembers open class GiftMessageCell: UITableViewCell {
 
-    var gift: GiftEntityProtocol?
+    public var gift: GiftEntityProtocol?
     
-    lazy var lightEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+    public lazy var lightEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
     
-    lazy var darkEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+    public lazy var darkEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
     
-    lazy var container: UIView = {
+    public lazy var container: UIView = {
         UIView(frame: CGRect(x: 0, y: 5, width: self.contentView.frame.width, height: self.contentView.frame.height - 10)).backgroundColor(UIColor.theme.barrageDarkColor1).isUserInteractionEnabled(false)
     }()
     
-    lazy var blur: UIVisualEffectView = {
+    public lazy var blur: UIVisualEffectView = {
         let blurView = UIVisualEffectView(effect: self.lightEffect)
         blurView.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height - 10)
         return blurView
     }()
     
-    lazy var avatar: ImageView = ImageView(frame: CGRect(x: 5, y: 5, width: self.frame.width / 5.0, height: self.frame.width / 5.0)).contentMode(.scaleAspectFit)
+    public lazy var avatar: ImageView = ImageView(frame: CGRect(x: 5, y: 5, width: self.frame.width / 5.0, height: self.frame.width / 5.0)).contentMode(.scaleAspectFit)
     
-    lazy var userName: UILabel = {
+    public lazy var userName: UILabel = {
         UILabel(frame: CGRect(x: self.avatar.frame.maxX + 6, y: 8, width: self.frame.width / 5.0 * 2 - 12, height: 15)).font(UIFont.theme.headlineExtraSmall).textColor(UIColor.theme.neutralColor100)
     }()
     
-    lazy var giftName: UILabel = {
+    public lazy var giftName: UILabel = {
         UILabel(frame: CGRect(x: self.avatar.frame.maxX + 6, y: self.userName.frame.maxY, width: self.frame.width / 5.0 * 2 - 12, height: 15)).font(UIFont.theme.bodySmall).textColor(UIColor.theme.neutralColor100)
     }()
     
-    lazy var giftIcon: ImageView = {
+    public lazy var giftIcon: ImageView = {
         ImageView(frame: CGRect(x: self.frame.width / 5.0 * 3, y: 0, width: self.frame.width / 5.0, height: self.contentView.frame.height)).contentMode(.scaleAspectFit)
     }()
     
-    lazy var giftNumbers: UILabel = {
+    public lazy var giftNumbers: UILabel = {
         UILabel(frame: CGRect(x: self.frame.width / 5.0 * 4 + 8, y: 10, width: self.frame.width / 5.0 - 16, height: self.frame.height - 20)).font(UIFont.theme.giftNumberFont).textColor(UIColor.theme.neutralColor100)
     }()
 
@@ -81,7 +81,8 @@ import UIKit
     
     /// Refresh view on receive gift.
     /// - Parameter item: ``GiftEntityProtocol``
-    @objc open func refresh(item: GiftEntityProtocol) {
+    @objc(refreshWithItem:)
+    open func refresh(item: GiftEntityProtocol) {
         if self.gift == nil {
             self.gift = item
         }
@@ -89,7 +90,7 @@ import UIKit
             self.avatar.image(with:avatarURL, placeHolder: UIImage(named: "", in: .chatroomBundle, with: nil))
         }
         
-        self.userName.text = item.sendUser?.nickName
+        self.userName.text = item.sendUser?.nickname
         self.giftName.text = "Sent ".chatroom.localize + (item.giftName)
         self.giftIcon.image(with: item.giftIcon, placeHolder: Appearance.giftPlaceHolder)
         self.giftNumbers.text = "X \(item.giftCount)"
