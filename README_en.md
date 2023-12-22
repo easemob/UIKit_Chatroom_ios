@@ -48,7 +48,7 @@ You can install ChatroomUIKit with the Swift Package Manager or CocoaPods as a d
 
 ## [CocoaPods](https://github.com/zjc19891106/ChatroomUIKit#cocoapods)
 
-```
+```ruby
 pod 'ChatroomUIKit'
 ```
 
@@ -57,29 +57,27 @@ pod 'ChatroomUIKit'
 ### [Basic Components of ChatroomUIKit](https://github.com/zjc19891106/ChatroomUIKit#basic-components-of-chatroomuikit)
 
 ```
-ChatroomUIKit  
+ChatroomUIKit
 ├─ Service                           // Basic service components.
-│  ├─ Protocol                       // Business protocol component.    
+│  ├─ Protocol                       // Business protocol component.
 │  │  ├─ GiftService                 // Gift sending and receiving channel.
 │  │  ├─ UserService                 // Component for user login and user attribute update.
 │  │  └─ ChatroomService             // Component for implementing the protocol for chat room management, including joining and leaving the chat room and sending and receiving messages.
-│  ├─ Implement                      // Protocol implementation component. 
+│  ├─ Implement                      // Protocol implementation component.
 │  └─ Client                         // ChatroomUIKit initialization class.
 │
 └─ UI                                // Basic UI components without business.
    ├─ Resource                       // Image or localize file.
    ├─ Component                      // UI module containing specific business. Some functional UI components in chat room UIKit.
    │  ├─ Room                        // Container of all chat room subviews.
-   │  ├─ Chat                        // The chat component and bottom functional area in the chat room.  
+   │  ├─ Chat                        // The chat component and bottom functional area in the chat room.
    │  ├─ Gift                        // Components such as the gift area and gift container in the chat room.
-   │  └─ Input                       // Input components in chat rooms such as emoticons. 
+   │  └─ Input                       // Input components in chat rooms such as emoticons.
    └─ Core
-      ├─ UIKit                       // Some common UIKit components and custom components. 
-      ├─ Theme                       // Theme-related components, including colors, fonts, skinning protocols and their components. 
-      └─ Extension                   // Some convenient system class extensions.  
+      ├─ UIKit                       // Some common UIKit components and custom components.
+      ├─ Theme                       // Theme-related components, including colors, fonts, skinning protocols and their components.
+      └─ Extension                   // Some convenient system class extensions.
 ```
-
-
 
 # [Documentation](https://github.com/zjc19891106/ChatroomUIKit#documentation)
 
@@ -89,7 +87,7 @@ You can open the `ChatroomUIKit.doccarchive` file in Xcode to view files in it o
 
 Also, you can right-click the file to show the package contents and copy all files inside to a folder. Then drag this folder to the `terminal` app and run the following command to deploy it on the local IP address.
 
-```
+```bash
 python3 -m http.server 8080
 ```
 
@@ -120,10 +118,10 @@ Refer to the following steps to create an iOS platform App in Xcode. The creatio
 
 ### [Step 1: Initialize ChatroomUIKit](https://github.com/zjc19891106/ChatroomUIKit#step-1-initialize-chatroomuikit)
 
-```
+```swift
 import UIKit
 import ChatroomUIKit
-    
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -131,9 +129,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // You can initialize the ChatroomUIKit when the app loads or before you use it. 
-        // You need to pass in the App Key. 
-        // To get the App Key, visit https://docs.agora.io/en/agora-chat/get-started/enable?platform=android#get-chat-project-information.  
+        // You can initialize the ChatroomUIKit when the app loads or before you use it.
+        // You need to pass in the App Key.
+        // To get the App Key, visit https://docs.agora.io/en/agora-chat/get-started/enable?platform=android#get-chat-project-information.
         ChatroomUIKitClient.shared.setup(with: "Appkey")
         return true
     }
@@ -142,24 +140,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 ### [Step 2: Log in to the ChatroomUIKit](https://github.com/zjc19891106/ChatroomUIKit#step-2-log-in-to-the-chatroomuikit)
 
-```
+```swift
 // Log in to the ChatroomUIKit with the user information of the current user object that conforms to the `UserInfoProtocol` protocol.
 // The token needs to be obtained from your app server. You can also log in with a temporary token generated on the Agora Console.
 // To generate a user and a temporary user token on the Agora Console, see https://docs.agora.io/en/agora-chat/get-started/enable?platform=ios#manage-users-and-generate-tokens.
-ChatroomUIKitClient.shared.login(with userId: "user id", token: "token", completion: <#T##(ChatError?) -> Void#>)
+ChatroomUIKitClient.shared.login(
+    with userId: "user id",
+    token: "token",
+    completion: <#T##(ChatError?) -> Void#>
+)
 ```
 
 ### [Step 3: Create a chat room view](https://github.com/zjc19891106/ChatroomUIKit#step-3-create-a-chat-room-view)
 
-```
+```swift
 // 1. Get a chat room list and join a chat room. Alternatively, create a chat room on the Agora Console.
 // Choose Project Management > Operation Management > Chat Room and click Create Chat Room and set parameters in the displayed dialog box to create a chat room. Get the chat room ID to pass it to the following `launchRoomView` method.
 // 2. Create a chat room view with `ChatroomView` by passing in parameters such as layout parameters and the array of extension button model protocols of the bottom toolbar.
 // It is recommended that the width of ChatroomView should be initialized as the width of the screen and the height should be no less than the height of the screen minus the height of the navigation.
-let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.room?.chatroomId ?? "", frame: CGRect(x: 0, y: self.playView.frame.maxY, width: self.view.frame.width, height: 336+BottomBarHeight), ownerId: "Chatroom's owner user id")        
-// 3. Add to the destination frame. 
+let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(
+    roomId: self.room?.chatroomId ?? "",
+    frame: CGRect(x: 0, y: self.playView.frame.maxY, width: self.view.frame.width, height: 336+BottomBarHeight),
+    ownerId: "Chatroom's owner user id"
+)
+// 3. Add to the destination frame.
 // 4. Add users to the chat room on the Console.
-// Choose ProjectManager > Operation Manager > Chat Room. Select View Chat Room Members in the Action column of a chat room and add users to the chat room in the displayed dialog box.  
+// Choose ProjectManager > Operation Manager > Chat Room. Select View Chat Room Members in the Action column of a chat room and add users to the chat room in the displayed dialog box.
 ```
 
 [![CreateChatroom](https://github.com/zjc19891106/ChatroomUIKit/raw/main/Documentation/CreateChatroom.png)](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Documentation/CreateChatroom.png).
@@ -168,7 +174,7 @@ Please refer to the next chapter for transparent transmission of events.
 
 # [Precautions](https://github.com/zjc19891106/ChatroomUIKit#precautions)
 
-When calling `ChatroomUIKitClient.shared.launchRoomView(roomId: String, frame: CGRect, is owner: Bool)`, remember to add ChatroomView above your existing view to facilitate interception and transparent transmission of click events.
+When calling `ChatroomUIKitClient.shared.launchRoomView(roomId: String, frame: CGRect, isOwner: Bool)`, remember to add ChatroomView above your existing view to facilitate interception and transparent transmission of click events.
 
 For example, if you have a view that plays video streams, be sure to add ChatroomView above this view.
 
@@ -178,42 +184,50 @@ Here are three examples of advanced usage.
 
 ### [1.Log in to ChatroomUIKit](https://github.com/zjc19891106/ChatroomUIKit#1log-in-to-chatroomuikit)
 
-```
+```swift
 class YourAppUser: UserInfoProtocol {
     var userId: String = "your application user id"
-            
+
     var nickName: String = "Your user nick name"
-            
+
     var avatarURL: String = "Your user avatar url"
-            
+
     var gender: Int = 1
-            
+
     var identity: String =  "Your user level symbol url"
-            
+
 }
 // Use the user information of the current user object that conforms to the UserInfoProtocol protocol to log in to ChatroomUIKit.
 // You need to get a user token from your app server. Alternatively, you can use a temporary token. To generate a temporary token, visit https://docs.agora.io/en/agora-chat/get-started/enable?platform=ios#generate-a-user-token.
-ChatroomUIKitClient.shared.login(with: YourAppUser(), token: "token", completion: <#T##(ChatError?) -> Void#>)
+ChatroomUIKitClient.shared.login(
+    with: YourAppUser(),
+    token: "token",
+    completion: <#T##(ChatError?) -> Void#>)
 ```
 
 ### [2.Initialize the chat room view](https://github.com/zjc19891106/ChatroomUIKit#2initialize-the-chat-room-view)
 
-```
+```swift
 //1. Get a chat room list and join a chat room. Alternatively, create a chat room on the Agora Console.
 // 2. Create a chat room view with `ChatroomView` by passing in parameters such as layout parameters and the array of extension button model protocols of the bottom toolbar.
-    let options  = ChatroomUIKitInitialOptions.UIOptions()
-    options.bottomDataSource = self.bottomBarDatas()
-    options.showGiftMessageArea = true
-    options.chatAreaShowGift = false
-    ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.room?.chatroomId ?? "", frame: CGRect(x: 0, y: self.playView.frame.maxY, width: self.view.frame.width, height: 336+BottomBarHeight), ownerId: self.room?.owner ?? "",options: options)        
-//3. Add to the destination frame. 
+let options  = ChatroomUIKitInitialOptions.UIOptions()
+options.bottomDataSource = self.bottomBarDatas()
+options.showGiftMessageArea = true
+options.chatAreaShowGift = false
+ChatroomUIKitClient.shared.launchRoomViewWithOptions(
+    roomId: self.room?.chatroomId ?? "",
+    frame: CGRect(x: 0, y: self.playView.frame.maxY, width: self.view.frame.width, height: 336+BottomBarHeight),
+    ownerId: self.room?.owner ?? "",
+    options: options
+)
+//3. Add to the destination frame.
 ```
 
 ### [3.Listen for ChatroomUIKit events and errors](https://github.com/zjc19891106/ChatroomUIKit#3listen-for-chatroomuikit-events-and-errors)
 
 You can call the `registerRoomEventsListener` method to listen for ChatroomUIKit events and errors.
 
-```
+```swift
 ChatroomUIKitClient.shared.registerRoomEventsListener(listener: self)
 ```
 
@@ -223,11 +237,15 @@ ChatroomUIKitClient.shared.registerRoomEventsListener(listener: self)
 
 The following shows how to change the overall cell layout style of the chat area and how to create the ChatroomView.
 
-```
+```swift
 // You can change the overall cell layout style of the chat area by setting the properties.
 Appearance.ChatMessageDisplayContentStyle = .all
 // Create the ChatroomView by passing in parameters like layout parameters and the bottom toolbar extension button model protocol array.
-let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.room?.chatroomId ?? "", frame: CGRect(x: 0, y: self.playView.frame.maxY, width: self.view.frame.width, height: 336+BottomBarHeight), ownerId: self.room?.owner ?? "")
+let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(
+    roomId: self.room?.chatroomId ?? "",
+    frame: CGRect(x: 0, y: self.playView.frame.maxY, width: self.view.frame.width, height: 336+BottomBarHeight),
+    ownerId: self.room?.owner ?? ""
+)
 self.view.addSubView(roomView)
 ```
 
@@ -237,17 +255,17 @@ For details, see [Appearance](https://github.com/zjc19891106/ChatroomUIKit/blob/
 
 The following shows how to customize the gift message cell.
 
-```
+```swift
 class CustomGiftMessageCell: GiftMessageCell {
     lazy var redDot: UIView = {
         UIView().backgroundColor(.red).cornerRadius(.large)
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(redDot)
     }
-    
+
     override func refresh(item: GiftEntityProtocol) {
         super.refresh(item: item)
         self.redDot.isHidden = item.selected
@@ -264,19 +282,19 @@ For details, see [ComponentsRegister](https://github.com/zjc19891106/ChatroomUIK
 
 - Switch to the light or dark theme that comes with the ChatroomUIKit.
 
-```
+```swift
 Theme.switchTheme(style: .dark)` or `Theme.switchTheme(style: .light)
 ```
 
 - Switch to a custom theme.
 
-```
+```swift
 /**
 How to customize a theme?
 
 To customize a theme, you need to define the hue values of the following five theme colors by reference to the theme color of the design document.
 
-All colors in ChatroomUIKit are defined with the HSLA color model that is a way of representing colors using hue, saturation, lightness, and alpha. 
+All colors in ChatroomUIKit are defined with the HSLA color model that is a way of representing colors using hue, saturation, lightness, and alpha.
 
 H (Hue): Hue, the basic attribute of color, is a degree on the color wheel from 0 to 360. 0 is red, 120 is green, and 240 is blue.
 
