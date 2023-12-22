@@ -10,10 +10,6 @@ import UIKit
 
 /**
  A subclass of UITextView that provides a placeholder text when the text view is empty.
- 
- - Author: GitHub Copilot
- - Version: 1.0.0
- - Date: 2021-10-14
  */
 @objcMembers public class PlaceHolderTextView: UITextView {
     
