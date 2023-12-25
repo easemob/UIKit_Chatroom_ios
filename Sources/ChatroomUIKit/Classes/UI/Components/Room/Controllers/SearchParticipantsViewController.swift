@@ -66,7 +66,6 @@ import UIKit
         self.rawSources = rawSources
         self.searchResults = rawSources
         super.init(nibName: nil, bundle: nil)
-        Theme.registerSwitchThemeViews(view: self)
     }
     
     required init?(coder: NSCoder) {

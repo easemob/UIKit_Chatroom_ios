@@ -50,7 +50,7 @@ extension GiftsViewController: GiftsViewActionEventsDelegate {
         //It can be called after completing the interaction related to the gift sending interface with the server.
         if ChatroomContext.shared?.muteMap?[ChatroomContext.shared?.currentUser?.userId ?? ""] ?? false {
             UIViewController.currentController?.dismiss(animated: true) {
-                UIViewController.currentController?.showToast(toast: "Your were muted!".chatroom.localize, duration: 2,delay: 1)
+                UIViewController.currentController?.showToast(toast: "You have been muted and are unable to send messages.".chatroom.localize, duration: 2,delay: 1)
             }
             return
         }

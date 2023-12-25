@@ -24,9 +24,9 @@
 
 "barrage_long_press_menu_privatechat" = "Private Chat";
 "barrage_long_press_menu_translate" = "Translate";
-"barrage_long_press_menu_delete" = "Delete";
+"barrage_long_press_menu_delete" = "Recall";
 "barrage_long_press_menu_mute" = "Mute";
-"barrage_long_press_menu_unmute" = "unmute";
+"barrage_long_press_menu_unmute" = "Unmute";
 "barrage_long_press_menu_report" = "Report";
 "barrage_long_press_menu_cancel" = "Cancel";
 "report_button_click_menu_title" = "Report";
@@ -36,7 +36,7 @@
 "Ban List" = "Ban List";
 "Sent" = "Sent";
 
-"violation_reason_1" = "Unwelcome commercial content or spam";
+"violation_reason_1" = "Unwelcome commercial&spam content";
 "violation_reason_2" = "Pornographic or explicit content";
 "violation_reason_3" = "Child abuse";
 "violation_reason_4" = "Hate speech or graphic violence";
@@ -47,5 +47,7 @@
 "violation_reason_9" = "Others";
 "Search" = "Search";
 "participant_list_button_click_menu_remove" = "Remove";
-"Your were muted!" = "Your were muted!";
+"Your were muted!" = "You have been muted.";
 "new messages" = "new messages";
+"Host" = "Host";
+"You have been muted and are unable to send messages." = "You have been muted and are unable to send messages.";

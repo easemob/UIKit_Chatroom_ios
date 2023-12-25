@@ -49,4 +49,6 @@
 "Search" = "搜索";
 "participant_list_button_click_menu_remove" = "移除";
 "Your were muted!" = "您已被禁言";
+"You have been muted and are unable to send messages." = "你已被禁言，无法发送消息";
 "new messages" = "条新消息";
+"Host" = "房主";

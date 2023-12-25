@@ -13,10 +13,6 @@ import UIKit
 
 /**
  A UICollectionViewCell subclass that displays a gift entity with an icon, name, and price. It also has a "Send" button that triggers a callback when tapped.
- 
- - Author: GitHub Copilot
- - Version: 1.0.0
- - Since: 2021-10-15
  */
 @objcMembers open class GiftEntityCell: UICollectionViewCell {
     
@@ -51,7 +47,7 @@ import UIKit
         self.contentView.backgroundColor = .clear
         self.contentView.addSubViews([self.cover, self.icon, self.name, self.displayValue])
         self.cover.addSubview(self.send)
-        self.displayValue.imageEdgeInsets(UIEdgeInsets(top: self.displayValue.imageEdgeInsets.top, left: -10, bottom: self.displayValue.imageEdgeInsets.bottom, right: self.displayValue.imageEdgeInsets.right))
+//        self.displayValue.imageEdgeInsets(UIEdgeInsets(top: self.displayValue.imageEdgeInsets.top, left: -10, bottom: self.displayValue.imageEdgeInsets.bottom, right: self.displayValue.imageEdgeInsets.right))
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
     }

@@ -70,7 +70,10 @@ import UIKit
         self.userAvatar.image(with: user.avatarURL, placeHolder: Appearance.avatarPlaceHolder)
         self.userName.text = user.nickname.isEmpty ? user.userId:user.nickname
         self.hiddenUserIdentity(hidden: hiddenUserIdentity ? hiddenUserIdentity:Appearance.messageDisplayStyle == .hideUserIdentity)
-        self.updateUserDetail(text: detail)
+        if ChatroomContext.shared?.ownerId ?? "" == user.userId {
+            self.updateUserDetail(text: detail == nil ? "Host".chatroom.localize:nil) 
+        }
+        
     }
     
     @objc public func hiddenUserIdentity(hidden: Bool) {

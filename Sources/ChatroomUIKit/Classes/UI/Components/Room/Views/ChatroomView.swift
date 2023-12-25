@@ -41,7 +41,7 @@ import UIKit
         
     /// Gift list on receive gift.
     public private(set) lazy var giftArea: GiftMessageList = {
-        GiftMessageList(frame: CGRect(x: 10, y: self.touchFrame.minY, width: self.touchFrame.width-120, height: Appearance.giftAreaRowHeight*2),source:self)
+        GiftMessageList(frame: CGRect(x: 10, y: self.touchFrame.minY, width: self.touchFrame.width/2.0+60, height: Appearance.giftAreaRowHeight*2),source:self)
     }()
     
     /// Chat area list.
@@ -241,7 +241,7 @@ extension ChatroomView: MessageListActionEventsHandler {
         }
         let currentUser = ChatroomContext.shared?.currentUser?.userId ?? ""
         if message.from.lowercased() != currentUser.lowercased() {
-            messageActions.removeAll { $0.tag == "Delete" }
+            messageActions.removeAll { $0.tag == "Recall" }
         }
         self.showLongPressDialog(message: message, messageActions: messageActions)
         for delegate in self.eventHandlers.allObjects {
@@ -254,7 +254,7 @@ extension ChatroomView: MessageListActionEventsHandler {
             switch item.tag {
             case "Translate":
                 self?.service?.translate(message: message, completion: { _ in })
-            case "Delete":
+            case "Recall":
                 self?.service?.recall(message: message, completion: { _ in })
             case "Mute":
                 self?.service?.mute(userId: message.from, completion: { _ in })

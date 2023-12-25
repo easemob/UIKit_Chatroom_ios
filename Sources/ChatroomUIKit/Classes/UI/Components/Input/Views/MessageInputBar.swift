@@ -71,8 +71,7 @@ import UIKit
         
         self.inputField.cornerRadius(Appearance.inputBarCorner)
         self.inputField.placeHolder = Appearance.inputPlaceHolder.chatroom.localize
-        let verticalOffset = (self.inputField.frame.size.height - self.inputField.contentSize.height * self.inputField.zoomScale)
-        self.inputField.contentInset = UIEdgeInsets(top: max(0, verticalOffset), left: 16, bottom: 0, right: 16)
+        self.inputField.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16)
         self.inputField.tintColor = UIColor.theme.primaryColor5
         self.inputField.placeHolderColor = UIColor.theme.neutralColor6
         self.inputField.textColor = UIColor.theme.neutralColor1
@@ -126,7 +125,9 @@ extension MessageInputBar: UITextViewDelegate {
     }
     
     public func textViewDidChangeSelection(_ textView: UITextView) {
-        self.rightView.isSelected = false
+        if textView.selectedRange.length > 0 {
+            self.rightView.isSelected = false
+        }
     }
     
     
