@@ -57,7 +57,7 @@ import UIKit
     public static var messageTranslationLanguage: LanguageType = .English
     
     /// ActionSheet data source of the message being long pressed.``ActionSheetItemProtocol``
-    public static var defaultMessageActions: [ActionSheetItemProtocol] = [ActionSheetItem(title: "barrage_long_press_menu_translate".chatroom.localize, type: .normal,tag: "Translate"),ActionSheetItem(title: "barrage_long_press_menu_delete".chatroom.localize, type: .normal,tag: "Delete"),ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute"),ActionSheetItem(title: "barrage_long_press_menu_report".chatroom.localize, type: .destructive,tag: "Report")]
+    public static var defaultMessageActions: [ActionSheetItemProtocol] = [ActionSheetItem(title: "barrage_long_press_menu_translate".chatroom.localize, type: .normal,tag: "Translate"),ActionSheetItem(title: "barrage_long_press_menu_delete".chatroom.localize, type: .normal,tag: "Recall"),ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute"),ActionSheetItem(title: "barrage_long_press_menu_report".chatroom.localize, type: .destructive,tag: "Report")]
     
     /// ActionSheet data source of the member list cell on click ``...``.
     public static var defaultOperationUserActions: [ActionSheetItemProtocol] = [ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute"),ActionSheetItem(title: "participant_list_button_click_menu_remove".chatroom.localize, type: .destructive,tag: "Remove")]
@@ -69,7 +69,7 @@ import UIKit
     public static var actionSheetRowHeight: CGFloat = 56
     
     /// The placeholder image of the gift image view of the gift list cell ``GiftEntityCell``.
-    public static var giftPlaceHolder: UIImage? = UIImage(named: "sendgift", in: .chatroomBundle, with: nil)
+    public static var giftPlaceHolder: UIImage? = UIImage(named: "gift_placeholder", in: .chatroomBundle, with: nil)
     
     /// The default image of the gift price of the gift list cell ``GiftEntityCell``.
     public static var giftPriceIcon: UIImage? = UIImage(named: "dollar", in: .chatroomBundle, with: nil)

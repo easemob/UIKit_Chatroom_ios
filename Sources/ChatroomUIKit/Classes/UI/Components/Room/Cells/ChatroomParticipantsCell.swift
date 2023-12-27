@@ -95,6 +95,12 @@ import UIKit
         } else {
             self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
         }
+        if self.reuseIdentifier == "ChatroomParticipantsCellSearchResultCell" {
+            self.userDetail.frame =  CGRect(x: self.userAvatar.frame.maxX+12, y: self.userName.frame.maxY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 18)
+        } else {
+            self.userDetail.frame =  CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.maxY-18, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 18)
+        }
+        
         self.more.frame = CGRect(x: self.contentView.frame.width-40, y: (self.contentView.frame.height-28)/2.0, width: 28, height: 28)
     }
     

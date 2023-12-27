@@ -36,7 +36,7 @@ import UIKit
     }()
     
     lazy var textCarousel: UILabel = {
-        UILabel(frame: CGRect(x: 0, y: 0, width: .infinity, height: self.frame.height-4)).textColor(Appearance.notifyTextColor).backgroundColor(.clear)
+        UILabel(frame: CGRect(x: 0, y: 0, width: .infinity, height: self.frame.height-4)).textColor(Appearance.notifyTextColor).backgroundColor(.clear).lineBreakMode(.byCharWrapping).numberOfLines(1)
     }()
 
     override init(frame: CGRect) {
@@ -71,14 +71,14 @@ import UIKit
         self.scroll.setContentOffset(self.originContentOffset, animated: false)
 
         let text = self.animationContext.first ?? ""
-        let width = text.chatroom.sizeWithText(font: self.textCarousel.font, size: CGSize(width: 999, height: self.frame.height)).width
+        let width = text.chatroom.sizeWithText(font: self.textCarousel.font, size: CGSize(width: 9999, height: self.frame.height-4)).width
         var duration: CGFloat = 2
-        duration += CGFloat(text.count)*0.1
-        if width+self.frame.height > self.frame.width {
+        duration += CGFloat(text.count)*0.25
+        if width+(self.frame.height-13) > self.frame.width {
             self.scroll.frame = CGRect(x: (self.voiceIcon.isHidden ? 15:self.voiceIcon.frame.maxX+5), y: 0, width: self.frame.width - (self.voiceIcon.isHidden ? 15:self.voiceIcon.frame.maxX) - 15, height: self.frame.height)
-            self.textCarousel.frame = CGRect(x: 0, y: 0, width: width+33+20, height: self.frame.height)
-            self.scroll.contentSize = CGSize(width: width+33+20, height: self.frame.height)
-            UIView.animate(withDuration: duration, delay: 2, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.3, options: .curveLinear) {
+            self.textCarousel.frame = CGRect(x: 0, y: 0, width: width, height: self.frame.height)
+            self.scroll.contentSize = CGSize(width: width+10, height: self.frame.height)
+            UIView.animate(withDuration: duration, delay: 2, usingSpringWithDamping: 1, initialSpringVelocity: 0.15, options: .curveLinear) {
                 self.queue.isAnimating = true
                 self.alpha = 1
                 self.textCarousel.text = text
@@ -100,10 +100,9 @@ import UIKit
                 }
             }
         } else {
-            self.frame = CGRect(x: self.frame.minX, y: self.frame.minY, width: width+30, height: self.frame.height)
             self.scroll.frame = CGRect(x: (self.voiceIcon.isHidden ? 15:self.voiceIcon.frame.maxX+5), y: 0, width: self.frame.width - (self.voiceIcon.isHidden ? 15:self.voiceIcon.frame.maxX) - 15, height: self.frame.height)
-            self.textCarousel.frame = CGRect(x: 0, y: 0, width: width, height: self.frame.height)
-            UIView.animate(withDuration: duration, delay: 2, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveLinear) {
+            self.textCarousel.frame = CGRect(x: 0, y: 0, width: self.scroll.frame.width, height: self.frame.height)
+            UIView.animate(withDuration: duration, delay: 2, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveLinear) {
                 self.queue.isAnimating = true
                 self.alpha = 1
                 self.textCarousel.text = text

@@ -14,7 +14,7 @@ import UIKit
     var chooseClosure: ((Int)->())?
         
     lazy var indicator: UIView = {
-        UIView(frame: CGRect(x: 16+Appearance.pageContainerTitleBarItemWidth/2.0-8, y: self.frame.height-4, width: 16, height: 4)).cornerRadius(2).backgroundColor(UIColor.theme.primaryColor5)
+        UIView(frame: CGRect(x: 16+Appearance.pageContainerTitleBarItemWidth/2.0-14, y: self.frame.height-4, width: 28, height: 4)).cornerRadius(2).backgroundColor(UIColor.theme.primaryColor5)
     }()
     
     lazy var layout: UICollectionViewFlowLayout = {
@@ -97,7 +97,7 @@ extension PageContainerTitleBar: UICollectionViewDataSource, UICollectionViewDel
         self.datas[safe: index]?.selected = true
         self.choicesBar.reloadData()
         UIView.animate(withDuration: 0.25) {
-            self.indicator.frame = CGRect(x: 16+Appearance.pageContainerTitleBarItemWidth/2.0+Appearance.pageContainerTitleBarItemWidth*CGFloat(index)-8, y: self.frame.height-4, width: 16, height: 4)
+            self.indicator.frame = CGRect(x: 16+Appearance.pageContainerTitleBarItemWidth/2.0+Appearance.pageContainerTitleBarItemWidth*CGFloat(index)-14, y: self.frame.height-4, width: 28, height: 4)
         }
     }
 

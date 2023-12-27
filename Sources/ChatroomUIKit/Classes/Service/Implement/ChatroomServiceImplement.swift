@@ -51,7 +51,7 @@ extension ChatroomServiceImplement: ChatroomService {
                     completion(false,error)
                 } else {
                     self?.sendJoinMessage(roomId: room?.chatroomId ?? "", completion: { error in
-                        if error?.code == .errorUserMuted {
+                        if error?.code == .userMuted {
                             completion(true,nil)
                         } else {
                             completion(error == nil,error)

@@ -265,7 +265,7 @@ extension ChatroomView: MessageListActionEventsHandler {
                     DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
                         if let eventsListeners =  self?.service?.eventsListener.allObjects {
                             for listener in eventsListeners {
-                                listener.onEventResultChanged(error: error, type: .recall)
+                                listener.onEventResultChanged(error: error, type: .report)
                             }
                         }
                     }

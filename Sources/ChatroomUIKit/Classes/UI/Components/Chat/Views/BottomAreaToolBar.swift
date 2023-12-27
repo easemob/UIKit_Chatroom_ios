@@ -110,10 +110,10 @@ import UIKit
             self.toolBar.isHidden = true
         } else {
             self.toolBar.isHidden = false
-            self.toolBar.frame = CGRect(x: self.frame.width-toolBarWidth, y: 0, width: toolBarWidth, height: self.frame.height)
+            self.toolBar.frame = CGRect(x: self.frame.width-toolBarWidth+8, y: 0, width: toolBarWidth, height: self.frame.height)
         }
         if !self.chatRaiser.isHidden {
-            self.chatRaiser.frame = CGRect(x: 15, y: 5, width: self.frame.width-30-toolBarWidth, height: self.frame.height - 10)
+            self.chatRaiser.frame = CGRect(x: 15, y: 5, width: self.frame.width-30-toolBarWidth+8, height: self.frame.height - 10)
         }
         self.toolBar.reloadData()
     }

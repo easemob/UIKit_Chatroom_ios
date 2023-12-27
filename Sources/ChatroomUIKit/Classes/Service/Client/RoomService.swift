@@ -463,7 +463,7 @@ import UIKit
             if error == nil {
                 self?.chatDrive?.removeMessage(message: message)
             }
-            self?.handleError(type: .translate, error: error)
+            self?.handleError(type: .recall, error: error)
             completion(error)
         })
     }

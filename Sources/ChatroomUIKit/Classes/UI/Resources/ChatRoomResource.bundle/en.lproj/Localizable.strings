@@ -36,10 +36,10 @@
 "Ban List" = "Ban List";
 "Sent" = "Sent";
 
-"violation_reason_1" = "Unwelcome commercial&spam content";
-"violation_reason_2" = "Pornographic or explicit content";
+"violation_reason_1" = "Unwelcome commercial content";
+"violation_reason_2" = "Pornographic&explicit content";
 "violation_reason_3" = "Child abuse";
-"violation_reason_4" = "Hate speech or graphic violence";
+"violation_reason_4" = "Hate speech&graphic violence";
 "violation_reason_5" = "Promote terrorism";
 "violation_reason_6" = "Harassment or bullying";
 "violation_reason_7" = "Suicide or self harm";

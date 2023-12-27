@@ -39,7 +39,7 @@ import UIKit
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.items = Appearance.reportTags.map({ $0 == "Adult" })
+        self.items = Appearance.reportTags.map({ $0 == "violation_reason_1".chatroom.localize })
         self.view.backgroundColor(.clear)
         self.view.addSubViews([self.optionsList,self.cancel,self.confirm])
         self.switchTheme(style: Theme.style)
