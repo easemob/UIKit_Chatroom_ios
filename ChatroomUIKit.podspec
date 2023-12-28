@@ -5,41 +5,30 @@
 # Any lines starting with a # are optional, but their use is encouraged
 # To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
 #
-
 Pod::Spec.new do |s|
   s.name             = 'ChatroomUIKit'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of ChatroomUIKit.'
+  s.version          = '1.0.0'
+  s.summary          = 'ChatroomUIKit.'
 
 
   s.description      = <<-DESC
-A chat room UIKit that is easy to use, efficient, innovative and rich in custom themes, easy to create a better chat room experience.
+This product is mainly designed to solve most user needs for chat rooms in pan-entertainment business scenarios. It mainly solves the problem for users that directly integrating the SDK is cumbersome and complex, and some APIs have poor experience (from the perspective of user-side developers) )And other issues. We are committed to creating chat room UIKit products with simple integration, high degree of freedom, simple process, and sufficiently detailed documentation.
                        DESC
 
-  s.homepage         = 'https://github.com/zjc19891106/ChatroomUIKit'
+  s.homepage         = 'https://github.com/easemob/UIKit_Chatroom_ios'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'zjc19891106' => '984065974@qq.com' }
-  s.source           = { :git => 'https://github.com/zjc19891106/ChatroomUIKit.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/easemob/UIKit_Chatroom_ios', :tag => s.version.to_s }
   # s.social_media_url = 'https://github.com/zjc19891106'
 
   s.ios.deployment_target = '13.0'
   s.xcconfig = {'ENABLE_BITCODE' => 'NO'}
   
-  s.subspec 'Service' do |ss|
-      ss.source_files = [
-        'Sources/ChatroomUIKit/Classes/Service/**/*'
-      ]
-      ss.dependency 'HyphenateChat'
-  end
 
-  s.subspec 'UI' do |ss|
-    ss.source_files = [
-      'Sources/ChatroomUIKit/Classes/UI/**/*.swift'
-    ]
-    ss.resources = ['Sources/ChatroomUIKit/**/*.bundle']
-
-  end
+  s.source_files = ['Sources/ChatroomUIKit/Classes/**/*']
+  s.resources = ['Sources/ChatroomUIKit/**/*.bundle']
+  s.dependency 'HyphenateChat'
   
   s.static_framework = true
   
@@ -55,3 +44,4 @@ A chat room UIKit that is easy to use, efficient, innovative and rich in custom 
   # s.public_header_files = 'Pod/Classes/**/*.h'
    s.frameworks = 'UIKit', 'Foundation','Combine'
 end
+
