@@ -26,7 +26,7 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
   s.xcconfig = {'ENABLE_BITCODE' => 'NO'}
   
 
-  s.source_files = ['Sources/ChatroomUIKit/Classes/**/*']
+  s.source_files = ['Sources/ChatroomUIKit/Classes/**/*.swift']
   s.resources = ['Sources/ChatroomUIKit/**/*.bundle']
   s.dependency 'HyphenateChat'
   
