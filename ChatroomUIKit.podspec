@@ -26,20 +26,10 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
   s.ios.deployment_target = '13.0'
   s.xcconfig = {'ENABLE_BITCODE' => 'NO'}
   
-  s.subspec 'Service' do |ss|
-      ss.source_files = [
-        'Sources/ChatroomUIKit/Classes/Service/**/*'
-      ]
-      ss.dependency 'HyphenateChat'
-  end
 
-  s.subspec 'UI' do |ss|
-    ss.source_files = [
-      'Sources/ChatroomUIKit/Classes/UI/**/*.swift'
-    ]
-    ss.resources = ['Sources/ChatroomUIKit/**/*.bundle']
-
-  end
+  s.source_files = ['Sources/ChatroomUIKit/Classes/**/*']
+  s.resources = ['Sources/ChatroomUIKit/**/*.bundle']
+  s.dependency 'HyphenateChat'
   
   s.static_framework = true
   
