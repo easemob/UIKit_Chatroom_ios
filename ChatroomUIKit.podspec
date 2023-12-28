@@ -5,7 +5,6 @@
 # Any lines starting with a # are optional, but their use is encouraged
 # To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
 #
-
 Pod::Spec.new do |s|
   s.name             = 'ChatroomUIKit'
   s.version          = '1.0.0'
@@ -27,7 +26,7 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
   s.xcconfig = {'ENABLE_BITCODE' => 'NO'}
   
 
-  s.source_files = ['Sources/ChatroomUIKit/Classes/**/*']
+  s.source_files = ['Sources/ChatroomUIKit/Classes/**/*.swift']
   s.resources = ['Sources/ChatroomUIKit/**/*.bundle']
   s.dependency 'HyphenateChat'
   
@@ -45,3 +44,4 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
   # s.public_header_files = 'Pod/Classes/**/*.h'
    s.frameworks = 'UIKit', 'Foundation','Combine'
 end
+
