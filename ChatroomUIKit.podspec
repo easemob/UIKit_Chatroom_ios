@@ -20,7 +20,7 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'zjc19891106' => '984065974@qq.com' }
-  s.source           = { :git => 'https://github.com/easemob/UIKit_Chatroom_ios', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/easemob/UIKit_Chatroom_ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://github.com/zjc19891106'
 
   s.ios.deployment_target = '13.0'
