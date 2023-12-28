@@ -39,7 +39,7 @@ import UIKit
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.items = Appearance.reportTags.map({ $0 == "violation_reason_1".chatroom.localize })
+        self.items = Appearance.reportReasons.map({ $0 == "violation_reason_1".chatroom.localize })
         self.view.backgroundColor(.clear)
         self.view.addSubViews([self.optionsList,self.cancel,self.confirm])
         self.switchTheme(style: Theme.style)
@@ -54,7 +54,7 @@ extension ReportOptionsController: UITableViewDelegate,UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        Appearance.reportTags.count
+        Appearance.reportReasons.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -63,21 +63,21 @@ extension ReportOptionsController: UITableViewDelegate,UITableViewDataSource {
             cell = ReportOptionCell(style: .default, reuseIdentifier: "ReportOptionCell")
         }
         cell?.selectionStyle = .none
-        cell?.refresh(select: self.items[safe: indexPath.row] ?? false,title: Appearance.reportTags[safe: indexPath.row] ?? "")
+        cell?.refresh(select: self.items[safe: indexPath.row] ?? false,title: Appearance.reportReasons[safe: indexPath.row] ?? "")
         return cell ?? ReportOptionCell()
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        tableView.deselectRow(at: indexPath, animated: true)
         self.items.removeAll()
-        self.items = Array(repeating: false, count: Appearance.reportTags.count)
+        self.items = Array(repeating: false, count: Appearance.reportReasons.count)
         self.items[indexPath.row] = true
         self.selectIndex = indexPath.row
         self.optionsList.reloadData()
     }
     
     @objc private func report() {
-        ChatClient.shared().chatManager?.reportMessage(withId: self.reportMessage.messageId, tag: Appearance.reportTags[safe: self.selectIndex] ?? "", reason: "",completion: { [weak self] error in
+        ChatClient.shared().chatManager?.reportMessage(withId: self.reportMessage.messageId, tag: Appearance.reportTags[safe: self.selectIndex] ?? "", reason: Appearance.reportReasons[safe: self.selectIndex] ?? "",completion: { [weak self] error in
             self?.reportClosure?(error)
         })
         

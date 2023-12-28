@@ -106,7 +106,10 @@ import UIKit
     public static var giftAreaRowHeight: CGFloat = 44
     
     /// The label for message reporting types.
-    public static var reportTags: [String] = ["violation_reason_1".chatroom.localize,"violation_reason_2".chatroom.localize,"violation_reason_3".chatroom.localize,"violation_reason_4".chatroom.localize,"violation_reason_5".chatroom.localize,"violation_reason_6".chatroom.localize,"violation_reason_7".chatroom.localize,"violation_reason_8".chatroom.localize,"violation_reason_9".chatroom.localize]
+    public static var reportTags: [String] = ["tag1","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9"]
+    
+    /// The label for message reporting types.
+    public static var reportReasons: [String] = ["violation_reason_1".chatroom.localize,"violation_reason_2".chatroom.localize,"violation_reason_3".chatroom.localize,"violation_reason_4".chatroom.localize,"violation_reason_5".chatroom.localize,"violation_reason_6".chatroom.localize,"violation_reason_7".chatroom.localize,"violation_reason_8".chatroom.localize,"violation_reason_9".chatroom.localize]
     
     /// The row height of the member cell.
     public static var participantsRowHeight: CGFloat = 62

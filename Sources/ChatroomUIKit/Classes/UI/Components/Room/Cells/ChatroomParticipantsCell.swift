@@ -54,14 +54,6 @@ import UIKit
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        self.userLevel.frame = self.userLevel.isHidden ? .zero:CGRect(x: 12, y: self.contentView.center.y-13, width: 26, height: 26)
-        self.userAvatar.frame = CGRect(x: self.userLevel.frame.maxX+12, y: self.contentView.center.y-20, width: 40, height: 40)
-        if self.userDetail.text == nil {
-            self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY+10, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
-        } else {
-            self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
-        }
-        self.more.frame = CGRect(x: self.contentView.frame.width-40, y: (self.contentView.frame.height-28)/2.0, width: 28, height: 28)
     }
     
     @objc public func refresh(user: UserInfoProtocol,detail: String? = nil,hiddenUserIdentity: Bool = false) {
@@ -69,39 +61,45 @@ import UIKit
         self.userLevel.image(with: user.identity, placeHolder: Appearance.identityPlaceHolder)
         self.userAvatar.image(with: user.avatarURL, placeHolder: Appearance.avatarPlaceHolder)
         self.userName.text = user.nickname.isEmpty ? user.userId:user.nickname
-        self.hiddenUserIdentity(hidden: hiddenUserIdentity ? hiddenUserIdentity:Appearance.messageDisplayStyle == .hideUserIdentity)
         if ChatroomContext.shared?.ownerId ?? "" == user.userId {
             self.updateUserDetail(text: detail == nil ? "Host".chatroom.localize:nil) 
+        } else {
+            self.updateUserDetail(text: detail)
         }
         
+        self.hiddenUserIdentity(hidden: hiddenUserIdentity ? hiddenUserIdentity:Appearance.messageDisplayStyle == .hideUserIdentity)
     }
     
     @objc public func hiddenUserIdentity(hidden: Bool) {
         self.userLevel.isHidden = hidden
-        self.userLevel.frame = hidden ? .zero:CGRect(x: 12, y: self.contentView.center.y-13, width: 26, height: 26)
-        self.userAvatar.frame = CGRect(x: hidden ? 12:self.userLevel.frame.maxX+12, y: self.contentView.center.y-20, width: 40, height: 40)
+        self.userLevel.frame = hidden ? .zero:CGRect(x: 12, y: Appearance.participantsRowHeight/2.0-13, width: 26, height: 26)
+        self.userAvatar.frame = CGRect(x: hidden ? 12:self.userLevel.frame.maxX+12, y: Appearance.participantsRowHeight/2.0-20, width: 40, height: 40)
+        self.userLevel.frame = self.userLevel.isHidden ? .zero:CGRect(x: 12, y: Appearance.participantsRowHeight/2.0-13, width: 26, height: 26)
+        self.userAvatar.frame = CGRect(x: self.userLevel.frame.maxX+12, y: Appearance.participantsRowHeight/2.0-20, width: 40, height: 40)
         if self.userDetail.text == nil {
             self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY+10, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
+            self.userDetail.frame = CGRect(x: self.userName.frame.minX, y: self.userName.frame.maxY, width: self.userName.frame.width, height: 18)
         } else {
             self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
+            self.userDetail.frame = CGRect(x: self.userName.frame.minX, y: self.userName.frame.maxY, width: self.userName.frame.width, height: 18)
         }
         self.more.frame = CGRect(x: self.contentView.frame.width-40, y: (self.contentView.frame.height-28)/2.0, width: 28, height: 28)
     }
     
     @objc func updateUserDetail(text: String?) {
         self.userDetail.text = text
-        if let content = text,!content.isEmpty {
-            self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY+10, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
-        } else {
-            self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
-        }
-        if self.reuseIdentifier == "ChatroomParticipantsCellSearchResultCell" {
-            self.userDetail.frame =  CGRect(x: self.userAvatar.frame.maxX+12, y: self.userName.frame.maxY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 18)
-        } else {
-            self.userDetail.frame =  CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.maxY-18, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 18)
-        }
-        
-        self.more.frame = CGRect(x: self.contentView.frame.width-40, y: (self.contentView.frame.height-28)/2.0, width: 28, height: 28)
+//        if let content = text,!content.isEmpty {
+//            self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY+10, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
+//        } else {
+//            self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
+//        }
+//        if self.reuseIdentifier == "ChatroomParticipantsCellSearchResultCell" {
+//            self.userDetail.frame =  CGRect(x: self.userAvatar.frame.maxX+12, y: self.userName.frame.maxY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 18)
+//        } else {
+//            self.userDetail.frame =  CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.maxY-18, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 18)
+//        }
+//        
+//        self.more.frame = CGRect(x: self.contentView.frame.width-40, y: (self.contentView.frame.height-28)/2.0, width: 28, height: 28)
     }
     
     @objc private func moreAction() {
