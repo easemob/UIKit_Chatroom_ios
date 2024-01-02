@@ -178,6 +178,8 @@ When calling `ChatroomUIKitClient.shared.launchRoomView(roomId: String, frame: C
 
 For example, if you have a view that plays video streams, be sure to add ChatroomView above this view.
 
+![UI Hierarchy](/Documentation/hierarchy.png)
+
 # [Advanced Usage](https://github.com/zjc19891106/ChatroomUIKit#advanced-usage)
 
 Here are three examples of advanced usage.
