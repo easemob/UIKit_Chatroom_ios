@@ -131,7 +131,6 @@ import UIKit
     /// The current page number for getting chat room participants.
     public private(set)var pageNum = 1
     
-    
     public private(set)var pageNumOfMute = 1
     
     public private(set) lazy var giftService: GiftService? = {
@@ -303,6 +302,7 @@ import UIKit
         self.roomService?.fetchParticipants(roomId: self.roomId, pageSize: pageSize, completion: { [weak self] userIds, error in
             guard let `self` = self else { return  }
             if let ids = userIds {
+                self.pageNum += 1
                 var unknownUserIds = [String]()
                 for userId in ids {
                     if ChatroomContext.shared?.usersMap?[userId] == nil {
