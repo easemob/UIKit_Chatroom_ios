@@ -160,7 +160,7 @@ class AppDelegate：UIResponder，UIApplicationDelegate {
          // 需要传入App Key。
          // 获取App Key，请访问
          // https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E8%8E%B7%E5%8F%96%E7%8E%AF%E4%BF%A1%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF-im-%E7%9A%84%E4%BF%A1%E6%81%AF
-         let error = ChatroomUIKitClient.shared.setup（with: "Appkey"）
+         let error = ChatroomUIKitClient.shared.setup（appKey: "Appkey"）
      }
 }
 ```
@@ -200,7 +200,7 @@ addSubView(roomView)
 
 # 注意事项
 
-在调用`ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "当前聊天室的主播用户ID")`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
+在调用`ChatroomUIKitClient.shared.launchRoomView(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "当前聊天室的主播用户ID")`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
 
 例如，如果您有一个播放视频流的视图，请添加到视频视图的上方，`ChatroomView`实质上是全屏覆盖的，传入的frame是可用区域，弹幕区域以及底部功能条区域，以及键盘弹起后输入框中事件的响应高度。
 
