@@ -31,7 +31,7 @@ final class ExamplesViewController: UIViewController {
         ChatroomUIKitClient.shared.logout()
         let user = ExampleRequiredConfig.YourAppUser()
         ChatroomUIKitClient.shared.login(user: user, token: ExampleRequiredConfig.chatToken) { error in
-            if error == nil || error?.code == .errorUserAlreadyLoginSame {
+            if error == nil || error?.code == .userAlreadyLoginSame {
                 self.navigationController?.pushViewController(ChatroomListViewController(), animated: true)
             } else {
                 let errorInfo = "ChatroomUIKitClient login failed!\nError:\(error?.errorDescription ?? "")"
