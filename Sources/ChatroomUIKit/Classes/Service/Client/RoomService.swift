@@ -128,9 +128,6 @@ import UIKit
         }
     }
     
-    /// The current page number for getting chat room participants.
-    public private(set)var pageNum = 1
-    
     public private(set)var pageNumOfMute = 1
     
     public private(set) lazy var giftService: GiftService? = {
@@ -302,7 +299,6 @@ import UIKit
         self.roomService?.fetchParticipants(roomId: self.roomId, pageSize: pageSize, completion: { [weak self] userIds, error in
             guard let `self` = self else { return  }
             if let ids = userIds {
-                self.pageNum += 1
                 var unknownUserIds = [String]()
                 for userId in ids {
                     if ChatroomContext.shared?.usersMap?[userId] == nil {
@@ -310,7 +306,7 @@ import UIKit
                     }
                 }
                 if ChatroomUIKitClient.shared.option.option_chat.useProperties {
-                    if unknownUserIds.count > 0,self.pageNum <= 1 {
+                    if unknownUserIds.count > 0 {
                         ChatroomUIKitClient.shared.userImplement?.userInfos(userIds: unknownUserIds, completion: { infos, error in
                             if error == nil {
                                 var users = [UserInfoProtocol]()
@@ -329,6 +325,10 @@ import UIKit
                         for userId in ids {
                             if let user = ChatroomContext.shared?.usersMap?[userId] {
                                 users.append(user)
+                            } else {
+                                let user = User()
+                                user.userId = userId
+                                users.append(user)
                             }
                         }
                         completion(users,error)
@@ -346,10 +346,6 @@ import UIKit
                     }
                     completion(users,error)
                 }
-            }
-            
-            if error == nil {
-                self.pageNum += 1
             }
             self.handleError(type: .fetchParticipants, error: error)
         })
