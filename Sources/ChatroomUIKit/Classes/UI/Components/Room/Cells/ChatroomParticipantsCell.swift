@@ -68,6 +68,7 @@ import UIKit
         }
         
         self.hiddenUserIdentity(hidden: hiddenUserIdentity ? hiddenUserIdentity:Appearance.messageDisplayStyle == .hideUserIdentity)
+        self.more.frame = CGRect(x: ScreenWidth-40, y: (Appearance.participantsRowHeight-28)/2.0, width: 28, height: 28)
     }
     
     @objc public func hiddenUserIdentity(hidden: Bool) {
@@ -83,7 +84,6 @@ import UIKit
             self.userName.frame = CGRect(x: self.userAvatar.frame.maxX+12, y: self.userAvatar.frame.minY, width: self.contentView.frame.width-self.userAvatar.frame.maxX-36-28, height: 20)
             self.userDetail.frame = CGRect(x: self.userName.frame.minX, y: self.userName.frame.maxY, width: self.userName.frame.width, height: 18)
         }
-        self.more.frame = CGRect(x: self.contentView.frame.width-40, y: (self.contentView.frame.height-28)/2.0, width: 28, height: 28)
     }
     
     @objc func updateUserDetail(text: String?) {
