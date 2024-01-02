@@ -202,6 +202,8 @@ addSubView(roomView)
 
 在调用`ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "当前聊天室的主播用户ID")`时，记得将ChatroomView添加到现有视图之上，以方便拦截和透传点击事件。
 
+![UI层级图](/Documentation/hierarchy.png)
+
 例如，如果您有一个播放视频流的视图，请添加到视频视图的上方，`ChatroomView`实质上是全屏覆盖的，传入的frame是可用区域，弹幕区域以及底部功能条区域，以及键盘弹起后输入框中事件的响应高度。
 
 # 进阶用法
