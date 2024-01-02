@@ -334,9 +334,9 @@ The following figure is the best-practice API calling sequence diagram in the `E
 
 For any questions about design guidelines and details, you can add comments to the Figma design draft and mention our designer Stevie Jiang.
 
-See the [UI design drawing](https://www.figma.com/file/OX2dUdilAKHahAh9VwX8aI/Streamuikit?node-id=137%3A38589&mode=dev).
+See the [UI design drawing](https://www.figma.com/community/file/1322495388317476706/chatroom-uikit).
 
-See the [UI design guidelines](https://www.figma.com/file/OX2dUdilAKHahAh9VwX8aI/Streamuikit?node-id=137)
+See the [UI design guidelines](https://docs-im-beta.easemob.com/uikit/chatroomuikit/ios/design_guide.html)
 
 # [Contributing](https://github.com/zjc19891106/ChatroomUIKit#contributing)
 
