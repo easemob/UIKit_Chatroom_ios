@@ -13,10 +13,12 @@ final class ChatroomListViewController: UITableViewController {
     
     private var chatrooms = [ChatRoom]() {
         didSet {
-            if self.chatrooms.count <= 0 {
-                self.tableView.backgroundView = self.empty
-            } else {
-                self.tableView.backgroundView = nil
+            DispatchQueue.main.async {
+                if self.chatrooms.count <= 0 {
+                    self.tableView.backgroundView = self.empty
+                } else {
+                    self.tableView.backgroundView = nil
+                }
             }
         }
     }
