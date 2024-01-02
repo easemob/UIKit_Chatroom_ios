@@ -15,7 +15,7 @@ import ChatroomUIKit
  **/
 public class ExampleRequiredConfig {
     //请参看文档 https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E8%8E%B7%E5%8F%96%E7%8E%AF%E4%BF%A1%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF-im-%E7%9A%84%E4%BF%A1%E6%81%AF
-    static let appKey: String = <#环信官方后台创建的appkey#>
+    static let appKey: String = ""
     
     //请参看文档  https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA-im-%E7%94%A8%E6%88%B7
     static var chatToken: String = <#用户登录使用的token#>
@@ -26,13 +26,13 @@ public class ExampleRequiredConfig {
         public var identity: String = ""//user level picture url
         
         public func toJsonObject() -> Dictionary<String, Any>? {
-            ["userId":self.userId,"nickName":self.nickName,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
+            ["userId":self.userId,"nickname":self.nickname,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
         }
         
         //请参看文档  https://docs-im-beta.easemob.com/product/enable_and_configure_IM.html#%E5%88%9B%E5%BB%BA-im-%E7%94%A8%E6%88%B7
         public var userId: String = <#用户登录需要的userId#>
         
-        public var nickName: String = "Jack"
+        public var nickname: String = "Jack"
         
         public var avatarURL: String = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_1.png"
         

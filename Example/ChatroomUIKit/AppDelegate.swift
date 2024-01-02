@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let error = ChatroomUIKitClient.shared.setup(with: ExampleRequiredConfig.appKey)
+        let error = ChatroomUIKitClient.shared.setup(appKey: ExampleRequiredConfig.appKey)
         return true
     }
 

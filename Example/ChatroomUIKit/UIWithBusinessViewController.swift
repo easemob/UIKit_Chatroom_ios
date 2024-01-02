@@ -30,7 +30,7 @@ final class UIWithBusinessViewController: UIViewController {
     }()
     
     lazy var roomView: ChatroomUIKit.ChatroomView = {
-        ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "",options: self.option)
+        ChatroomUIKitClient.shared.launchRoomView(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "",options: self.option)
     }()
     
     lazy var members: UIButton = {
@@ -84,13 +84,13 @@ final class UIWithBusinessViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.addSubViews([self.background,self.roomView,self.members,self.modeSegment,self.illustrate,self.showGiftInChatArea])
         //Not necessary.When you want to receive chatroom view's click events.
-        self.roomView.addActionHandler(actionHandler: self)
+        self.roomView.addActionHandler(self)
         //Not necessary.But when you want to receive room events,you can call as follows.
-        ChatroomUIKitClient.shared.registerRoomEventsListener(listener: self)
+        ChatroomUIKitClient.shared.registerRoomEventsListener( self)
     }
         
     deinit {
-        ChatroomUIKitClient.shared.unregisterRoomEventsListener(listener: self)
+        ChatroomUIKitClient.shared.unregisterRoomEventsListener( self)
         ChatroomUIKitClient.shared.destroyRoom()
         consoleLogInfo("\(self.swiftClassName ?? "") deinit", type: .debug)
     }
@@ -139,7 +139,7 @@ extension UIWithBusinessViewController {
                     }
                 })
             case "Remove":
-                DialogManager.shared.showAlert(content: "删除 `\(user.nickName.isEmpty ? user.userId:user.nickName)`.确定?", showCancel: true, showConfirm: true) {
+                DialogManager.shared.showAlert(content: "删除 `\(user.nickname.isEmpty ? user.userId:user.nickname)`.确定?", showCancel: true, showConfirm: true) {
                     ChatroomUIKitClient.shared.roomService?.kick(userId: user.userId) { [weak self] error in
                         guard let `self` = self else { return }
                         if error == nil {
@@ -238,7 +238,7 @@ extension UIWithBusinessViewController: RoomEventsListener {
     
     func onUserLeave(roomId: String, userId: String) {
         //Statistical data
-        self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickName ?? userId) was left.", duration: 3)
+        self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickname ?? userId) was left.", duration: 3)
     }
     
     
@@ -259,7 +259,7 @@ extension UIWithBusinessViewController: RoomEventsListener {
     }
     
     func onUserTokenWillExpired() {
-        ChatroomUIKitClient.shared.refreshToken(token: ExampleRequiredConfig.chatToken)
+        ChatroomUIKitClient.shared.refreshToken(ExampleRequiredConfig.chatToken)
     }
     
     func onUserLoginOtherDevice(device: String) {
@@ -267,11 +267,11 @@ extension UIWithBusinessViewController: RoomEventsListener {
     }
     
     func onUserUnmuted(roomId: String, userId: String) {
-        self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickName ?? userId) was unmuted.", duration: 3)
+        self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickname ?? userId) was unmuted.", duration: 3)
     }
     
     func onUserMuted(roomId: String, userId: String) {
-        self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickName ?? userId) was muted.", duration: 3)
+        self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickname ?? userId) was muted.", duration: 3)
     }
     
     func onUserJoined(roomId: String, user: ChatroomUIKit.UserInfoProtocol) {
