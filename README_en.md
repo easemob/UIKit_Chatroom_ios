@@ -132,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // You can initialize the ChatroomUIKit when the app loads or before you use it.
         // You need to pass in the App Key.
         // To get the App Key, visit https://docs.agora.io/en/agora-chat/get-started/enable?platform=android#get-chat-project-information.
-        ChatroomUIKitClient.shared.setup(with: "Appkey")
+        ChatroomUIKitClient.shared.setup(appKey: "Appkey")
         return true
     }
 }
@@ -145,7 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // The token needs to be obtained from your app server. You can also log in with a temporary token generated on the Agora Console.
 // To generate a user and a temporary user token on the Agora Console, see https://docs.agora.io/en/agora-chat/get-started/enable?platform=ios#manage-users-and-generate-tokens.
 ChatroomUIKitClient.shared.login(
-    with userId: "user id",
+    userId: "user id",
     token: "token",
     completion: <#T##(ChatError?) -> Void#>
 )
@@ -200,7 +200,7 @@ class YourAppUser: UserInfoProtocol {
 // Use the user information of the current user object that conforms to the UserInfoProtocol protocol to log in to ChatroomUIKit.
 // You need to get a user token from your app server. Alternatively, you can use a temporary token. To generate a temporary token, visit https://docs.agora.io/en/agora-chat/get-started/enable?platform=ios#generate-a-user-token.
 ChatroomUIKitClient.shared.login(
-    with: YourAppUser(),
+    user: YourAppUser(),
     token: "token",
     completion: <#T##(ChatError?) -> Void#>)
 ```
@@ -214,7 +214,7 @@ let options  = ChatroomUIKitInitialOptions.UIOptions()
 options.bottomDataSource = self.bottomBarDatas()
 options.showGiftMessageArea = true
 options.chatAreaShowGift = false
-ChatroomUIKitClient.shared.launchRoomViewWithOptions(
+ChatroomUIKitClient.shared.launchRoomView(
     roomId: self.room?.chatroomId ?? "",
     frame: CGRect(x: 0, y: self.playView.frame.maxY, width: self.view.frame.width, height: 336+BottomBarHeight),
     ownerId: self.room?.owner ?? "",
