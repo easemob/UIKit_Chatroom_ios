@@ -87,6 +87,7 @@ import UIKit
     open override func viewDidLoad() {
         super.viewDidLoad()
         self.definesPresentationContext = true
+        self.tableView.contentInsetAdjustmentBehavior = .never
         self.tableView.rowHeight = Appearance.participantsRowHeight
         self.tableView.tableHeaderView = self.searchController.searchBar
         self.tableView.register(ChatroomParticipantsCell.self, forCellReuseIdentifier: "ChatroomParticipantsCellSearchResultCell")

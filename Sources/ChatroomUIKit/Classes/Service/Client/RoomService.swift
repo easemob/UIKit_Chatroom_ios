@@ -128,6 +128,8 @@ import UIKit
         }
     }
     
+    public private(set)var pageNum = 1
+    
     public private(set)var pageNumOfMute = 1
     
     public private(set) lazy var giftService: GiftService? = {
@@ -305,7 +307,7 @@ import UIKit
                         unknownUserIds.append(userId)
                     }
                 }
-                if ChatroomUIKitClient.shared.option.option_chat.useProperties {
+                if ChatroomUIKitClient.shared.option.option_chat.useProperties,self.pageNum <= 1 {
                     if unknownUserIds.count > 0 {
                         ChatroomUIKitClient.shared.userImplement?.userInfos(userIds: unknownUserIds, completion: { infos, error in
                             if error == nil {
@@ -346,6 +348,9 @@ import UIKit
                     }
                     completion(users,error)
                 }
+            }
+            if error == nil {
+                self.pageNum += 1
             }
             self.handleError(type: .fetchParticipants, error: error)
         })
