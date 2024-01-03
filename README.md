@@ -226,7 +226,7 @@ public final class YourAppUser: NSObject, UserInfoProtocol {
     public func toJsonObject() -> Dictionary<String, Any>? {
         [
             "userId": self.userId,
-            "nickName": self.nickName,
+            "nickName": self.nickname,
             "avatarURL": self.avatarURL,
             "identity": self.identity,
             "gender": self.gender
@@ -235,7 +235,7 @@ public final class YourAppUser: NSObject, UserInfoProtocol {
 
     public var userId: String = <#T##String#>
 
-    public var nickName: String = "Jack"
+    public var nickname: String = "Jack"
 
     public var avatarURL: String = "https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_1.png"
 
@@ -255,7 +255,7 @@ public final class YourAppUser: NSObject, UserInfoProtocol {
     options.bottomDataSource = self.bottomBarDatas()
     options.showGiftMessageArea = true
     options.chatAreaShowGift = false
-    let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "Chatroom's owner id", options: options)
+    let roomView = ChatroomUIKitClient.shared.launchRoomView(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "Chatroom's owner id", options: options)
 //3. 添加视图
     addSubView(roomView)
 ```
@@ -265,7 +265,7 @@ public final class YourAppUser: NSObject, UserInfoProtocol {
 您可以调用`registerRoomEventsListener`方法来侦听 ChatroomUIKit 事件和错误。
 
 ```swift
-ChatroomUIKitClient.shared.registerRoomEventsListener(listener: self)
+ChatroomUIKitClient.shared.registerRoomEventsListener(self)
 ```
 
 # 自定义

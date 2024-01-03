@@ -11,7 +11,7 @@ Appearance.swift 是容纳了所有可配项的类，您需要在初始化Chatro
 ![位置示意图](./pageContainerTitleBarItemWidth.png).
 
 
-2. [Appearance.pageContainerConstraintsSize](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift).修改它可以改变整个PageContainer弹窗的整体Size
+2. [Appearance.giftDialogContainerConstraintsSize](https://github.com/easemob/UIKit_Chatroom_ios/ChatroomUIKit/blob/main/Sources/ChatroomUIKit/Classes/UI/Core/UIKit/Utils/Appearance.swift).修改它可以改变整个PageContainer弹窗的整体Size
 
 ![位置示意图](pageContainerTitleBarItemWidth.png).
 

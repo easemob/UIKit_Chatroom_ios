@@ -107,6 +107,7 @@ A container that contains a gift list. You can inherit this class to implement a
 
 # [Quick Start](https://github.com/easemob/UIKit_Chatroom_ios#quick-start)
 
+
 This guide provides several usage examples for different ChatroomUIKit components. Refer to the `Examples` folder for detailed code snippets and projects showing various use cases.
 
 Refer to the following steps to create an iOS platform App in Xcode. The creation settings are as follows:
@@ -151,7 +152,9 @@ ChatroomUIKitClient.shared.login(
 )
 ```
 
+
 ### [Step 3: Create a chat room view](https://github.com/easemob/UIKit_Chatroom_ios#step-3-create-a-chat-room-view)
+
 
 ```swift
 // 1. Get a chat room list and join a chat room. Alternatively, create a chat room on the Agora Console.
@@ -174,6 +177,7 @@ Please refer to the next chapter for transparent transmission of events.
 
 # [Precautions](https://github.com/easemob/UIKit_Chatroom_ios#precautions)
 
+
 When calling `ChatroomUIKitClient.shared.launchRoomView(roomId: String, frame: CGRect, isOwner: Bool)`, remember to add ChatroomView above your existing view to facilitate interception and transparent transmission of click events.
 
 For example, if you have a view that plays video streams, be sure to add ChatroomView above this view.
@@ -186,13 +190,14 @@ Here are three examples of advanced usage.
 
 ### [1.Log in to ChatroomUIKit](https://github.com/easemob/UIKit_Chatroom_ios#1log-in-to-chatroomuikit)
 
+
 ```swift
 class YourAppUser: UserInfoProtocol {
 
     public func toJsonObject() -> Dictionary<String, Any>? {
         ["userId":self.userId,"nickname":self.nickname,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
     }
-    
+
     var userId: String = "your application user id"
 
     var nickname: String = "Your user nick name"
@@ -214,6 +219,7 @@ ChatroomUIKitClient.shared.login(
 
 ### [2.Initialize the chat room view](https://github.com/easemob/UIKit_Chatroom_ios#2initialize-the-chat-room-view)
 
+
 ```swift
 //1. Get a chat room list and join a chat room. Alternatively, create a chat room on the Agora Console.
 // 2. Create a chat room view with `ChatroomView` by passing in parameters such as layout parameters and the array of extension button model protocols of the bottom toolbar.
@@ -232,15 +238,17 @@ ChatroomUIKitClient.shared.launchRoomView(
 
 ### [3.Listen for ChatroomUIKit events and errors](https://github.com/easemob/UIKit_Chatroom_ios#3listen-for-chatroomuikit-events-and-errors)
 
+
 You can call the `registerRoomEventsListener` method to listen for ChatroomUIKit events and errors.
 
 ```swift
-ChatroomUIKitClient.shared.registerRoomEventsListener(listener: self)
+ChatroomUIKitClient.shared.registerRoomEventsListener( self)
 ```
 
 # [Customization](https://github.com/easemob/UIKit_Chatroom_ios#customization)
 
 ### [1.Modify configurable items](https://github.com/easemob/UIKit_Chatroom_ios#1modify-configurable-items)
+
 
 The following shows how to change the overall cell layout style of the chat area and how to create the ChatroomView.
 
@@ -259,6 +267,7 @@ self.view.addSubView(roomView)
 For details, see [Appearance](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/Appearance.md).
 
 ### [2.Customize components](https://github.com/easemob/UIKit_Chatroom_ios#2customize-components)
+
 
 The following shows how to customize the gift message cell.
 
@@ -323,17 +332,17 @@ Theme.switchTheme(style: .custom)
 
 Note that custom themes and built-in themes are mutually exclusive.
 
-# [Business Flowchart](https://github.com/easemob/UIKit_Chatroom_ios#business-flowchart)
+# [Business Flowchart]
 
 The following figure presents the entire logic of business requests and callbacks.
 
-[![Overall flow diagram of business logic](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/BusinessFlowchart.png)](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/BusinessFlowchart.png)
+![Overall flow diagram of business logic](./Documentation/BusinessFlowchart.png)
 
-# [API Sequence Diagram](https://github.com/easemob/UIKit_Chatroom_ios#api-sequence-diagram)
+# [API Sequence Diagram]
 
 The following figure is the best-practice API calling sequence diagram in the `Example` project.
 
-[![APIUML](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/Api.png)](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/Api.png)
+![APIUML](./Documentation/Api.png)
 
 # [Design Guidelines](https://github.com/easemob/UIKit_Chatroom_ios#design-guidelines)
 
@@ -348,6 +357,7 @@ See the [UI design guidelines](https://docs-im-beta.easemob.com/uikit/chatroomui
 Contributions and feedback are welcome! For any issues or improvement suggestions, you can open an issue or submit a pull request.
 
 ## [Author](https://github.com/easemob/UIKit_Chatroom_ios#author)
+
 
 zjc19891106, [984065974@qq.com](mailto:984065974@qq.com)
 
