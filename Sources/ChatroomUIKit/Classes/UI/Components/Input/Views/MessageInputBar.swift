@@ -221,6 +221,8 @@ extension MessageInputBar: UITextViewDelegate {
             let emoji = ChatEmojiView(frame: CGRect(x: 0, y: self.inputField.frame.maxY+8, width: self.frame.width, height: self.keyboardHeight)).tag(124)
             self.emoji = emoji
             self.addSubview(emoji)
+        } else {
+            self.emoji?.frame = CGRect(x: 0, y: self.inputField.frame.maxY+8, width: self.frame.width, height: self.keyboardHeight)
         }
         self.updateHeight()
         self.emoji?.emojiClosure = { [weak self] in
@@ -282,11 +284,17 @@ extension MessageInputBar: UITextViewDelegate {
         attachment.bounds = CGRect(x: 0, y: -3.5, width: 18, height: 18)
         let imageText = NSMutableAttributedString(attachment: attachment)
         if #available(iOS 11.0, *) {
-            imageText.addAttributes([.accessibilityTextCustom: key], range: NSMakeRange(0, imageText.length))
+            if self.inputField.selectedRange.location != NSNotFound,self.inputField.selectedRange.length != NSNotFound {
+                imageText.addAttributes([.accessibilityTextCustom: key], range: NSMakeRange(0, imageText.length))
+                attribute.replaceCharacters(in: self.inputField.selectedRange, with: imageText)
+                
+            } else {
+                imageText.addAttributes([.accessibilityTextCustom: key], range: NSMakeRange(0, imageText.length))
+                attribute.append(imageText)
+            }
         } else {
             assert(false,"failed add accessibility custom text!")
         }
-        attribute.append(imageText)
         return attribute
     }
     
