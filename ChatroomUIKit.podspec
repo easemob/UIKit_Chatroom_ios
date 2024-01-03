@@ -33,10 +33,6 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
   s.static_framework = true
   
   s.swift_version = '5.0'
-  
-
-  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
 
 #  s.source_files = 'Sources/ChatroomUIKit/Classes/**/*'
