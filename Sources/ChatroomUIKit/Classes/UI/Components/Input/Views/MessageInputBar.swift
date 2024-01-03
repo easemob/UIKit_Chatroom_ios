@@ -72,6 +72,7 @@ import UIKit
         self.inputField.cornerRadius(Appearance.inputBarCorner)
         self.inputField.placeHolder = Appearance.inputPlaceHolder.chatroom.localize
         self.inputField.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16)
+        self.inputField.contentInsetAdjustmentBehavior = .never
         self.inputField.tintColor = UIColor.theme.primaryColor5
         self.inputField.placeHolderColor = UIColor.theme.neutralColor6
         self.inputField.textColor = UIColor.theme.neutralColor1
