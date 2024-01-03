@@ -171,8 +171,6 @@ let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(
 // Choose ProjectManager > Operation Manager > Chat Room. Select View Chat Room Members in the Action column of a chat room and add users to the chat room in the displayed dialog box.
 ```
 
-[![CreateChatroom](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/CreateChatroom.png)](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/CreateChatroom.png).
-
 Please refer to the next chapter for transparent transmission of events.
 
 # [Precautions](https://github.com/easemob/UIKit_Chatroom_ios#precautions)
@@ -182,7 +180,7 @@ When calling `ChatroomUIKitClient.shared.launchRoomView(roomId: String, frame: C
 
 For example, if you have a view that plays video streams, be sure to add ChatroomView above this view.
 
-![UI Hierarchy](/Documentation/hierarchy.png)
+![UI Hierarchy](./Documentation/hierarchy.png)
 
 # [Advanced Usage](https://github.com/easemob/UIKit_Chatroom_ios#advanced-usage)
 
@@ -256,7 +254,7 @@ The following shows how to change the overall cell layout style of the chat area
 // You can change the overall cell layout style of the chat area by setting the properties.
 Appearance.ChatMessageDisplayContentStyle = .all
 // Create the ChatroomView by passing in parameters like layout parameters and the bottom toolbar extension button model protocol array.
-let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(
+let roomView = ChatroomUIKitClient.shared.launchRoomView(
     roomId: self.room?.chatroomId ?? "",
     frame: CGRect(x: 0, y: self.playView.frame.maxY, width: self.view.frame.width, height: 336+BottomBarHeight),
     ownerId: self.room?.owner ?? ""
