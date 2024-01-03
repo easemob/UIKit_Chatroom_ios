@@ -55,7 +55,7 @@ import UIKit
     }()
     
     public private(set) lazy var content: UILabel = {
-        return UILabel(frame: CGRect(x: 10, y: 7, width: self.container.frame.width - 20, height: self.container.frame.height - 18)).backgroundColor(.clear).numberOfLines(0).lineBreakMode(.byWordWrapping)
+        return UILabel(frame: CGRect(x: 10, y: 7, width: self.container.frame.width - 20, height: self.container.frame.height - 18)).backgroundColor(.clear).numberOfLines(0)
     }()
     
     public private(set) lazy var giftIcon: ImageView = {
@@ -118,8 +118,8 @@ import UIKit
         self.avatar.image(with: chat.message.user?.avatarURL ?? "", placeHolder: Appearance.avatarPlaceHolder)
         self.content.attributedText = chat.attributeText
         self.container.frame = CGRect(x: 15, y: 6, width: chat.width + 24, height: chat.height - 6)
-        self.content.preferredMaxLayoutWidth =  self.container.frame.width - 24
-        self.content.frame = CGRect(x: self.content.frame.minX, y: self.content.frame.minY, width:  self.container.frame.width - 24, height:  self.container.frame.height - 16)
+//        self.content.preferredMaxLayoutWidth =  self.container.frame.width - 24
+        self.content.frame = CGRect(x: 10, y: self.container.frame.minY, width:  self.container.frame.width - 24, height:  self.container.frame.height - 16)
         self.giftIcon.frame = CGRect(x: self.container.frame.width-26, y: (self.container.frame.height-18)/2.0, width: 18, height: 18)
         self.giftIcon.isHidden = chat.gift == nil
         if let item = chat.gift {
@@ -167,10 +167,16 @@ fileprivate let gift_tail_indent: CGFloat = 26
     lazy public var attributeText: NSAttributedString = self.convertAttribute()
         
     /// The height of the chat entity, calculated based on the attributed text and the width of the chat view.
-    lazy public var height: CGFloat =  UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).height + 26
+    lazy public var height: CGFloat =  {
+        let cellHeight = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).height + 26
+        return cellHeight
+    }()
     
     /// The width of the chat entity, calculated based on the attributed text and the width of the chat view.
-    lazy public var width: CGFloat = (self.gift == nil ? UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 18)).width:self.attributeText.size().width+self.firstLineHeadIndent())+(self.gift != nil ? gift_tail_indent:0)
+    lazy public var width: CGFloat = {
+        let cellWidth = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).width+(self.gift != nil ? gift_tail_indent:0)
+        return cellWidth
+    }()
     
     /// Chat cell display gift info.Need to set it.``GiftEntityProtocol``
     lazy public var gift: GiftEntityProtocol? = nil
@@ -185,11 +191,12 @@ fileprivate let gift_tail_indent: CGFloat = 26
             switch body.event {
             case chatroom_UIKit_gift:
                 if let item = self.gift {
+                    let giftText = " "+item.giftName+" "+"× \(item.giftCount)"
                     text.append(NSMutableAttributedString {
-                        AttributedText(" "+item.giftName+" "+"× \(item.giftCount)").foregroundColor(Color.theme.neutralColor98).font(UIFont.theme.labelMedium).paragraphStyle(self.paragraphStyle())
+                        AttributedText(giftText).foregroundColor(Color.theme.neutralColor98).font(UIFont.theme.labelMedium).paragraphStyle(self.paragraphStyle())
                     })
                 }
-            case chatroom_UIKit_user_join:
+            case chatroom_UIKit_user_join,chatroom_UIKit_gift:
                 text.append(NSMutableAttributedString {
                     AttributedText(" "+"Joined".chatroom.localize).foregroundColor(Color.theme.secondaryColor7).font(UIFont.theme.labelMedium).paragraphStyle(self.paragraphStyle())
                 })
@@ -208,6 +215,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
                 })
             }
             let string = text.string as NSString
+            
             for symbol in ChatEmojiConvertor.shared.emojis {
                 if string.range(of: symbol).location != NSNotFound {
                     let ranges = text.string.chatroom.rangesOfString(symbol)
@@ -225,12 +233,6 @@ fileprivate let gift_tail_indent: CGFloat = 26
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent()
         paragraphStyle.lineHeightMultiple = 1.08
-        paragraphStyle.alignment = .natural
-        if self.gift != nil {
-            paragraphStyle.tailIndent = self.lastLineHeadIndent()
-        } else {
-            paragraphStyle.tailIndent = 0
-        }
         return paragraphStyle
     }
     
