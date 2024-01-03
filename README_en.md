@@ -1,44 +1,44 @@
-# [Sample Demo](https://github.com/zjc19891106/ChatroomUIKit#sample-demo)
+# [Sample Demo](https://github.com/easemob/UIKit_Chatroom_ios#sample-demo)
 
 In this project, there is a best practice demonstration project in the `Example` folder for you to build your own business capabilities.
 
 To experience functions of the ChatroomUIKit, you can scan the following QR code to try a demo.
 
-[![SampleDemo](https://github.com/zjc19891106/ChatroomUIKit/raw/main/Documentation/demo.png)](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Documentation/demo.png).
+[![SampleDemo](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/demo.png)](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/demo.png).
 
-# [ChatroomUIKit Guide](https://github.com/zjc19891106/ChatroomUIKit#chatroomuikit-guide)
+# [ChatroomUIKit Guide](https://github.com/easemob/UIKit_Chatroom_ios#chatroomuikit-guide)
 
-## [Introduction](https://github.com/zjc19891106/ChatroomUIKit#introduction)
+## [Introduction](https://github.com/easemob/UIKit_Chatroom_ios#introduction)
 
 This guide presents an overview and usage examples of the ChatroomUIKit framework in iOS development, and describes various components and features of this UIKit, enabling developers to have a good understanding of the UIKit and make effective use of it.
 
-## [Table of Contents](https://github.com/zjc19891106/ChatroomUIKit#table-of-contents)
+## [Table of Contents](https://github.com/easemob/UIKit_Chatroom_ios#table-of-contents)
 
-- [Requirements](https://github.com/zjc19891106/ChatroomUIKit#requirements)
-- [Installation](https://github.com/zjc19891106/ChatroomUIKit#installation)
-- [Documentation](https://github.com/zjc19891106/ChatroomUIKit#documentation)
-- [Structure](https://github.com/zjc19891106/ChatroomUIKit#structure)
-- [Quick Start](https://github.com/zjc19891106/ChatroomUIKit#quick-start)
-- [Precautions](https://github.com/zjc19891106/ChatroomUIKit#precautions)
-- [Advanced Usage](https://github.com/zjc19891106/ChatroomUIKit#advanced-usage)
-- [Customization](https://github.com/zjc19891106/ChatroomUIKit#customization)
-- [BusinessFlowchart](https://github.com/zjc19891106/ChatroomUIKit#business-flowchart)
-- [API Sequence Diagram](https://github.com/zjc19891106/ChatroomUIKit#api-sequence-diagram)
-- [DesignGuidelines](https://github.com/zjc19891106/ChatroomUIKit#design-guidelines)
-- [Contributing](https://github.com/zjc19891106/ChatroomUIKit#contributing)
-- [License](https://github.com/zjc19891106/ChatroomUIKit#license)
+- [Requirements](https://github.com/easemob/UIKit_Chatroom_ios#requirements)
+- [Installation](https://github.com/easemob/UIKit_Chatroom_ios#installation)
+- [Documentation](https://github.com/easemob/UIKit_Chatroom_ios#documentation)
+- [Structure](https://github.com/easemob/UIKit_Chatroom_ios#structure)
+- [Quick Start](https://github.com/easemob/UIKit_Chatroom_ios#quick-start)
+- [Precautions](https://github.com/easemob/UIKit_Chatroom_ios#precautions)
+- [Advanced Usage](https://github.com/easemob/UIKit_Chatroom_ios#advanced-usage)
+- [Customization](https://github.com/easemob/UIKit_Chatroom_ios#customization)
+- [BusinessFlowchart](https://github.com/easemob/UIKit_Chatroom_ios#business-flowchart)
+- [API Sequence Diagram](https://github.com/easemob/UIKit_Chatroom_ios#api-sequence-diagram)
+- [DesignGuidelines](https://github.com/easemob/UIKit_Chatroom_ios#design-guidelines)
+- [Contributing](https://github.com/easemob/UIKit_Chatroom_ios#contributing)
+- [License](https://github.com/easemob/UIKit_Chatroom_ios#license)
 
-# [Requirements](https://github.com/zjc19891106/ChatroomUIKit#requirements)
+# [Requirements](https://github.com/easemob/UIKit_Chatroom_ios#requirements)
 
 - iOS 13.0+
 - Xcode 13.0+
 - Swift 5.0+
 
-# [Installation](https://github.com/zjc19891106/ChatroomUIKit#installation)
+# [Installation](https://github.com/easemob/UIKit_Chatroom_ios#installation)
 
 You can install ChatroomUIKit with the Swift Package Manager or CocoaPods as a dependency of your Xcode project.
 
-## [Swift Package Manager](https://github.com/zjc19891106/ChatroomUIKit#swift-package-manager)
+## [Swift Package Manager](https://github.com/easemob/UIKit_Chatroom_ios#swift-package-manager)
 
 1. Open your project in Xcode.
 2. Choose **File** > **Add Package**.
@@ -46,15 +46,15 @@ You can install ChatroomUIKit with the Swift Package Manager or CocoaPods as a d
 4. Select the desired version.
 5. Click **Add Package** to add the ChatroomUIKit.
 
-## [CocoaPods](https://github.com/zjc19891106/ChatroomUIKit#cocoapods)
+## [CocoaPods](https://github.com/easemob/UIKit_Chatroom_ios#cocoapods)
 
 ```ruby
 pod 'ChatroomUIKit'
 ```
 
-# [Structure](https://github.com/zjc19891106/ChatroomUIKit#structure)
+# [Structure](https://github.com/easemob/UIKit_Chatroom_ios#structure)
 
-### [Basic Components of ChatroomUIKit](https://github.com/zjc19891106/ChatroomUIKit#basic-components-of-chatroomuikit)
+### [Basic Components of ChatroomUIKit](https://github.com/easemob/UIKit_Chatroom_ios#basic-components-of-chatroomuikit)
 
 ```
 ChatroomUIKit
@@ -79,9 +79,9 @@ ChatroomUIKit
       └─ Extension                   // Some convenient system class extensions.
 ```
 
-# [Documentation](https://github.com/zjc19891106/ChatroomUIKit#documentation)
+# [Documentation](https://github.com/easemob/UIKit_Chatroom_ios#documentation)
 
-## [Document](https://github.com/zjc19891106/ChatroomUIKit/tree/main/Documentation/ChatroomUIKit.doccarchive)
+## [Document](https://github.com/easemob/UIKit_Chatroom_ios/tree/main/Documentation/ChatroomUIKit.doccarchive)
 
 You can open the `ChatroomUIKit.doccarchive` file in Xcode to view files in it or deploy this file to your homepage.
 
@@ -93,19 +93,19 @@ python3 -m http.server 8080
 
 After deployment, you can visit `http://yourlocalhost:8080/documentation/chatroomuikit` in your browser, where `yourlocalhost` is your local IP address. Alternatively, you can deploy this folder on an external network address.
 
-## [Appearance](https://github.com/zjc19891106/ChatroomUIKit/tree/main/Documentation/Appearance.md).
+## [Appearance](https://github.com/easemob/UIKit_Chatroom_ios/tree/main/Documentation/Appearance.md).
 
 Detailed descriptions of available items in the `UI` component.
 
-## [ComponentRegister](https://github.com/zjc19891106/ChatroomUIKit/tree/main/Documentation/ComponentRegister.md).
+## [ComponentRegister](https://github.com/easemob/UIKit_Chatroom_ios/tree/main/Documentation/ComponentRegister.md).
 
 UI components that can be inherited for customization.
 
-## [GiftsViewController](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Documentation/GiftsViewController.md)
+## [GiftsViewController](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/GiftsViewController.md)
 
 A container that contains a gift list. You can inherit this class to implement additional UI definitions and business processing. After you click the **Send** button to deliver a gift, you can decide whether to close the gift pop-up window and call the gift API in your business on your server to send the gift message to the chat room.
 
-# [Quick Start](https://github.com/zjc19891106/ChatroomUIKit#quick-start)
+# [Quick Start](https://github.com/easemob/UIKit_Chatroom_ios#quick-start)
 
 This guide provides several usage examples for different ChatroomUIKit components. Refer to the `Examples` folder for detailed code snippets and projects showing various use cases.
 
@@ -116,7 +116,7 @@ Refer to the following steps to create an iOS platform App in Xcode. The creatio
 - User Interface: Select **Storyboard**.
 - Language: You common development language.
 
-### [Step 1: Initialize ChatroomUIKit](https://github.com/zjc19891106/ChatroomUIKit#step-1-initialize-chatroomuikit)
+### [Step 1: Initialize ChatroomUIKit](https://github.com/easemob/UIKit_Chatroom_ios#step-1-initialize-chatroomuikit)
 
 ```swift
 import UIKit
@@ -138,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-### [Step 2: Log in to the ChatroomUIKit](https://github.com/zjc19891106/ChatroomUIKit#step-2-log-in-to-the-chatroomuikit)
+### [Step 2: Log in to the ChatroomUIKit](https://github.com/easemob/UIKit_Chatroom_ios#step-2-log-in-to-the-chatroomuikit)
 
 ```swift
 // Log in to the ChatroomUIKit with the user information of the current user object that conforms to the `UserInfoProtocol` protocol.
@@ -151,7 +151,7 @@ ChatroomUIKitClient.shared.login(
 )
 ```
 
-### [Step 3: Create a chat room view](https://github.com/zjc19891106/ChatroomUIKit#step-3-create-a-chat-room-view)
+### [Step 3: Create a chat room view](https://github.com/easemob/UIKit_Chatroom_ios#step-3-create-a-chat-room-view)
 
 ```swift
 // 1. Get a chat room list and join a chat room. Alternatively, create a chat room on the Agora Console.
@@ -168,11 +168,11 @@ let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(
 // Choose ProjectManager > Operation Manager > Chat Room. Select View Chat Room Members in the Action column of a chat room and add users to the chat room in the displayed dialog box.
 ```
 
-[![CreateChatroom](https://github.com/zjc19891106/ChatroomUIKit/raw/main/Documentation/CreateChatroom.png)](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Documentation/CreateChatroom.png).
+[![CreateChatroom](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/CreateChatroom.png)](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/CreateChatroom.png).
 
 Please refer to the next chapter for transparent transmission of events.
 
-# [Precautions](https://github.com/zjc19891106/ChatroomUIKit#precautions)
+# [Precautions](https://github.com/easemob/UIKit_Chatroom_ios#precautions)
 
 When calling `ChatroomUIKitClient.shared.launchRoomView(roomId: String, frame: CGRect, isOwner: Bool)`, remember to add ChatroomView above your existing view to facilitate interception and transparent transmission of click events.
 
@@ -180,17 +180,22 @@ For example, if you have a view that plays video streams, be sure to add Chatroo
 
 ![UI Hierarchy](/Documentation/hierarchy.png)
 
-# [Advanced Usage](https://github.com/zjc19891106/ChatroomUIKit#advanced-usage)
+# [Advanced Usage](https://github.com/easemob/UIKit_Chatroom_ios#advanced-usage)
 
 Here are three examples of advanced usage.
 
-### [1.Log in to ChatroomUIKit](https://github.com/zjc19891106/ChatroomUIKit#1log-in-to-chatroomuikit)
+### [1.Log in to ChatroomUIKit](https://github.com/easemob/UIKit_Chatroom_ios#1log-in-to-chatroomuikit)
 
 ```swift
 class YourAppUser: UserInfoProtocol {
+
+    public func toJsonObject() -> Dictionary<String, Any>? {
+        ["userId":self.userId,"nickname":self.nickname,"avatarURL":self.avatarURL,"identity":self.identity,"gender":self.gender]
+    }
+    
     var userId: String = "your application user id"
 
-    var nickName: String = "Your user nick name"
+    var nickname: String = "Your user nick name"
 
     var avatarURL: String = "Your user avatar url"
 
@@ -207,7 +212,7 @@ ChatroomUIKitClient.shared.login(
     completion: <#T##(ChatError?) -> Void#>)
 ```
 
-### [2.Initialize the chat room view](https://github.com/zjc19891106/ChatroomUIKit#2initialize-the-chat-room-view)
+### [2.Initialize the chat room view](https://github.com/easemob/UIKit_Chatroom_ios#2initialize-the-chat-room-view)
 
 ```swift
 //1. Get a chat room list and join a chat room. Alternatively, create a chat room on the Agora Console.
@@ -225,7 +230,7 @@ ChatroomUIKitClient.shared.launchRoomView(
 //3. Add to the destination frame.
 ```
 
-### [3.Listen for ChatroomUIKit events and errors](https://github.com/zjc19891106/ChatroomUIKit#3listen-for-chatroomuikit-events-and-errors)
+### [3.Listen for ChatroomUIKit events and errors](https://github.com/easemob/UIKit_Chatroom_ios#3listen-for-chatroomuikit-events-and-errors)
 
 You can call the `registerRoomEventsListener` method to listen for ChatroomUIKit events and errors.
 
@@ -233,9 +238,9 @@ You can call the `registerRoomEventsListener` method to listen for ChatroomUIKit
 ChatroomUIKitClient.shared.registerRoomEventsListener(listener: self)
 ```
 
-# [Customization](https://github.com/zjc19891106/ChatroomUIKit#customization)
+# [Customization](https://github.com/easemob/UIKit_Chatroom_ios#customization)
 
-### [1.Modify configurable items](https://github.com/zjc19891106/ChatroomUIKit#1modify-configurable-items)
+### [1.Modify configurable items](https://github.com/easemob/UIKit_Chatroom_ios#1modify-configurable-items)
 
 The following shows how to change the overall cell layout style of the chat area and how to create the ChatroomView.
 
@@ -251,9 +256,9 @@ let roomView = ChatroomUIKitClient.shared.launchRoomViewWithOptions(
 self.view.addSubView(roomView)
 ```
 
-For details, see [Appearance](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Documentation/Appearance.md).
+For details, see [Appearance](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/Appearance.md).
 
-### [2.Customize components](https://github.com/zjc19891106/ChatroomUIKit#2customize-components)
+### [2.Customize components](https://github.com/easemob/UIKit_Chatroom_ios#2customize-components)
 
 The following shows how to customize the gift message cell.
 
@@ -278,9 +283,9 @@ class CustomGiftMessageCell: GiftMessageCell {
 ComponentsRegister.shared.GiftMessagesViewCell = CustomGiftMessageCell.self
 ```
 
-For details, see [ComponentsRegister](https://github.com/zjc19891106/ChatroomUIKit/blob/main/Documentation/ComponentsRegister.md).
+For details, see [ComponentsRegister](https://github.com/easemob/UIKit_Chatroom_ios/blob/main/Documentation/ComponentsRegister.md).
 
-### [3.Switch to the original or custom theme](https://github.com/zjc19891106/ChatroomUIKit#3switch-to-the-original-or-custom-theme)
+### [3.Switch to the original or custom theme](https://github.com/easemob/UIKit_Chatroom_ios#3switch-to-the-original-or-custom-theme)
 
 - Switch to the light or dark theme that comes with the ChatroomUIKit.
 
@@ -318,19 +323,19 @@ Theme.switchTheme(style: .custom)
 
 Note that custom themes and built-in themes are mutually exclusive.
 
-# [Business Flowchart](https://github.com/zjc19891106/ChatroomUIKit#business-flowchart)
+# [Business Flowchart](https://github.com/easemob/UIKit_Chatroom_ios#business-flowchart)
 
 The following figure presents the entire logic of business requests and callbacks.
 
-[![Overall flow diagram of business logic](https://github.com/zjc19891106/ChatroomUIKit/raw/main/Documentation/BusinessFlowchart.png)](https://github.com/zjc19891106/ChatroomUIKit/raw/main/Documentation/BusinessFlowchart.png)
+[![Overall flow diagram of business logic](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/BusinessFlowchart.png)](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/BusinessFlowchart.png)
 
-# [API Sequence Diagram](https://github.com/zjc19891106/ChatroomUIKit#api-sequence-diagram)
+# [API Sequence Diagram](https://github.com/easemob/UIKit_Chatroom_ios#api-sequence-diagram)
 
 The following figure is the best-practice API calling sequence diagram in the `Example` project.
 
-[![APIUML](https://github.com/zjc19891106/ChatroomUIKit/raw/main/Documentation/Api.png)](https://github.com/zjc19891106/ChatroomUIKit/raw/main/Documentation/Api.png)
+[![APIUML](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/Api.png)](https://github.com/easemob/UIKit_Chatroom_ios/raw/main/Documentation/Api.png)
 
-# [Design Guidelines](https://github.com/zjc19891106/ChatroomUIKit#design-guidelines)
+# [Design Guidelines](https://github.com/easemob/UIKit_Chatroom_ios#design-guidelines)
 
 For any questions about design guidelines and details, you can add comments to the Figma design draft and mention our designer Stevie Jiang.
 
@@ -338,14 +343,14 @@ See the [UI design drawing](https://www.figma.com/community/file/132249538831747
 
 See the [UI design guidelines](https://docs-im-beta.easemob.com/uikit/chatroomuikit/ios/design_guide.html)
 
-# [Contributing](https://github.com/zjc19891106/ChatroomUIKit#contributing)
+# [Contributing](https://github.com/easemob/UIKit_Chatroom_ios#contributing)
 
 Contributions and feedback are welcome! For any issues or improvement suggestions, you can open an issue or submit a pull request.
 
-## [Author](https://github.com/zjc19891106/ChatroomUIKit#author)
+## [Author](https://github.com/easemob/UIKit_Chatroom_ios#author)
 
 zjc19891106, [984065974@qq.com](mailto:984065974@qq.com)
 
-## [License](https://github.com/zjc19891106/ChatroomUIKit#license)
+## [License](https://github.com/easemob/UIKit_Chatroom_ios#license)
 
 ChatroomUIKit is available under the MIT license. See the LICENSE file for more information.
