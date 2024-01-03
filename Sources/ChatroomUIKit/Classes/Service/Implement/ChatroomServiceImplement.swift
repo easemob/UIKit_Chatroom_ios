@@ -195,7 +195,7 @@ extension ChatroomServiceImplement: ChatroomService {
                 ChatClient.shared().roomManager?.getChatroomMemberListFromServer(withId: roomId, cursor: self.cursor, pageSize: Int(pageSize),completion: { [weak self] cursorResult, error in
                     if error == nil {
                         self?.cursor = cursorResult?.cursor ?? ""
-                        if (cursorResult?.cursor ?? "empty").isEmpty {
+                        if (cursorResult?.cursor ?? "").isEmpty {
                             self?.cursor = "empty"
                         }
                     }
