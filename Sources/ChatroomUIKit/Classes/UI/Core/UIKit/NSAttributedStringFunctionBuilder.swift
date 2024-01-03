@@ -245,7 +245,7 @@ extension Component {
         return self.paragraphStyle(paragraphStyle)
     }
 
-    public func lineBreakeMode(_ lineBreakMode: NSLineBreakMode) -> Component {
+    public func lineBreakMode(_ lineBreakMode: NSLineBreakMode) -> Component {
         let paragraphStyle = getMutableParagraphStyle()
         paragraphStyle.lineBreakMode = lineBreakMode
         return self.paragraphStyle(paragraphStyle)
