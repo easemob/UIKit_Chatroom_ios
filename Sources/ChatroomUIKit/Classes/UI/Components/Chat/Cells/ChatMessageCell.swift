@@ -120,7 +120,7 @@ import UIKit
         self.container.frame = CGRect(x: 15, y: 6, width: chat.width + 24, height: chat.height - 6)
         self.content.preferredMaxLayoutWidth =  self.container.frame.width - 24
         self.content.frame = CGRect(x: self.content.frame.minX, y: self.content.frame.minY, width:  self.container.frame.width - 24, height:  self.container.frame.height - 16)
-        self.giftIcon.frame = CGRect(x: self.content.frame.width-16, y: (self.container.frame.height-18)/2.0, width: 18, height: 18)
+        self.giftIcon.frame = CGRect(x: self.container.frame.width-26, y: (self.container.frame.height-18)/2.0, width: 18, height: 18)
         self.giftIcon.isHidden = chat.gift == nil
         if let item = chat.gift {
             self.giftIcon.image(with: item.giftIcon, placeHolder: Appearance.giftPlaceHolder)
