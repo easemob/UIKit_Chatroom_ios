@@ -134,8 +134,7 @@ import UIKit
     }()
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark")?.withTintColor(.darkGray, renderingMode: .alwaysOriginal),
-                        for: .normal)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(clickCloseButton), for: .touchUpInside)
         button.isHidden = true

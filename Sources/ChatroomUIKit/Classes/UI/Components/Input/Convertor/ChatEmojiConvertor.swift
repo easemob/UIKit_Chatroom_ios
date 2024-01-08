@@ -38,7 +38,7 @@ import Foundation
         let text = NSMutableAttributedString(attributedString: input)
         for range in ranges.reversed() {
             if range.location != NSNotFound, range.length != NSNotFound {
-                let value = self.emojiMap.isEmpty ? UIImage(named: symbol, in: .chatroomBundle, with: nil):self.emojiMap[symbol]
+                let value = self.emojiMap.isEmpty ? UIImage(named: symbol, in: .chatroomBundle, compatibleWith: nil):self.emojiMap[symbol]
                 let attachment = NSTextAttachment()
                 attachment.image = value
                 attachment.bounds = CGRect(x: 0, y: -2, width: 14, height: 14)

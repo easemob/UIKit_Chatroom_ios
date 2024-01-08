@@ -9,9 +9,9 @@ import UIKit
 
 @objc open class ReportOptionCell: UITableViewCell {
     
-    public private(set) var normalImage = UIImage(named: "unselect", in: .chatroomBundle, with: nil)
+    public private(set) var normalImage = UIImage(named: "unselect", in: .chatroomBundle, compatibleWith: nil)
     
-    public private(set) var selectImage = UIImage(named: "select", in: .chatroomBundle, with: nil)
+    public private(set) var selectImage = UIImage(named: "select", in: .chatroomBundle, compatibleWith: nil)
     
     lazy var content: UILabel = {
         UILabel(frame: CGRect(x: 16, y: (self.contentView.frame.height-22)/2.0, width: self.contentView.frame.width-72, height: 22)).textColor(UIColor.theme.neutralColor1).font(UIFont.theme.labelLarge).backgroundColor(.clear)
@@ -54,8 +54,13 @@ import UIKit
 extension ReportOptionCell: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.content.textColor(style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1)
-        self.selectImage = style == .dark ? self.selectImage?.withTintColor(UIColor.theme.primaryColor6, renderingMode: .automatic):self.selectImage
-        self.normalImage = style == .dark ? self.normalImage?.withTintColor(UIColor.theme.neutralColor8, renderingMode: .automatic):self.normalImage
+        if style == .dark {
+            self.normalImage = UIImage(named: "unselect_dark", in: .chatroomBundle, compatibleWith: nil)
+            self.selectImage = UIImage(named: "select_dark", in: .chatroomBundle, compatibleWith: nil)
+        } else {
+            self.normalImage = UIImage(named: "unselect", in: .chatroomBundle, compatibleWith: nil)
+            self.selectImage = UIImage(named: "select", in: .chatroomBundle, compatibleWith: nil)
+        }
     }
     
     

@@ -11,7 +11,7 @@ import UIKit
     
     @objc public var moreClosure: ((UserInfoProtocol) -> Void)?
     
-    private var moreImage = UIImage(named: "more", in: .chatroomBundle, with: nil)
+    private var moreImage = UIImage(named: "more", in: .chatroomBundle, compatibleWith: nil)
 
     private var user: UserInfoProtocol?
     
@@ -35,15 +35,15 @@ import UIKit
         UIButton(type: .custom).frame(CGRect(x: self.contentView.frame.width-40, y: (self.contentView.frame.height-28)/2.0, width: 28, height: 28)).backgroundColor(.clear).image(self.moreImage, .normal).addTargetFor(self, action: #selector(moreAction), for: .touchUpInside)
     }()
     
-//    lazy var separateLine: UIView = {
-//        UIView(frame: CGRect(x: 0, y: self.contentView.frame.height-1, width: self.contentView.frame.width, height: 1))
-//    }()
+    lazy var separateLine: UIView = {
+        UIView(frame: CGRect(x: 0, y: self.contentView.frame.height-1, width: self.contentView.frame.width, height: 1))
+    }()
     
     public required override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor(.clear)
         self.contentView.backgroundColor(.clear)
-        self.contentView.addSubViews([self.userLevel,self.userAvatar,self.userName,self.userDetail,self.more])
+        self.contentView.addSubViews([self.userLevel,self.userAvatar,self.userName,self.userDetail,self.more,self.separateLine])
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
     }
@@ -69,6 +69,7 @@ import UIKit
         
         self.hiddenUserIdentity(hidden: hiddenUserIdentity ? hiddenUserIdentity:Appearance.messageDisplayStyle == .hideUserIdentity)
         self.more.frame = CGRect(x: ScreenWidth-40, y: (Appearance.participantsRowHeight-28)/2.0, width: 28, height: 28)
+        self.separateLine.frame = CGRect(x: self.userName.frame.maxX, y: self.contentView.frame.height-0.5, width: ScreenWidth-self.userName.frame.maxX, height: 0.5)
     }
     
     @objc public func hiddenUserIdentity(hidden: Bool) {
@@ -114,9 +115,13 @@ extension ChatroomParticipantsCell: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.userName.textColor(style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1)
         self.userDetail.textColor(style == .dark ? UIColor.theme.neutralColor6:UIColor.theme.neutralColor5)
-        self.moreImage?.withTintColor(style == .dark ? UIColor.theme.neutralColor6:UIColor.theme.neutralColor5, renderingMode: .automatic)
+        if style == .dark {
+            self.moreImage = UIImage(named: "more_dark", in: .chatroomBundle, compatibleWith: nil)
+        } else {
+            self.moreImage = UIImage(named: "more", in: .chatroomBundle, compatibleWith: nil)
+        }
         self.more.setImage(self.moreImage, for: .normal)
-//        self.separateLine.backgroundColor(Theme.style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor9)
+        self.separateLine.backgroundColor(Theme.style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor9)
     }
     
 }

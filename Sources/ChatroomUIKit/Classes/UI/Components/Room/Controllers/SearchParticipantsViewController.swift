@@ -51,7 +51,7 @@ import UIKit
     public private(set) var action: ((UserInfoProtocol) -> Void)?
     
     public private(set) lazy var empty: EmptyStateView = {
-        EmptyStateView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.tableView.frame.height),emptyImage: UIImage(named: "empty",in: .chatroomBundle, with: nil))
+        EmptyStateView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.tableView.frame.height),emptyImage: UIImage(named: "empty",in: .chatroomBundle, compatibleWith: nil))
     }()
     
     
@@ -91,11 +91,8 @@ import UIKit
         self.tableView.rowHeight = Appearance.participantsRowHeight
         self.tableView.tableHeaderView = self.searchController.searchBar
         self.tableView.register(ChatroomParticipantsCell.self, forCellReuseIdentifier: "ChatroomParticipantsCellSearchResultCell")
-        _ = self.searchController.publisher(for: \.isActive).sink { [weak self] status in
-            if !status {
-                self?.searchResults.removeAll()
-            }
-        }
+        self.searchController.addObserver(self, forKeyPath: "isActive", options: [.old, .new], context: nil)
+
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
         NotificationCenter.default.addObserver(forName: NSNotification.Name("ChatroomUIKitKickUserSuccess"), object: self, queue: .main) { [weak self] notify in
@@ -107,7 +104,20 @@ import UIKit
         }
     }
     
+    public override func observeValue(forKeyPath keyPath: String?,
+                                 of object: Any?,
+                                 change: [NSKeyValueChangeKey : Any]?,
+                                 context: UnsafeMutableRawPointer?) {
+            
+            if keyPath == "isActive", let newValue = change?[.newKey] as? Bool {
+                if !newValue {
+                    self.searchResults.removeAll()
+                }
+            }
+        }
+    
     deinit {
+        self.removeObserver(self, forKeyPath: "isActive")
         consoleLogInfo("deinit \(self.swiftClassName ?? "")", type: .debug)
     }
     

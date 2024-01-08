@@ -225,7 +225,11 @@ extension MessageList: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
         self.moreMessages.backgroundColor(style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98)
         self.moreMessages.textColor(style == .dark ? UIColor.theme.primaryColor6:UIColor.theme.primaryColor5, .normal)
-        self.moreMessages.image(UIImage(named: "more_messages", in: .chatroomBundle, with: nil)?.withTintColor(style == .dark ? UIColor.theme.primaryColor6:UIColor.theme.primaryColor5), .normal)
+        var image = UIImage(named: "more_messages", in: .chatroomBundle, compatibleWith: nil)
+        if style == .dark {
+            image = UIImage(named: "more_messages_dark", in: .chatroomBundle, compatibleWith: nil)
+        }
+        self.moreMessages.image(image, .normal)
     }
 }
 

@@ -89,7 +89,7 @@ import UIKit
         super.init(frame: frame)
         self.datas = datas
         self.addSubViews([self.chatRaiser, self.toolBar])
-        self.chatRaiser.setImage(UIImage(named: "chatraise",in: .chatroomBundle,with: nil), for: .normal)
+        self.chatRaiser.setImage(UIImage(named: "chatraise",in: .chatroomBundle, compatibleWith: nil), for: .normal)
         self.chatRaiser.setTitle(" " + "StartChat".chatroom.localize, for: .normal)
         self.chatRaiser.titleEdgeInsets = UIEdgeInsets(top: self.chatRaiser.titleEdgeInsets.top, left: 10, bottom: self.chatRaiser.titleEdgeInsets.bottom, right: 10)
         self.chatRaiser.imageEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 80)

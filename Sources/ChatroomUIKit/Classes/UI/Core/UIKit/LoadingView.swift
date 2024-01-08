@@ -14,7 +14,7 @@ import UIKit
     let darkEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
     
     private let activityIndicatorView: UIActivityIndicatorView = {
-        let activityIndicatorView = UIActivityIndicatorView(style: .large)
+        let activityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicatorView
     }()

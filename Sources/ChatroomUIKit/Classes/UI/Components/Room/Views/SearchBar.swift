@@ -29,7 +29,7 @@ import UIKit
     }
     
     lazy var searchField: UIButton = {
-        UIButton(type: .custom).frame(CGRect(x: 16, y: 4, width: self.frame.width-32, height: self.frame.height-8)).backgroundColor(UIColor.theme.neutralColor95).textColor(UIColor.theme.neutralColor6, .normal).cornerRadius(.large).title("Search".chatroom.localize, .normal).image(UIImage(named: "search", in: .chatroomBundle, with: nil), .normal).addTargetFor(self, action: #selector(clickSearch), for: .touchUpInside)
+        UIButton(type: .custom).frame(CGRect(x: 16, y: 4, width: self.frame.width-32, height: self.frame.height-8)).backgroundColor(UIColor.theme.neutralColor95).textColor(UIColor.theme.neutralColor6, .normal).cornerRadius(.large).title("Search".chatroom.localize, .normal).image(UIImage(named: "search", in: .chatroomBundle, compatibleWith: nil), .normal).addTargetFor(self, action: #selector(clickSearch), for: .touchUpInside)
     }()
 
     public override init(frame: CGRect) {
@@ -52,9 +52,11 @@ import UIKit
 
 extension SearchBar: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
-        let raw = UIImage(named: "search", in: .chatroomBundle, with: nil)
-        let image = style == .dark ? raw?.withTintColor(UIColor.theme.neutralColor4):raw
-        self.searchField.backgroundColor(style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor95).textColor(style == .dark ? UIColor.theme.neutralColor4:UIColor.theme.neutralColor6, .normal).image(image, .normal)
+        var raw = UIImage(named: "search", in: .chatroomBundle, compatibleWith: nil)
+        if style == .dark {
+            raw = UIImage(named: "search_dark", in: .chatroomBundle, compatibleWith: nil)
+        }
+        self.searchField.backgroundColor(style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor95).textColor(style == .dark ? UIColor.theme.neutralColor4:UIColor.theme.neutralColor6, .normal).image(raw, .normal)
     }
     
 }

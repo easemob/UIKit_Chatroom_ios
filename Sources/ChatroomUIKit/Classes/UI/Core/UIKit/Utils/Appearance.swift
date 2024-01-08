@@ -69,16 +69,16 @@ import UIKit
     public static var actionSheetRowHeight: CGFloat = 56
     
     /// The placeholder image of the gift image view of the gift list cell ``GiftEntityCell``.
-    public static var giftPlaceHolder: UIImage? = UIImage(named: "gift_placeholder", in: .chatroomBundle, with: nil)
+    public static var giftPlaceHolder: UIImage? = UIImage(named: "gift_placeholder", in: .chatroomBundle, compatibleWith: nil)
     
     /// The default image of the gift price of the gift list cell ``GiftEntityCell``.
-    public static var giftPriceIcon: UIImage? = UIImage(named: "dollar", in: .chatroomBundle, with: nil)
+    public static var giftPriceIcon: UIImage? = UIImage(named: "dollar", in: .chatroomBundle, compatibleWith: nil)
     
     /// The placeholder image of the avatar image view of ``ChatMessageCell``.
-    public static var avatarPlaceHolder: UIImage? = UIImage(named: "default_avatar", in: .chatroomBundle, with: nil)
+    public static var avatarPlaceHolder: UIImage? = UIImage(named: "default_avatar", in: .chatroomBundle, compatibleWith: nil)
     
     /// The default icon of ``HorizontalTextCarousel``.
-    public static var notifyMessageIcon: UIImage? = UIImage(named: "speaker", in: .chatroomBundle, with: nil)
+    public static var notifyMessageIcon: UIImage? = UIImage(named: "speaker", in: .chatroomBundle, compatibleWith: nil)
     
     public static var notifyTextColor = UIColor.theme.barrageLightColor100
     
@@ -88,7 +88,7 @@ import UIKit
     public static var notifyMessageOriginPoint: CGPoint = CGPoint(x: 20, y: NavigationHeight+10)
         
     /// The placeholder image of the user-level image view of ``ChatMessageCell``.
-    public static var identityPlaceHolder: UIImage? = UIImage(named: "achievement", in: .chatroomBundle, with: nil)
+    public static var identityPlaceHolder: UIImage? = UIImage(named: "achievement", in: .chatroomBundle, compatibleWith: nil)
     
     /// The height limit of the input box in ``MessageInputBar``.
     public static var maxInputHeight: CGFloat = 88

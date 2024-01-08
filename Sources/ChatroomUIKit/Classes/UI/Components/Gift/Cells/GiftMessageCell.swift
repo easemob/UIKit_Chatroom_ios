@@ -87,7 +87,7 @@ import UIKit
             self.gift = item
         }
         if let avatarURL = item.sendUser?.avatarURL {
-            self.avatar.image(with:avatarURL, placeHolder: UIImage(named: "", in: .chatroomBundle, with: nil))
+            self.avatar.image(with:avatarURL, placeHolder: UIImage(named: "", in: .chatroomBundle, compatibleWith: nil))
         }
         
         self.userName.text = item.sendUser?.nickname

@@ -36,7 +36,7 @@ import UIKit
     }()
     
     public private(set) lazy var send: UIButton = {
-        UIButton(type: .custom).frame(CGRect(x: self.frame.width - 42, y: self.inputField.frame.maxY-32, width: 30, height: 30)).backgroundColor(.clear).image(UIImage(named: "airplane", in: .chatroomBundle, with: nil), .normal).addTargetFor(self, action: #selector(sendMessage), for: .touchUpInside)
+        UIButton(type: .custom).frame(CGRect(x: self.frame.width - 42, y: self.inputField.frame.maxY-32, width: 30, height: 30)).backgroundColor(.clear).image(UIImage(named: "airplane", in: .chatroomBundle, compatibleWith: nil), .normal).addTargetFor(self, action: #selector(sendMessage), for: .touchUpInside)
     }()
     
     private var limitCount: Int {
@@ -66,8 +66,7 @@ import UIKit
         self.rawTextHeight = self.rawHeight-16
         self.rawFrame = frame
         self.addSubViews([self.inputField, self.rightView,self.send])
-        self.rightView.setImage(UIImage(named: "emojiKeyboard", in: Bundle.chatroomBundle, with: nil)?.withTintColor(UIColor.theme.neutralColor3), for: .normal)
-        self.rightView.setImage(UIImage(named: "textKeyboard", in: Bundle.chatroomBundle, with: nil)?.withTintColor(UIColor.theme.neutralColor3), for: .selected)
+        
         
         self.inputField.cornerRadius(Appearance.inputBarCorner)
         self.inputField.placeHolder = Appearance.inputPlaceHolder.chatroom.localize
@@ -281,7 +280,7 @@ extension MessageInputBar: UITextViewDelegate {
         let attribute = NSMutableAttributedString(attributedString: text!)
         attribute.addAttributes([.foregroundColor:Theme.style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1,.font:UIFont.theme.bodyLarge], range: NSMakeRange(0, attribute.length))
         let attachment = NSTextAttachment()
-        attachment.image = ChatEmojiConvertor.shared.emojiMap.isEmpty ? UIImage(named: key, in: .chatroomBundle, with: nil):ChatEmojiConvertor.shared.emojiMap[key]
+        attachment.image = ChatEmojiConvertor.shared.emojiMap.isEmpty ? UIImage(named: key, in: .chatroomBundle, compatibleWith: nil):ChatEmojiConvertor.shared.emojiMap[key]
         attachment.bounds = CGRect(x: 0, y: -3.5, width: 18, height: 18)
         let imageText = NSMutableAttributedString(attachment: attachment)
         if #available(iOS 11.0, *) {
@@ -307,12 +306,18 @@ extension MessageInputBar: UITextViewDelegate {
 extension MessageInputBar: ThemeSwitchProtocol {
     
     public func switchTheme(style: ThemeStyle) {
-        self.rightView.setImage(UIImage(named: "emojiKeyboard", in: .chatroomBundle, with: nil)?.withTintColor(style == .dark ? UIColor.theme.neutralColor95:UIColor.theme.neutralColor3, renderingMode: .automatic), for: .normal)
-        self.rightView.setImage(UIImage(named: "textKeyboard", in: .chatroomBundle, with: nil)?.withTintColor(style == .dark ? UIColor.theme.neutralColor95:UIColor.theme.neutralColor3, renderingMode: .automatic), for: .selected)
-        var image = UIImage(named: "airplane", in: .chatroomBundle, with: nil)
+        
+        var image = UIImage(named: "airplane", in: .chatroomBundle, compatibleWith: nil)
+        var emojiKeyboard = UIImage(named: "emojiKeyboard_light", in: .chatroomBundle, compatibleWith: nil)
+        var textKeyboard = UIImage(named: "textKeyboard_light", in: .chatroomBundle, compatibleWith: nil)
         if style == .dark {
-            image = image?.withTintColor(UIColor.theme.primaryColor6)
+            image = UIImage(named: "airplane_dark", in: .chatroomBundle, compatibleWith: nil)
+            emojiKeyboard = UIImage(named: "emojiKeyboard", in: .chatroomBundle, compatibleWith: nil)
+            textKeyboard = UIImage(named: "textKeyboard", in: .chatroomBundle, compatibleWith: nil)
         }
+        
+        self.rightView.setImage(emojiKeyboard, for: .normal)
+        self.rightView.setImage(textKeyboard, for: .selected)
         self.send.setImage(image, for: .normal)
         self.viewWithTag(124)?.backgroundColor(style == .dark ? UIColor.theme.neutralColor1:UIColor.theme.neutralColor98)
         self.inputField.backgroundColor(style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor95)

@@ -37,7 +37,7 @@ import UIKit
     @objc required override public init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubViews([self.emojiList, self.deleteEmoji, self.separaLine])
-        self.deleteEmoji.setImage(UIImage(named: "delete_emoji_light", in: .chatroomBundle, with: nil), for: .normal)
+        self.deleteEmoji.setImage(UIImage(named: "delete_emoji_light", in: .chatroomBundle, compatibleWith: nil), for: .normal)
         
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
@@ -60,7 +60,7 @@ extension ChatEmojiView: UICollectionViewDelegate, UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChatEmojiCell", for: indexPath) as? ChatEmojiCell
-        cell?.icon.image = ChatEmojiConvertor.shared.emojiMap.isEmpty ? UIImage(named: ChatEmojiConvertor.shared.emojis[indexPath.row], in: .chatroomBundle, with: nil):ChatEmojiConvertor.shared.emojiMap[ChatEmojiConvertor.shared.emojis[indexPath.row]]
+        cell?.icon.image = ChatEmojiConvertor.shared.emojiMap.isEmpty ? UIImage(named: ChatEmojiConvertor.shared.emojis[indexPath.row], in: .chatroomBundle, compatibleWith: nil):ChatEmojiConvertor.shared.emojiMap[ChatEmojiConvertor.shared.emojis[indexPath.row]]
         return cell ?? ChatEmojiCell()
     }
 
@@ -72,7 +72,7 @@ extension ChatEmojiView: UICollectionViewDelegate, UICollectionViewDataSource {
 
 extension ChatEmojiView: ThemeSwitchProtocol {
     public func switchTheme(style: ThemeStyle) {
-        self.deleteEmoji.setImage(UIImage(named: style == .dark ? "delete_emoji_dark":"delete_emoji_light", in: .chatroomBundle, with: nil), for: .normal)
+        self.deleteEmoji.setImage(UIImage(named: style == .dark ? "delete_emoji_dark":"delete_emoji_light", in: .chatroomBundle, compatibleWith: nil), for: .normal)
     }
 }
 
