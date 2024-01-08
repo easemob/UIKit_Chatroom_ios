@@ -8,7 +8,7 @@
 import Foundation
 
 
-public typealias ActionClosure = ((ActionSheetItemProtocol) -> Void)
+public typealias ActionClosure = ((ActionSheetItemProtocol,Any?) -> Void)
 
 /// An enumeration representing the type of an action sheet item.
 @objc public enum ActionSheetItemType: Int {

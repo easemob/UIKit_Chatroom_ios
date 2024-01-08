@@ -250,7 +250,7 @@ extension ChatroomView: MessageListActionEventsHandler {
     }
     
     private func showLongPressDialog(message: ChatMessage,messageActions: [ActionSheetItemProtocol]) {
-        DialogManager.shared.showMessageActions(messageActions) { [weak self] item in
+        DialogManager.shared.showMessageActions(messageActions) { [weak self] item,object in
             switch item.tag {
             case "Translate":
                 self?.service?.translate(message: message, completion: { _ in })
@@ -271,7 +271,7 @@ extension ChatroomView: MessageListActionEventsHandler {
                     }
                 }
             default:
-                item.action?(item)
+                item.action?(item,message)
             }
         }
     }

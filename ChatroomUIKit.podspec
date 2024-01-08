@@ -22,14 +22,14 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
   s.source           = { :git => 'https://github.com/easemob/UIKit_Chatroom_ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://github.com/zjc19891106'
 
-  s.ios.deployment_target = '13.0'
+  s.ios.deployment_target = '11.0'
   s.xcconfig = {'ENABLE_BITCODE' => 'NO'}
   
 
   s.source_files = ['Sources/ChatroomUIKit/Classes/**/*.swift']
   s.resources = ['Sources/ChatroomUIKit/**/*.bundle']
   s.dependency 'HyphenateChat'
-  
+  s.dependency 'SDWebImage'
   s.static_framework = true
   
   s.swift_version = '5.0'
@@ -38,6 +38,6 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
 #  s.source_files = 'Sources/ChatroomUIKit/Classes/**/*'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-   s.frameworks = 'UIKit', 'Foundation','Combine'
+   s.frameworks = 'UIKit', 'Foundation'
 end
 
