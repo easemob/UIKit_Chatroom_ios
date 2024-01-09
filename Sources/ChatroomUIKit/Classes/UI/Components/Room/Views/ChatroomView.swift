@@ -228,6 +228,12 @@ extension ChatroomView: MessageListActionEventsHandler {
                     }
                 }
             }
+            if message.from == ChatroomContext.shared?.currentUser?.userId ?? "" {
+                if let index = messageActions.firstIndex(where: { $0.tag == "Mute"
+                }) {
+                    messageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute")
+                }
+            }
         } else {
             messageActions.append(contentsOf: Appearance.defaultMessageActions)
             if let index = messageActions.firstIndex(where: { $0.tag == "Mute"
