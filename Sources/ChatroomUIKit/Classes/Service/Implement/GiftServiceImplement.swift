@@ -110,7 +110,7 @@ extension GiftServiceImplement: ChatEventsListener {
     
     public var giftPrice: String = ""
     
-    public var giftCount: String = "1"
+    public var giftCount: Int = 1
     
     public var giftIcon: String = ""
     
