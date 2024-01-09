@@ -11,7 +11,7 @@ import Foundation
     var giftId: String {set get}
     var giftName: String {set get}
     var giftPrice: String {set get}
-    var giftCount: String {set get}
+    var giftCount: Int {set get}
     var giftIcon: String {set get}
     /// Developers can upload a special effect to the server that matches the gift ID. The special effect name is the ID of the gift. When entering the room, the SDK will pull the gift resource and download the special effect corresponding to the gift ID. If the value of the gift received is true, the corresponding special effect will be found in full screen. For playback and broadcasting, the gift resource and special effects resource download server can create a web page for users to use. After each app is started, the gift resources are pre-downloaded and cached to disk for UIKit to access before loading the scene.
     var giftEffect: String {set get}
