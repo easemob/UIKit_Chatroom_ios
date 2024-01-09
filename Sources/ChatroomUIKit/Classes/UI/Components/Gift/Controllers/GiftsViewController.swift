@@ -65,7 +65,7 @@ extension GiftsViewController: GiftsViewActionEventsDelegate {
                 UIViewController.currentController?.showToast(toast: errorInfo, duration: 3)
             } else {
                 item.sendUser = ChatroomContext.shared?.currentUser
-                item.giftCount = "1"
+                item.giftCount = 1
                 if let implement = self?.giftService as? GiftServiceImplement,let giftMessage = message {
                     implement.notifyGiftDriveShowSelfSend(gift: item,message: giftMessage)
                 }
