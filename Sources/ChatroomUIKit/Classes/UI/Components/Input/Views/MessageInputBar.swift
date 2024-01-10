@@ -132,7 +132,7 @@ extension MessageInputBar: UITextViewDelegate {
     
     
     /// Update subviews height on text input content changed.
-    private func updateHeight() {
+    @objc open func updateHeight() {
         let textHeight = self.inputField.sizeThatFits(CGSize(width: self.inputField.frame.width, height: 9999)).height
         if textHeight >= self.rawTextHeight {
             let increment = textHeight - self.rawTextHeight
@@ -168,7 +168,7 @@ extension MessageInputBar: UITextViewDelegate {
         self.recoverInputState()
     }
     
-    private func recoverInputState() {
+    @objc open func recoverInputState() {
         self.rawHeight = self.rawFrame.height
         self.rawTextHeight = self.rawHeight-16
         self.inputField.frame = CGRect(x: 12, y: 8, width: self.frame.width-111, height: self.rawTextHeight)
@@ -189,7 +189,7 @@ extension MessageInputBar: UITextViewDelegate {
     }
 
     /// This function is called when the user taps on the emoji button in the chat input bar. It toggles the selected state of the right view and calls the `changeEmojiClosure` closure with the new selected state. If the right view is selected, it resigns the first responder status of the input field. Otherwise, it becomes the first responder.
-    @objc func changeToEmoji() {
+    @objc open func changeToEmoji() {
         self.rightView.isSelected = !self.rightView.isSelected
         self.changeEmojiClosure?(self.rightView.isSelected)
         if self.rightView.isSelected {
@@ -199,7 +199,7 @@ extension MessageInputBar: UITextViewDelegate {
         }
     }
     
-    @objc private func keyboardWillShow(notification: Notification) {
+    @objc open func keyboardWillShow(notification: Notification) {
         if !self.inputField.isFirstResponder {
             return
         }
@@ -212,7 +212,7 @@ extension MessageInputBar: UITextViewDelegate {
         self.updateHeight()
     }
     
-    @objc private func keyboardWillHide(notification: Notification) {
+    @objc open func keyboardWillHide(notification: Notification) {
         let frame = notification.chatroom.keyboardEndFrame
         let duration = notification.chatroom.keyboardAnimationDuration
         self.keyboardHeight = frame!.height
@@ -249,7 +249,7 @@ extension MessageInputBar: UITextViewDelegate {
         }
     }
     
-    @objc public func hiddenInputBar() {
+    @objc open func hiddenInputBar() {
         self.inputField.resignFirstResponder()
         UIView.animate(withDuration: 0.3) {
             self.frame = CGRect(x: 0, y: ScreenHeight, width: self.frame.width, height: self.keyboardHeight + 60)
@@ -276,7 +276,7 @@ extension MessageInputBar: UITextViewDelegate {
 
      - Returns: The converted attributed string with the emoji image attachment.
      */
-    func convertText(text: NSAttributedString?, key: String) -> NSAttributedString {
+    @objc open func convertText(text: NSAttributedString?, key: String) -> NSAttributedString {
         let attribute = NSMutableAttributedString(attributedString: text!)
         attribute.addAttributes([.foregroundColor:Theme.style == .dark ? UIColor.theme.neutralColor98:UIColor.theme.neutralColor1,.font:UIFont.theme.bodyLarge], range: NSMakeRange(0, attribute.length))
         let attachment = NSTextAttachment()

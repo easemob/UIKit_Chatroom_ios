@@ -36,4 +36,6 @@ fileprivate let component = ComponentsRegister()
     
     public var ChatroomParticipantCell: ChatroomParticipantsCell.Type = ChatroomParticipantsCell.self
     
+    public var MessageEntity: ChatEntity.Type = ChatEntity.self
+    
 }

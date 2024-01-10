@@ -279,7 +279,7 @@ extension MessageList: IMessageListDrive {
     }
     
     private func convertMessageToRender(message: ChatMessage,gift: GiftEntityProtocol?) -> ChatEntity {
-        let entity = ChatEntity()
+        let entity = ComponentsRegister.shared.MessageEntity.init()
         entity.message = message
         entity.gift = gift
         entity.attributeText = entity.attributeText
