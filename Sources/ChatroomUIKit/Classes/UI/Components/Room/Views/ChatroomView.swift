@@ -95,7 +95,7 @@ import UIKit
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func sendTextMessage(text: String) {
+    @objc open func sendTextMessage(text: String) {
         self.service?.roomService?.sendMessage(text: text, roomId: ChatroomContext.shared?.roomId ?? "", completion: { [weak self] message, error in
             if error == nil {
                 self?.chatList.showNewMessage(message: message, gift: nil)
@@ -114,7 +114,7 @@ import UIKit
     /// This method binds your view to the model it serves. A ChatroomView can only call it once. There is judgment in this method. Calling it multiple times is invalid.
     /// - Parameter service: ``RoomService``
     @objc(connectWithService:)
-    public func connectService(_ service: RoomService) {
+    open func connectService(_ service: RoomService) {
         if self.service != nil {
             return
         }
@@ -137,7 +137,7 @@ import UIKit
     /// Disconnect room service
     /// - Parameter service: ``RoomService``
     @objc(disconnectWithService:)
-    public func disconnectService(_ service: RoomService) {
+    open func disconnectService(_ service: RoomService) {
         self.service?.leaveRoom(completion: { [weak self] error in
             if error == nil {
                 self?.service = nil
@@ -199,8 +199,16 @@ extension ChatroomView: GiftMessageListTransformAnimationDataSource {
 extension ChatroomView: MessageListActionEventsHandler {
     
     public func onMessageLongPressed(message: ChatMessage) {
+        
+        self.showLongPressDialog(message: message, messageActions: self.filterMessageActions(message: message))
+        for delegate in self.eventHandlers.allObjects {
+            delegate.onMessageLongPressed(message: message)
+        }
+    }
+    
+    @objc open func filterMessageActions(message: ChatMessage) -> [ActionSheetItemProtocol] {
         if message.body.type == .custom {
-            return
+            return []
         }
         let currentUser = ChatroomContext.shared?.currentUser?.userId ?? ""
         var messageActions = [ActionSheetItemProtocol]()
@@ -255,10 +263,7 @@ extension ChatroomView: MessageListActionEventsHandler {
         if message.from.lowercased() != currentUser.lowercased() {
             messageActions.removeAll { $0.tag == "Recall" }
         }
-        self.showLongPressDialog(message: message, messageActions: messageActions)
-        for delegate in self.eventHandlers.allObjects {
-            delegate.onMessageLongPressed(message: message)
-        }
+        return messageActions
     }
     
     private func showLongPressDialog(message: ChatMessage,messageActions: [ActionSheetItemProtocol]) {

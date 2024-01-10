@@ -116,8 +116,8 @@ import UIKit
         self.option.option_UI.bottomDataSource = options.bottomDataSource
         self.option.option_UI.showGiftMessageArea = options.showGiftMessageArea
         self.option.option_UI.chatAreaShowGift = options.chatAreaShowGift
-        let room = ChatroomView(respondTouch: frame)
-        let service = RoomService(roomId: roomId)
+        let room = ComponentsRegister.shared.RoomView.init(respondTouch: frame)
+        let service = ComponentsRegister.shared.RoomViewService.init(roomId: roomId)
         self.roomService = service
         room.connectService(service)
         return room
