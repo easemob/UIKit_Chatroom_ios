@@ -70,8 +70,8 @@ import UIKit
     ///   - action: Callback upon a click of a message operation.
     @objc(showWithMessageActions:action:)
     public func showMessageActions(_ actions: [ActionSheetItemProtocol],action: @escaping ActionClosure) {
-        let actionSheet = ActionSheet(items: actions) { item in
-            action(item)
+        let actionSheet = ActionSheet(items: actions) { item,object in
+            action(item,object)
             UIViewController.currentController?.dismiss(animated: true)
         }
         actionSheet.frame = CGRect(x: 0, y: 0, width: actionSheet.frame.width, height: actionSheet.frame.height)
@@ -85,8 +85,8 @@ import UIKit
     ///   - action: Callback upon a click of a member operation.
     @objc(showWithUserActions:action:)
     public func showUserActions(actions: [ActionSheetItemProtocol],action: @escaping ActionClosure) {
-        let actionSheet = ActionSheet(items: actions) { item in
-            action(item)
+        let actionSheet = ActionSheet(items: actions) { item,object in
+            action(item,object)
             UIViewController.currentController?.dismiss(animated: true)
         }
         let vc = DialogContainerViewController(custom: actionSheet,constraintsSize: actionSheet.frame.size)
