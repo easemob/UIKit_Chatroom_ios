@@ -35,15 +35,15 @@ import UIKit
         UIButton(type: .custom).frame(CGRect(x: self.contentView.frame.width-40, y: (self.contentView.frame.height-28)/2.0, width: 28, height: 28)).backgroundColor(.clear).image(self.moreImage, .normal).addTargetFor(self, action: #selector(moreAction), for: .touchUpInside)
     }()
     
-//    lazy var separateLine: UIView = {
-//        UIView(frame: CGRect(x: 0, y: self.contentView.frame.height-1, width: self.contentView.frame.width, height: 1))
-//    }()
+    lazy var separateLine: UIView = {
+        UIView(frame: CGRect(x: self.userName.frame.minY, y: self.contentView.frame.height-1, width: self.contentView.frame.width, height: 1))
+    }()
     
     public required override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor(.clear)
         self.contentView.backgroundColor(.clear)
-        self.contentView.addSubViews([self.userLevel,self.userAvatar,self.userName,self.userDetail,self.more])
+        self.contentView.addSubViews([self.userLevel,self.userAvatar,self.userName,self.userDetail,self.more,self.separateLine])
         Theme.registerSwitchThemeViews(view: self)
         self.switchTheme(style: Theme.style)
     }
@@ -56,7 +56,7 @@ import UIKit
         super.layoutSubviews()
     }
     
-    @objc public func refresh(user: UserInfoProtocol,detail: String? = nil,hiddenUserIdentity: Bool = false) {
+    @objc open func refresh(user: UserInfoProtocol,detail: String? = nil,hiddenUserIdentity: Bool = false) {
         self.user = user
         self.userLevel.image(with: user.identity, placeHolder: Appearance.identityPlaceHolder)
         self.userAvatar.image(with: user.avatarURL, placeHolder: Appearance.avatarPlaceHolder)
@@ -69,6 +69,7 @@ import UIKit
         
         self.hiddenUserIdentity(hidden: hiddenUserIdentity ? hiddenUserIdentity:Appearance.messageDisplayStyle == .hideUserIdentity)
         self.more.frame = CGRect(x: ScreenWidth-40, y: (Appearance.participantsRowHeight-28)/2.0, width: 28, height: 28)
+        self.separateLine.frame = CGRect(x: self.userName.frame.minY, y: self.contentView.frame.height-0.5, width: self.contentView.frame.width, height: 0.5)
     }
     
     @objc public func hiddenUserIdentity(hidden: Bool) {
@@ -116,7 +117,7 @@ extension ChatroomParticipantsCell: ThemeSwitchProtocol {
         self.userDetail.textColor(style == .dark ? UIColor.theme.neutralColor6:UIColor.theme.neutralColor5)
         self.moreImage?.withTintColor(style == .dark ? UIColor.theme.neutralColor6:UIColor.theme.neutralColor5, renderingMode: .automatic)
         self.more.setImage(self.moreImage, for: .normal)
-//        self.separateLine.backgroundColor(Theme.style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor9)
+        self.separateLine.backgroundColor(Theme.style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor9)
     }
     
 }

@@ -20,8 +20,12 @@ import UIKit
     public private(set) var style: ChatMessageDisplayContentStyle = Appearance.messageDisplayStyle
     
     public private(set) lazy var container: UIView = {
-        UIView(frame: CGRect(x: 15, y: 6, width: self.contentView.frame.width - 30, height: self.frame.height - 6)).backgroundColor( UIColor.theme.barrageLightColor2).cornerRadius(.small)
+        self.createContainer()
     }()
+    
+    @objc open func createContainer() -> UIView {
+        UIView(frame: CGRect(x: 15, y: 6, width: self.contentView.frame.width - 30, height: self.frame.height - 6)).backgroundColor( UIColor.theme.barrageLightColor2).cornerRadius(.small)
+    }
     
     public private(set) lazy var time: UILabel = {
         UILabel(frame: CGRect(x: 8, y: 10, width: 40, height: 18)).font(UIFont.theme.bodyMedium).textColor(UIColor.theme.secondaryColor8).textAlignment(.center).backgroundColor(.clear)
@@ -112,7 +116,7 @@ import UIKit
     /// Refresh the entity that renders the chat barrage, which contains height, width and rich text cache.
     /// - Parameter chat: ``ChatEntity``
     @objc(refreshWithChatEntity:)
-    public func refresh(chat: ChatEntity) {
+    open func refresh(chat: ChatEntity) {
         self.time.text = chat.showTime
         self.identity.image(with: chat.message.user?.identity ?? "", placeHolder: Appearance.identityPlaceHolder)
         self.avatar.image(with: chat.message.user?.avatarURL ?? "", placeHolder: Appearance.avatarPlaceHolder)
@@ -252,6 +256,10 @@ fileprivate let gift_tail_indent: CGFloat = 26
     
     /// Returns the distance of the last line head indent based on the appearance of the chat cell.
     @objc public func lastLineHeadIndent() -> CGFloat { gift_tail_indent }
+    
+    required public override init() {
+            
+    }
 }
 
 public extension ChatMessage {
