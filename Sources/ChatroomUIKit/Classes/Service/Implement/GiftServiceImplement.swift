@@ -44,6 +44,7 @@ extension GiftServiceImplement: GiftService {
         let userMap = ["chatroom_uikit_userInfo":user?.toJsonObject()]
         let message = ChatMessage(conversationID: self.currentRoomId, body: ChatCustomMessageBody(event: chatroom_UIKit_gift, customExt: ["chatroom_uikit_gift" : gift.toJsonObject().chatroom.jsonString]), ext: userMap as [AnyHashable : Any])
         message.chatType = .chatRoom
+        message.priority = .high
         ChatClient.shared().chatManager?.send(message, progress: nil,completion: { chatMessage, error in
             completion(chatMessage,error)
         })
