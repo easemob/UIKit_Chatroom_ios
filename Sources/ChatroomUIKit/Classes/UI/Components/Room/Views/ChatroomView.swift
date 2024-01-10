@@ -202,6 +202,7 @@ extension ChatroomView: MessageListActionEventsHandler {
         if message.body.type == .custom {
             return
         }
+        let currentUser = ChatroomContext.shared?.currentUser?.userId ?? ""
         var messageActions = [ActionSheetItemProtocol]()
         if let owner = ChatroomContext.shared?.owner,owner {
             messageActions.append(contentsOf: Appearance.defaultMessageActions)
@@ -239,7 +240,12 @@ extension ChatroomView: MessageListActionEventsHandler {
                 messageActions.remove(at: index)
             }
         }
-        let currentUser = ChatroomContext.shared?.currentUser?.userId ?? ""
+        if currentUser == message.from {
+            if let index = messageActions.firstIndex(where: { $0.tag == "Mute"
+            }) {
+                messageActions.remove(at: index)
+            }
+        }
         if message.from.lowercased() != currentUser.lowercased() {
             messageActions.removeAll { $0.tag == "Recall" }
         }
