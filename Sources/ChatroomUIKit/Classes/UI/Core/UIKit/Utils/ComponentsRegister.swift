@@ -38,4 +38,8 @@ fileprivate let component = ComponentsRegister()
     
     public var MessageEntity: ChatEntity.Type = ChatEntity.self
     
+    public var RoomView: ChatroomView.Type = ChatroomView.self
+    
+    public var RoomViewService: RoomService.Type = RoomService.self
+    
 }
