@@ -69,7 +69,7 @@ import UIKit
         
         self.hiddenUserIdentity(hidden: hiddenUserIdentity ? hiddenUserIdentity:Appearance.messageDisplayStyle == .hideUserIdentity)
         self.more.frame = CGRect(x: ScreenWidth-40, y: (Appearance.participantsRowHeight-28)/2.0, width: 28, height: 28)
-        self.separateLine.frame = CGRect(x: self.userName.frame.minY, y: self.contentView.frame.height-0.5, width: self.contentView.frame.width, height: 0.5)
+        self.separateLine.frame = CGRect(x: self.userName.frame.minY, y: Appearance.participantsRowHeight-0.5, width: ScreenWidth-self.userName.frame.minY, height: 0.5)
     }
     
     @objc public func hiddenUserIdentity(hidden: Bool) {

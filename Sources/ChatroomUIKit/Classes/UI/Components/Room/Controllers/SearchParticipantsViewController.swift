@@ -90,6 +90,7 @@ import UIKit
         self.tableView.contentInsetAdjustmentBehavior = .never
         self.tableView.rowHeight = Appearance.participantsRowHeight
         self.tableView.tableHeaderView = self.searchController.searchBar
+        self.tableView.separatorStyle = .none
         self.tableView.register(ChatroomParticipantsCell.self, forCellReuseIdentifier: "ChatroomParticipantsCellSearchResultCell")
         _ = self.searchController.publisher(for: \.isActive).sink { [weak self] status in
             if !status {

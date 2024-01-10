@@ -65,6 +65,7 @@ open class ParticipantsController: UITableViewController {
         self.tableView.backgroundColor = .clear
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.separatorStyle = .none
         self.tableView.tableHeaderView = self.searchField
         self.tableView.registerCell(ComponentsRegister.shared.ChatroomParticipantCell, forCellReuseIdentifier: "ChatroomParticipantsCell")
         self.tableView.rowHeight = Appearance.participantsRowHeight
