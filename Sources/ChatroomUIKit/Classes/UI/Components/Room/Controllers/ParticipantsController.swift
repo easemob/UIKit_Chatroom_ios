@@ -10,7 +10,7 @@ import UIKit
 /// Chatroom participants list
 open class ParticipantsController: UITableViewController {
     
-    public private(set) var roomService = RoomService(roomId: ChatroomContext.shared?.roomId ?? "")
+    public private(set) var roomService = ComponentsRegister.shared.RoomViewService.init(roomId: ChatroomContext.shared?.roomId ?? "")
     
     public private(set) var users = [UserInfoProtocol]() {
         didSet {
