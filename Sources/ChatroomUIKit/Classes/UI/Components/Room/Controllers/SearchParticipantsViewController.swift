@@ -117,7 +117,6 @@ import UIKit
         }
     
     deinit {
-        self.removeObserver(self, forKeyPath: "isActive")
         consoleLogInfo("deinit \(self.swiftClassName ?? "")", type: .debug)
     }
     
