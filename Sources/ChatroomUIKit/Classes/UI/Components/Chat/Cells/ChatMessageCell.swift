@@ -186,7 +186,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
     lazy public var gift: GiftEntityProtocol? = nil
     
     /// Converts the message text into an attributed string, including the user's nickname, message text, and emojis.
-    @objc public func convertAttribute() -> NSAttributedString {
+    @objc open func convertAttribute() -> NSAttributedString {
         let userId = self.message.user?.userId ?? self.message.from
         var text = NSMutableAttributedString {
             AttributedText((self.message.user?.nickname ?? userId)).foregroundColor(Color.theme.primaryColor8).font(UIFont.theme.labelMedium).paragraphStyle(self.paragraphStyle())
@@ -233,7 +233,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
     }
     
     /// Returns a paragraph style object with the first line head indent set based on the appearance of the chat cell.
-    @objc public func paragraphStyle() -> NSMutableParagraphStyle {
+    @objc open func paragraphStyle() -> NSMutableParagraphStyle {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent()
         paragraphStyle.lineHeightMultiple = 1.08
@@ -241,7 +241,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
     }
     
     /// Returns the distance of the first line head indent based on the appearance of the chat cell.
-    @objc public func firstLineHeadIndent() -> CGFloat {
+    @objc open func firstLineHeadIndent() -> CGFloat {
         var distance:CGFloat = 0
         switch Appearance.messageDisplayStyle {
         case .all: distance = 90
@@ -255,7 +255,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
     }
     
     /// Returns the distance of the last line head indent based on the appearance of the chat cell.
-    @objc public func lastLineHeadIndent() -> CGFloat { gift_tail_indent }
+    @objc open func lastLineHeadIndent() -> CGFloat { gift_tail_indent }
     
     required public override init() {
             
