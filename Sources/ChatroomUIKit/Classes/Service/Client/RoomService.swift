@@ -159,15 +159,15 @@ import UIKit
         self.roomId = roomId
     }
     
-    func bindChatDriver(_ driver: IMessageListDrive) {
+    @objc public func bindChatDriver(_ driver: IMessageListDrive) {
         self.chatDrive = driver
     }
     
-    func bindGiftDriver(_ driver: IGiftMessageListDrive) {
+    @objc public func bindGiftDriver(_ driver: IGiftMessageListDrive) {
         self.giftDrive = driver
     }
     
-    func bindGlobalNotifyDriver(driver: IGlobalBoardcastViewDrive) {
+    @objc public func bindGlobalNotifyDriver(driver: IGlobalBoardcastViewDrive) {
         self.notifyDrive = driver
     }
     
@@ -188,7 +188,7 @@ import UIKit
         }
     }
     
-    private func cleanCache() {
+    @objc open func cleanCache() {
         self.roomId = ""
         self.roomService = nil
         self.giftDrive = nil
@@ -228,7 +228,7 @@ import UIKit
 //        })
 //    }
     
-    @objc public func enterRoom(completion: @escaping (ChatError?) -> Void) {
+    @objc open func enterRoom(completion: @escaping (ChatError?) -> Void) {
         if let userId = ChatroomContext.shared?.currentUser?.userId  {
             self.roomService?.chatroomOperating(roomId: self.roomId, userId: userId, type: .join) { [weak self] success, error in
                 guard let `self` = self else { return }
@@ -244,7 +244,7 @@ import UIKit
         }
     }
     
-    @objc public func leaveRoom(completion: @escaping (ChatError?) -> Void) {
+    @objc open func leaveRoom(completion: @escaping (ChatError?) -> Void) {
         self.roomService?.chatroomOperating(roomId: self.roomId, userId: ChatClient.shared().currentUsername ?? "", type: .leave, completion: { [weak self] success, error in
             if success {
                 self?.cleanCache()
@@ -253,7 +253,7 @@ import UIKit
         })
     }
     
-    @objc public func destroyed(completion: @escaping (ChatError?) -> Void) {
+    @objc open func destroyed(completion: @escaping (ChatError?) -> Void) {
         self.roomService?.chatroomOperating(roomId: self.roomId, userId: ChatClient.shared().currentUsername ?? "", type: .destroyed, completion: { [weak self] success, error in
             if success {
                 self?.cleanCache()
@@ -264,7 +264,7 @@ import UIKit
     
     //MARK: - Participants operation
     @objc(kickUserWithId:completion:)
-    public func kick(userId: String,completion: @escaping (ChatError?) -> Void) {
+    open func kick(userId: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.operatingUser(roomId: self.roomId, userId: userId, type: .kick, completion: { [weak self] success, error in
             if error == nil {
                 NotificationCenter.default.post(name: NSNotification.Name("ChatroomUIKitKickUserSuccess"), object: userId)
@@ -276,7 +276,7 @@ import UIKit
     }
     
     @objc(muteUserWithId:completion:)
-    public func mute(userId: String,completion: @escaping (ChatError?) -> Void) {
+    open func mute(userId: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.operatingUser(roomId: self.roomId, userId: userId, type: .mute, completion: { [weak self] success, error in
             if error == nil {
                 ChatroomContext.shared?.muteMap?[userId] = true
@@ -287,7 +287,7 @@ import UIKit
     }
     
     @objc(unmuteUserWithId:completion:)
-    public func unmute(userId: String,completion: @escaping (ChatError?) -> Void) {
+    open func unmute(userId: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.operatingUser(roomId: self.roomId, userId: userId, type: .unmute, completion: { [weak self] success, error in
             if error == nil {
                 ChatroomContext.shared?.muteMap?.removeValue(forKey: userId)
@@ -297,7 +297,7 @@ import UIKit
         })
     }
     
-    @objc public func fetchParticipants(pageSize: UInt, completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
+    @objc open func fetchParticipants(pageSize: UInt, completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
         self.roomService?.fetchParticipants(roomId: self.roomId, pageSize: pageSize, completion: { [weak self] userIds, error in
             guard let `self` = self else { return  }
             if let ids = userIds {
@@ -357,7 +357,7 @@ import UIKit
     }
     
     @objc(fetchMuteUsersWithPageSize:completion:)
-    public func fetchMuteUsers(pageSize: UInt, completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
+    open func fetchMuteUsers(pageSize: UInt, completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
         self.roomService?.fetchMuteUsers(roomId: self.roomId, pageNum: UInt(self.pageNumOfMute), pageSize: pageSize, completion: { [weak self] userIds, error in
             guard let `self` = self else { return }
             if error == nil {
@@ -410,7 +410,7 @@ import UIKit
     ///   - unknownUserIds: User ID array without user information
     ///   - completion: Callback user infos and error.
     @objc(fetchThenCacheUserInfosOnEndScrollWithunknownUserIds:completion:)
-    public func fetchThenCacheUserInfosOnEndScroll(unknownUserIds:[String], completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
+    open func fetchThenCacheUserInfosOnEndScroll(unknownUserIds:[String], completion: @escaping (([UserInfoProtocol]?,ChatError?)->Void)) {
         ChatroomUIKitClient.shared.userImplement?.userInfos(userIds: unknownUserIds, completion: { infos, error in
             if error == nil {
                 for info in infos {
@@ -448,7 +448,7 @@ import UIKit
 //    }
     //MARK: - Message operation
     @objc(translateWithMessage:completion:)
-    public func translate(message: ChatMessage,completion: @escaping (ChatError?) -> Void) {
+    public open translate(message: ChatMessage,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.translateMessage(message: message, completion: { [weak self] translateResult, error in
             if error == nil,let translation = translateResult {
                 self?.chatDrive?.refreshMessage(message: translation)
@@ -459,7 +459,7 @@ import UIKit
     }
     
     @objc(recallWithMessage:completion:)
-    public func recall(message: ChatMessage,completion: @escaping (ChatError?) -> Void) {
+    open func recall(message: ChatMessage,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.recall(messageId: message.messageId, completion: { [weak self] error in
             if error == nil {
                 self?.chatDrive?.removeMessage(message: message)
@@ -470,7 +470,7 @@ import UIKit
     }
     
     @objc(reportWithMessage:tag:reason:completion:)
-    public func report(message: ChatMessage,tag: String, reason: String,completion: @escaping (ChatError?) -> Void) {
+    open func report(message: ChatMessage,tag: String, reason: String,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.report(messageId: message.messageId, tag: tag, reason: reason, completion: { [weak self] error in
             self?.handleError(type: .report, error: error)
             completion(error)
