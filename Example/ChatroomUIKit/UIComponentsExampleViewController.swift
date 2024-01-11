@@ -206,7 +206,7 @@ extension UIComponentsExampleViewController: BottomAreaToolBarActionEvents,Gifts
     
     func onBottomItemClicked(item: ChatroomUIKit.ChatBottomItemProtocol) {
         switch item.type {
-        case 2:
+        case 1:
             DialogManager.shared.showGiftsDialog(titles: ["礼物","1231232"], gifts: [self.gift1,self.gift2])
             self.gift1.giftsView.addActionHandler(actionHandler: self)
         default:
