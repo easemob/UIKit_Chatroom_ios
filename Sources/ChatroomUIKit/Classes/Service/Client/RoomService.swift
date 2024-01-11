@@ -448,7 +448,7 @@ import UIKit
 //    }
     //MARK: - Message operation
     @objc(translateWithMessage:completion:)
-    public open translate(message: ChatMessage,completion: @escaping (ChatError?) -> Void) {
+    open func translate(message: ChatMessage,completion: @escaping (ChatError?) -> Void) {
         self.roomService?.translateMessage(message: message, completion: { [weak self] translateResult, error in
             if error == nil,let translation = translateResult {
                 self?.chatDrive?.refreshMessage(message: translation)
