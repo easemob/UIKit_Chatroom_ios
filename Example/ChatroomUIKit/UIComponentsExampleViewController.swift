@@ -57,7 +57,11 @@ final class UIComponentsExampleViewController: UIViewController {
         segment.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         segment.selectedSegmentIndex = self.style == .light ? 0:1
         
-        segment.selectedSegmentTintColor = UIColor(0x009EFF)
+        if #available(iOS 13.0, *) {
+            segment.selectedSegmentTintColor = UIColor(0x009EFF)
+        } else {
+            // Fallback on earlier versions
+        }
         segment.setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.white,NSAttributedStringKey.font:UIFont.systemFont(ofSize: 18, weight: .medium)], for: .selected)
         segment.setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.white,NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16, weight: .regular)], for: .normal)
         segment.addTarget(self, action: #selector(switchTheme(sender:)), for: .valueChanged)
@@ -66,16 +70,28 @@ final class UIComponentsExampleViewController: UIViewController {
     
     /// Switch show or hidden global notify icon.
     private lazy var speakerSegment: UISegmentedControl = {
-        let segment = UISegmentedControl(items: ["Light","Dark"])
+        let segment = UISegmentedControl(items: ["Icon","None"])
         segment.frame = CGRect(x: 100, y: self.modeSegment.frame.maxY+5, width: 96, height: 46)
-        segment.setImage(UIImage(systemName: "speaker.wave.3")?.withTintColor(.white), forSegmentAt: 0)
-        segment.setImage(UIImage(systemName: "speaker.slash")?.withTintColor(.white), forSegmentAt: 1)
+        if #available(iOS 13.0, *) {
+            segment.setImage(UIImage(systemName: "speaker.wave.3")?.withTintColor(.white), forSegmentAt: 0)
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 13.0, *) {
+            segment.setImage(UIImage(systemName: "speaker.slash")?.withTintColor(.white), forSegmentAt: 1)
+        } else {
+            // Fallback on earlier versions
+        }
         segment.tintColor = UIColor(0x009EFF)
         segment.tag = 12
         segment.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         segment.selectedSegmentIndex = self.carouselTextView.voiceIcon.isHidden ? 1:0
         
-        segment.selectedSegmentTintColor = UIColor(0x009EFF)
+        if #available(iOS 13.0, *) {
+            segment.selectedSegmentTintColor = UIColor(0x009EFF)
+        } else {
+            // Fallback on earlier versions
+        }
         segment.setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.white,NSAttributedStringKey.font:UIFont.systemFont(ofSize: 18, weight: .medium)], for: .selected)
         segment.setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.white,NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16, weight: .regular)], for: .normal)
         segment.addTarget(self, action: #selector(switchSpeakerIcon(sender:)), for: .valueChanged)
@@ -112,7 +128,11 @@ final class UIComponentsExampleViewController: UIViewController {
         
         // Switch ChatmessageDisplayStyle
         let switchCellStyle = UIButton(type: .custom).frame(CGRect(x: 100, y: self.speakerSegment.frame.maxY+5, width: 150, height: 40)).textColor(.white, .normal).backgroundColor(UIColor.theme.primaryColor6).cornerRadius(.small).title(".all", .normal).title("长按切换", .normal).font(.systemFont(ofSize: 16, weight: .semibold))
-        switchCellStyle.addInteraction(UIContextMenuInteraction(delegate: self))
+        if #available(iOS 13.0, *) {
+            switchCellStyle.addInteraction(UIContextMenuInteraction(delegate: self))
+        } else {
+            // Fallback on earlier versions
+        }
         self.view.addSubview(switchCellStyle)
         
         
@@ -123,6 +143,7 @@ final class UIComponentsExampleViewController: UIViewController {
 
 extension UIComponentsExampleViewController: UIContextMenuInteractionDelegate {
 
+    @available(iOS 13.0, *)
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
             let action1 = UIAction(title: ".all", image: UIImage(systemName: "bookmark.fill")) { (_) in
@@ -220,13 +241,13 @@ extension UIComponentsExampleViewController {
     /// - Returns: Conform ``ChatBottomItemProtocol`` class instance array.
     func bottomBarDatas() -> [ChatBottomItemProtocol] {
         var entities = [ChatBottomItemProtocol]()
-        let names = ["ellipsis.circle","mic.slash","gift"]
+        let names = ["ellipsis_vertical","gift"]
         for i in 0...names.count-1 {
             let entity = ChatBottomItem()
             entity.showRedDot = false
             entity.selected = false
-            entity.selectedImage = UIImage(systemName: names[i])?.withTintColor(UIColor.theme.neutralColor98,renderingMode: .alwaysOriginal)
-            entity.normalImage = UIImage(systemName: names[i])?.withTintColor(UIColor.theme.neutralColor98,renderingMode: .alwaysOriginal)
+            entity.selectedImage = UIImage(named: names[i])
+            entity.normalImage = UIImage(named: names[i])
             entity.type = i
             entities.append(entity)
         }

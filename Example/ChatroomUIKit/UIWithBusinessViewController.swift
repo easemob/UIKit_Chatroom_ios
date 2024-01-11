@@ -47,7 +47,7 @@ final class UIWithBusinessViewController: UIViewController {
         segment.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         segment.selectedSegmentIndex = self.style == .light ? 0:1
         
-        segment.selectedSegmentTintColor = UIColor(0x009EFF)
+//        segment.selectedSegmentTintColor = UIColor(0x009EFF)
         segment.setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.white,NSAttributedStringKey.font:UIFont.systemFont(ofSize: 18, weight: .medium)], for: .selected)
         segment.setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.white,NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16, weight: .regular)], for: .normal)
         segment.addTarget(self, action: #selector(onChanged(sender:)), for: .valueChanged)
@@ -160,13 +160,13 @@ extension UIWithBusinessViewController {
     /// - Returns: Conform ``ChatBottomItemProtocol`` class instance array.
     func bottomBarDatas() -> [ChatBottomItemProtocol] {
         var entities = [ChatBottomItemProtocol]()
-        let names = ["ellipsis.circle","mic.slash","gift"]
+        let names = ["ellipsis_vertical","gift"]
         for i in 0...names.count-1 {
             let entity = ChatBottomItem()
             entity.showRedDot = false
             entity.selected = false
-            entity.selectedImage = UIImage(systemName: names[i])?.withTintColor(UIColor.theme.neutralColor98,renderingMode: .alwaysOriginal)
-            entity.normalImage = UIImage(systemName: names[i])?.withTintColor(UIColor.theme.neutralColor98,renderingMode: .alwaysOriginal)
+            entity.selectedImage = UIImage(named: names[i])
+            entity.normalImage = UIImage(named: names[i])
             entity.type = i
             entities.append(entity)
         }

@@ -30,7 +30,7 @@ This guide presents an overview and usage examples of the ChatroomUIKit framewor
 
 # [Requirements](https://github.com/easemob/UIKit_Chatroom_ios#requirements)
 
-- iOS 13.0+
+- iOS 11.0+
 - Xcode 13.0+
 - Swift 5.0+
 

@@ -34,8 +34,8 @@
 
 # 前置开发环境要求
 
-- Xcode 14.0及以上版本
-- 最低支持系统：iOS 13.0
+- Xcode 13.0及以上版本
+- 最低支持系统：iOS 11.0
 - 请确保您的项目已设置有效的开发者签名
 
 # 安装
@@ -48,7 +48,7 @@
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '13.0'
+platform :ios, '11.0'
 
 target 'YourTarget' do
   use_frameworks!
@@ -59,7 +59,7 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
     end
   end
 end
