@@ -36,28 +36,49 @@ import UIKit
     lazy private var eventHandlers: NSHashTable<ChatroomViewActionEventsDelegate> = NSHashTable<ChatroomViewActionEventsDelegate>.weakObjects()
         
     public private(set) lazy var carouselTextView: GlobalBoardcastView = {
-        GlobalBoardcastView(originPoint: Appearance.notifyMessageOriginPoint, width: self.frame.width-40, font: UIFont.theme.headlineExtraSmall, textColor: UIColor.theme.neutralColor98).cornerRadius(.large).backgroundColor(Appearance.notifyBackgroundColor)
+        self.createBoardcast()
     }()
+    
+    @objc open func createBoardcast() -> GlobalBoardcastView {
+        GlobalBoardcastView(originPoint: Appearance.notifyMessageOriginPoint, width: self.frame.width-40, font: UIFont.theme.headlineExtraSmall, textColor: UIColor.theme.neutralColor98).cornerRadius(.large).backgroundColor(Appearance.notifyBackgroundColor)
+    }
         
     /// Gift list on receive gift.
     public private(set) lazy var giftArea: GiftMessageList = {
-        GiftMessageList(frame: CGRect(x: 10, y: self.touchFrame.minY, width: self.touchFrame.width/2.0+60, height: Appearance.giftAreaRowHeight*2),source:self)
+        self.createGiftsArea()
     }()
+    
+    
+    @objc open func createGiftsArea() -> GiftMessageList {
+        GiftMessageList(frame: CGRect(x: 10, y: self.touchFrame.minY, width: self.touchFrame.width/2.0+60, height: Appearance.giftAreaRowHeight*2),source:self)
+    }
     
     /// Chat area list.
     public private(set) lazy var chatList: MessageList = {
-        MessageList(frame: CGRect(x: 0, y: ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea ? self.giftArea.frame.maxY+5:self.touchFrame.minY, width: self.touchFrame.width-50, height: self.touchFrame.height-54-BottomBarHeight-5-(ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea ? (Appearance.giftAreaRowHeight*2):0))).backgroundColor(.clear)
+        self.createChatList()
     }()
+    
+    @objc open func createChatList() -> MessageList {
+        MessageList(frame: CGRect(x: 0, y: ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea ? self.giftArea.frame.maxY+5:self.touchFrame.minY, width: self.touchFrame.width-50, height: self.touchFrame.height-54-BottomBarHeight-5-(ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea ? (Appearance.giftAreaRowHeight*2):0))).backgroundColor(.clear)
+    }
     
     /// Bottom function bar below chat  list.
     public private(set) lazy var bottomBar: BottomAreaToolBar = {
-        BottomAreaToolBar(frame: CGRect(x: 0, y: self.frame.height-54-BottomBarHeight, width: self.touchFrame.width, height: 54), datas: ChatroomUIKitClient.shared.option.option_UI.bottomDataSource)
+        self.createBottomBar()
     }()
+    
+    @objc open func createBottomBar() -> BottomAreaToolBar {
+        BottomAreaToolBar(frame: CGRect(x: 0, y: self.frame.height-54-BottomBarHeight, width: self.touchFrame.width, height: 54), datas: ChatroomUIKitClient.shared.option.option_UI.bottomDataSource)
+    }
     
     /// Input text menu bar.
     public private(set) lazy var inputBar: MessageInputBar = {
-        ComponentsRegister.shared.InputBar.init(frame: CGRect(x: 0, y: self.frame.height, width: self.touchFrame.width, height: 52),text: nil,placeHolder: Appearance.inputPlaceHolder)
+        self.createInputBar()
     }()
+    
+    @objc open func createInputBar() -> MessageInputBar {
+        ComponentsRegister.shared.InputBar.init(frame: CGRect(x: 0, y: self.frame.height, width: self.touchFrame.width, height: 52),text: nil,placeHolder: Appearance.inputPlaceHolder)
+    }
     
     private var touchFrame = CGRect.zero
     
