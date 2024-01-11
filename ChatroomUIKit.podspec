@@ -29,7 +29,7 @@ This product is mainly designed to solve most user needs for chat rooms in pan-e
   s.source_files = ['Sources/ChatroomUIKit/Classes/**/*.swift']
   s.resources = ['Sources/ChatroomUIKit/**/*.bundle']
   s.dependency 'HyphenateChat'
-  s.dependency 'SDWebImage'
+  s.dependency 'Kingfisher','~> 6.3.1'
   s.static_framework = true
   
   s.swift_version = '5.0'

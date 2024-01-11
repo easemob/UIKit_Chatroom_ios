@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SDWebImage
+import Kingfisher
 
 /// A subclass of `UIImageView` that provides a method for loading an image from a URL.
 @objc final public class ImageView: UIImageView {
@@ -24,7 +24,7 @@ import SDWebImage
     ///   - url: The URL of the image to load.
     ///   - placeHolder: An optional placeholder image to display while the image is being loaded.
     public func image(with url: String,placeHolder: UIImage?) {
-        self.sd_setImage(with: URL(string: url), placeholderImage: placeHolder, options: .retryFailed, context: nil)
+        self.kf.setImage(with: URL(string: url),placeholder: placeHolder)
     }
 
 }
