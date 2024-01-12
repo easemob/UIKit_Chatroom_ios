@@ -118,7 +118,7 @@ extension UIWithBusinessViewController {
     }
     
     private func handleUserAction(user: UserInfoProtocol,muteTab: Bool) {
-        DialogManager.shared.showUserActions(actions: muteTab ? Appearance.defaultOperationMuteUserActions:Appearance.defaultOperationUserActions) { item in
+        DialogManager.shared.showUserActions(actions: muteTab ? Appearance.defaultOperationMuteUserActions:Appearance.defaultOperationUserActions) { item,object in
             switch item.tag {
             case "Mute":
                 ChatroomUIKitClient.shared.roomService?.mute(userId: user.userId, completion: { [weak self] error in
@@ -151,7 +151,7 @@ extension UIWithBusinessViewController {
                     }
                 }
             default:
-                item.action?(item)
+                item.action?(item,user)
             }
         }
     }
