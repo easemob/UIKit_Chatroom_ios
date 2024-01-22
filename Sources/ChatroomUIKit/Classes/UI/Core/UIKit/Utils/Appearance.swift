@@ -99,6 +99,8 @@ import UIKit
     /// The corner radius of ``MessageInputBar``.
     public static var inputBarCorner: CornerRadius = .medium
     
+    public static var inputSendIcon: UIImage? = Theme.style == .dark ? UIImage(named: "airplane_dark", in: .chatroomBundle, compatibleWith: nil):UIImage(named: "airplane_light", in: .chatroomBundle, compatibleWith: nil)
+    
     /// The corner radius of the avatar image view of ``MessageInputBar``.
     public static var avatarRadius: CornerRadius = .large
     

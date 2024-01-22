@@ -7,6 +7,30 @@
 
 import UIKit
 
+@objcMembers public class UIOptions: NSObject {
+    /// Whether to show a gift message area..
+    @objc public var showGiftMessageArea = true
+    
+    /// Data source of ``ChatBottomBar``.
+    @objc public var bottomDataSource: [ChatBottomItemProtocol] = []
+    
+    /// Whether to show the gift information in the chat  area.
+    @objc public var chatAreaShowGift = false
+}
+
+@objcMembers public class ChatOptions: NSObject {
+    
+    /// Whether print chat sdk log or not.
+    public var enableConsoleLog = false
+    
+    /// Whether auto login or not.
+    public var autoLogin = false
+    
+    /// Whether to use user attributes.
+    @objc public var useProperties: Bool = true
+    
+}
+
 /// A wrapper class for some options to be set during initialization of ChatroomUIKit.ChatroomView.
 @objcMembers open class ChatroomUIKitInitialOptions: NSObject {
     
@@ -16,29 +40,7 @@ import UIKit
     /// The option of chat sdk function.
     public var option_chat: ChatOptions = ChatOptions()
     
-    @objcMembers public class UIOptions: NSObject {
-        /// Whether to show a gift message area..
-        @objc public var showGiftMessageArea = true
-        
-        /// Data source of ``ChatBottomBar``.
-        @objc public var bottomDataSource: [ChatBottomItemProtocol] = []
-        
-        /// Whether to show the gift information in the chat  area.
-        @objc public var chatAreaShowGift = false
-    }
     
-    @objcMembers public class ChatOptions: NSObject {
-        
-        /// Whether print chat sdk log or not.
-        public var enableConsoleLog = false
-        
-        /// Whether auto login or not.
-        public var autoLogin = false
-        
-        /// Whether to use user attributes.
-        @objc public var useProperties: Bool = true
-        
-    }
 }
 
 ///ChatroomUIKit initialization class.
@@ -62,7 +64,7 @@ import UIKit
     /// - Parameters:
     /// Returns the initialization success or an error that includes the description of the cause of the failure.
     @objc(setupWithAppkey:option:)
-    public func setup(appKey: String,option: ChatroomUIKitInitialOptions.ChatOptions = ChatroomUIKitInitialOptions.ChatOptions()) -> ChatError? {
+    public func setup(appKey: String,option: ChatOptions = ChatOptions()) -> ChatError? {
         let option = ChatSDKOptions(appkey: appKey)
         option.enableConsoleLog = true
         option.isAutoLogin = false
@@ -109,7 +111,7 @@ import UIKit
     ///   - options: ``UIOptions``
     /// - Returns: ``ChatroomView`` instance.
     @objc(launchRoomViewWithRoomId:frame:ownerId:options:)
-    public func launchRoomView(roomId: String,frame: CGRect, ownerId: String , options: ChatroomUIKitInitialOptions.UIOptions = ChatroomUIKitInitialOptions.UIOptions()) -> ChatroomView {
+    public func launchRoomView(roomId: String,frame: CGRect, ownerId: String , options: UIOptions = UIOptions()) -> ChatroomView {
         self.roomId = roomId
         ChatroomContext.shared?.roomId = roomId
         ChatroomContext.shared?.ownerId = ownerId

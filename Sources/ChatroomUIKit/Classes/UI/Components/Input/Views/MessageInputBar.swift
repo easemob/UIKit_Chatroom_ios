@@ -311,7 +311,7 @@ extension MessageInputBar: ThemeSwitchProtocol {
         var emojiKeyboard = UIImage(named: "emojiKeyboard_light", in: .chatroomBundle, compatibleWith: nil)
         var textKeyboard = UIImage(named: "textKeyboard_light", in: .chatroomBundle, compatibleWith: nil)
         if style == .dark {
-            image = UIImage(named: "airplane_dark", in: .chatroomBundle, compatibleWith: nil)
+            image = Appearance.inputSendIcon
             emojiKeyboard = UIImage(named: "emojiKeyboard", in: .chatroomBundle, compatibleWith: nil)
             textKeyboard = UIImage(named: "textKeyboard", in: .chatroomBundle, compatibleWith: nil)
         }
