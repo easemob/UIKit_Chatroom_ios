@@ -17,8 +17,8 @@ final class UIWithBusinessViewController: UIViewController {
     
     var owner = false
     
-    var option: ChatroomUIKitInitialOptions.UIOptions {
-        let options  = ChatroomUIKitInitialOptions.UIOptions()
+    var option: UIOptions {
+        let options  = UIOptions()
         options.bottomDataSource = self.bottomBarDatas()
         options.showGiftMessageArea = true
         options.chatAreaShowGift = false
