@@ -24,9 +24,7 @@ import UIKit
     }()
     
     @objc open func createContainer() -> UIView {
-        UIView(frame: CGRect(x: Appearance
-            .chatAreaSidePadding, y: 6, width: self.contentView.frame.width - Appearance
-            .chatAreaSidePadding*2, height: self.frame.height - 6)).backgroundColor( UIColor.theme.barrageLightColor2).cornerRadius(.small)
+        UIView(frame: CGRect(x: Appearance.chatAreaSidePadding, y: 6, width: self.contentView.frame.width - Appearance.chatAreaSidePadding*2, height: self.frame.height - 6)).backgroundColor( UIColor.theme.barrageLightColor2).cornerRadius(.small)
     }
     
     public private(set) lazy var time: UILabel = {
@@ -123,10 +121,10 @@ import UIKit
         self.identity.image(with: chat.message.user?.identity ?? "", placeHolder: Appearance.identityPlaceHolder)
         self.avatar.image(with: chat.message.user?.avatarURL ?? "", placeHolder: Appearance.avatarPlaceHolder)
         self.content.attributedText = chat.attributeText
-        self.container.frame = CGRect(x: Appearance
-            .chatAreaSidePadding, y: 6, width: chat.width + 24, height: chat.height - 6)
+        self.container.frame = CGRect(x: Appearance.chatAreaSidePadding, y: 6, width: chat.width+2*Appearance.chatAreaSidePadding, height: chat.height - 6)
 //        self.content.preferredMaxLayoutWidth =  self.container.frame.width - 24
-        self.content.frame = CGRect(x: 10, y: self.container.frame.minY, width:  self.container.frame.width - 24, height:  self.container.frame.height - 16)
+        self.container.backgroundColor = .red
+        self.content.frame = CGRect(x: 10, y: self.container.frame.minY, width: chat.width, height:  self.container.frame.height - 16)
         self.giftIcon.frame = CGRect(x: self.container.frame.width-26, y: (self.container.frame.height-18)/2.0, width: 18, height: 18)
         self.giftIcon.isHidden = chat.gift == nil
         if let item = chat.gift {
@@ -175,13 +173,13 @@ fileprivate let gift_tail_indent: CGFloat = 26
         
     /// The height of the chat entity, calculated based on the attributed text and the width of the chat view.
     lazy public var height: CGFloat =  {
-        let cellHeight = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).height + 26
+        let cellHeight = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 24 - Appearance.chatAreaSidePadding*2, height: 9999)).height + 26
         return cellHeight
     }()
     
     /// The width of the chat entity, calculated based on the attributed text and the width of the chat view.
     lazy public var width: CGFloat = {
-        let cellWidth = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).width+(self.gift != nil ? gift_tail_indent:0)
+        let cellWidth = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 24 - Appearance.chatAreaSidePadding*2, height: 9999)).width+(self.gift != nil ? gift_tail_indent:0)
         return cellWidth
     }()
     
