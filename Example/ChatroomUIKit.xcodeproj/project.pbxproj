@@ -10,6 +10,8 @@
 		051FBE672AD66EDD00A25EC5 /* HueSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051FBE662AD66EDD00A25EC5 /* HueSettingViewController.swift */; };
 		054544102AA9BEFC0079C260 /* Gifts.json in Resources */ = {isa = PBXBuildFile; fileRef = 0545440F2AA9BEFC0079C260 /* Gifts.json */; };
 		054EA71B2AA072D200C716A4 /* OCUIComponentsExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 054EA71A2AA072D200C716A4 /* OCUIComponentsExampleViewController.m */; };
+		059D9D9F2B5F68A800DA9EEF /* ChatBottomItemOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 059D9D9E2B5F68A800DA9EEF /* ChatBottomItemOC.m */; };
+		059D9DAC2B5F8EAF00DA9EEF /* GiftsOCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059D9DAA2B5F8EAF00DA9EEF /* GiftsOCViewController.m */; };
 		05B7D8852AB3F079000F25DF /* UIWithBusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B7D8842AB3F079000F25DF /* UIWithBusinessViewController.swift */; };
 		05B7D8872AB3F091000F25DF /* ExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B7D8862AB3F091000F25DF /* ExamplesViewController.swift */; };
 		05B7D88C2AB4024E000F25DF /* ExampleRequiredConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B7D88B2AB4024E000F25DF /* ExampleRequiredConfig.swift */; };
@@ -29,6 +31,10 @@
 		054EA7182AA072D100C716A4 /* ChatroomUIKit_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChatroomUIKit_Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		054EA7192AA072D200C716A4 /* OCUIComponentsExampleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCUIComponentsExampleViewController.h; sourceTree = "<group>"; };
 		054EA71A2AA072D200C716A4 /* OCUIComponentsExampleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OCUIComponentsExampleViewController.m; sourceTree = "<group>"; };
+		059D9D9D2B5F68A800DA9EEF /* ChatBottomItemOC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatBottomItemOC.h; sourceTree = "<group>"; };
+		059D9D9E2B5F68A800DA9EEF /* ChatBottomItemOC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatBottomItemOC.m; sourceTree = "<group>"; };
+		059D9DAA2B5F8EAF00DA9EEF /* GiftsOCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiftsOCViewController.m; sourceTree = "<group>"; };
+		059D9DAB2B5F8EAF00DA9EEF /* GiftsOCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiftsOCViewController.h; sourceTree = "<group>"; };
 		05B7D8842AB3F079000F25DF /* UIWithBusinessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWithBusinessViewController.swift; sourceTree = "<group>"; };
 		05B7D8862AB3F091000F25DF /* ExamplesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesViewController.swift; sourceTree = "<group>"; };
 		05B7D88B2AB4024E000F25DF /* ExampleRequiredConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequiredConfig.swift; sourceTree = "<group>"; };
@@ -96,6 +102,10 @@
 				607FACD71AFB9204008FA782 /* UIComponentsExampleViewController.swift */,
 				054EA7192AA072D200C716A4 /* OCUIComponentsExampleViewController.h */,
 				054EA71A2AA072D200C716A4 /* OCUIComponentsExampleViewController.m */,
+				059D9D9D2B5F68A800DA9EEF /* ChatBottomItemOC.h */,
+				059D9D9E2B5F68A800DA9EEF /* ChatBottomItemOC.m */,
+				059D9DAB2B5F8EAF00DA9EEF /* GiftsOCViewController.h */,
+				059D9DAA2B5F8EAF00DA9EEF /* GiftsOCViewController.m */,
 				054EA7182AA072D100C716A4 /* ChatroomUIKit_Example-Bridging-Header.h */,
 				0545440F2AA9BEFC0079C260 /* Gifts.json */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -266,12 +276,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ChatroomUIKit_Example/Pods-ChatroomUIKit_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/HyphenateChat/HyphenateChat.framework/HyphenateChat",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HyphenateChat.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				059D9DAC2B5F8EAF00DA9EEF /* GiftsOCViewController.m in Sources */,
 				607FACD81AFB9204008FA782 /* UIComponentsExampleViewController.swift in Sources */,
 				05B7D88C2AB4024E000F25DF /* ExampleRequiredConfig.swift in Sources */,
 				05B7D8872AB3F091000F25DF /* ExamplesViewController.swift in Sources */,
@@ -293,6 +304,7 @@
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				05B7D8852AB3F079000F25DF /* UIWithBusinessViewController.swift in Sources */,
 				05BA09742ABA912A00EF646C /* ChatroomListViewController.swift in Sources */,
+				059D9D9F2B5F68A800DA9EEF /* ChatBottomItemOC.m in Sources */,
 				054EA71B2AA072D200C716A4 /* OCUIComponentsExampleViewController.m in Sources */,
 				05BA09762ABA9C8100EF646C /* MineGiftsViewController.swift in Sources */,
 			);

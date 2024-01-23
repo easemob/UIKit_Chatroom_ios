@@ -26,7 +26,18 @@ final class ChatroomListViewController: UITableViewController {
     lazy var empty: EmptyStateView = {
         EmptyStateView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.tableView.frame.height),emptyImage: UIImage(named: "empty",in: .chatroomBundle, compatibleWith: nil))
     }()
-
+    
+    private var entranceOC = false
+    
+    public required init(ocEntrance: Bool) {
+        self.entranceOC = ocEntrance
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "聊天室列表"
@@ -71,7 +82,7 @@ final class ChatroomListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.navigationController?.pushViewController(UIWithBusinessViewController(chatroomId: self.chatrooms[indexPath.row].chatroomId ?? ""), animated: true)
+        self.navigationController?.pushViewController(self.entranceOC ? OCUIComponentsExampleViewController(roomId: self.chatrooms[indexPath.row].chatroomId ?? "",ownerId: "lcy"):UIWithBusinessViewController(chatroomId: self.chatrooms[indexPath.row].chatroomId ?? ""), animated: true)
     }
     
     deinit {

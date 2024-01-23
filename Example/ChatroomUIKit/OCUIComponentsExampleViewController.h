@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OCUIComponentsExampleViewController : UIViewController
 
+- (instancetype)initWithRoomId:(NSString *)roomId ownerId:(NSString *)ownerId;
+
 @end
 
 NS_ASSUME_NONNULL_END

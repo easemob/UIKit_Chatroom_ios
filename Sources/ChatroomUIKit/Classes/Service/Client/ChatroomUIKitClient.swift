@@ -52,7 +52,7 @@ import UIKit
     public private(set) lazy var userImplement: UserServiceProtocol? = nil
     
     /// Chat room-related protocol implementation class.
-    public private(set) lazy var roomService: RoomService? = nil
+    public lazy var roomService: RoomService? = nil
     
     /// Options function wrapper.
     public private(set) lazy var option: ChatroomUIKitInitialOptions = ChatroomUIKitInitialOptions()

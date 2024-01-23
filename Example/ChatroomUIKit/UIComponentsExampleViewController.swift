@@ -208,7 +208,7 @@ extension UIComponentsExampleViewController: BottomAreaToolBarActionEvents,Gifts
         switch item.type {
         case 1:
             DialogManager.shared.showGiftsDialog(titles: ["礼物","1231232"], gifts: [self.gift1,self.gift2])
-            self.gift1.giftsView.addActionHandler(actionHandler: self)
+            self.gift1.giftsContainer.addActionHandler(actionHandler: self)
         default:
             break
         }

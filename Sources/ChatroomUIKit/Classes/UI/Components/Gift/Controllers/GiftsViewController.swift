@@ -7,13 +7,30 @@
 
 import UIKit
 
-@objcMembers open class GiftsViewController: UIViewController {
+@objc public protocol GiftsViewControllerProtocol: NSObjectProtocol {
+    func dataSource() -> [GiftEntityProtocol]
+    func giftService() -> GiftService?
+    func giftsView() -> GiftsView
+}
+
+@objcMembers open class GiftsViewController: UIViewController,GiftsViewControllerProtocol {
+    public func giftService() -> GiftService? {
+        self.service
+    }
     
-    private var gifts = [GiftEntityProtocol]()
+    public func giftsView() -> GiftsView {
+        self.giftsContainer
+    }
     
-    public private(set) lazy var giftService: GiftService? = ChatroomUIKitClient.shared.roomService?.giftService
+    public func dataSource() -> [GiftEntityProtocol] {
+        self.gifts
+    }
         
-    public private(set) lazy var giftsView: GiftsView = {
+    public var gifts = [GiftEntityProtocol]()
+    
+    public lazy var service: GiftService? = ChatroomUIKitClient.shared.roomService?.giftService
+        
+    public lazy var giftsContainer: GiftsView = {
         GiftsView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height-BottomBarHeight), gifts: self.gifts)
     }()
     
@@ -34,8 +51,8 @@ import UIKit
     open override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.view.addSubview(self.giftsView)
-        self.giftsView.addActionHandler(actionHandler: self)
+        self.view.addSubview(self.giftsContainer)
+        self.giftsContainer.addActionHandler(actionHandler: self)
     }
     
     deinit {
@@ -58,7 +75,7 @@ extension GiftsViewController: GiftsViewActionEventsDelegate {
             UIViewController.currentController?.dismiss(animated: true)
         }
         //If you need the server to process the deduction logic before sending the gift message after clicking send, set it to `false`, and after the processing is completed, you need to call `sendGift` method send gift message to channel.
-        self.giftService?.sendGift(gift: item) { [weak self] message,error in
+        self.service?.sendGift(gift: item) { [weak self] message,error in
             if error != nil {
                 let errorInfo = "Send gift message to channel failure!\nError:\(error?.errorDescription ?? "")"
                 consoleLogInfo(errorInfo, type: .error)

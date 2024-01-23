@@ -33,7 +33,7 @@ final class ExamplesViewController: UIViewController {
         ChatroomUIKitClient.shared.login(user: user, token: ExampleRequiredConfig.chatToken) { [weak self] error in
             if error == nil || error?.code == .userAlreadyLoginSame {
                 DispatchQueue.main.async {
-                    self?.navigationController?.pushViewController(ChatroomListViewController(), animated: true)
+                    self?.navigationController?.pushViewController(ChatroomListViewController(ocEntrance: false), animated: true)
                 }
             } else {
                 let errorInfo = "ChatroomUIKitClient login failed!\nError:\(error?.errorDescription ?? "")"
@@ -44,7 +44,19 @@ final class ExamplesViewController: UIViewController {
     }
     
     @IBAction func push_OC_UI_component(_ sender: Any) {
-        self.navigationController?.pushViewController(OCUIComponentsExampleViewController(), animated: true)
+        ChatroomUIKitClient.shared.logout()
+        let user = ExampleRequiredConfig.YourAppUser()
+        ChatroomUIKitClient.shared.login(user: user, token: ExampleRequiredConfig.chatToken) { [weak self] error in
+            if error == nil || error?.code == .userAlreadyLoginSame {
+                DispatchQueue.main.async {
+                    self?.navigationController?.pushViewController(ChatroomListViewController(ocEntrance: true), animated: true)
+                }
+            } else {
+                let errorInfo = "ChatroomUIKitClient login failed!\nError:\(error?.errorDescription ?? "")"
+                consoleLogInfo(errorInfo, type: .error)
+                UIViewController.currentController?.showToast(toast: errorInfo, duration: 3)
+            }
+        }
     }
     
 }

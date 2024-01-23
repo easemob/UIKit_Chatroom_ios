@@ -114,7 +114,7 @@ import UIKit
 }
 
 /// Chat room request & response wrapper class in the chat room UIKit.
-@objc open class RoomService: NSObject {
+@objcMembers open class RoomService: NSObject {
     
     /// The chat room events listener.
     public private(set) var eventsListener: NSHashTable<RoomEventsListener> = NSHashTable<RoomEventsListener>.weakObjects()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc final public class DialogManager: NSObject {
+@objcMembers final public class DialogManager: NSObject {
     
     public static let shared = DialogManager()
     
@@ -16,7 +16,7 @@ import UIKit
     ///   - titles: `[String]`
     ///   - gifts: ``GiftsViewController`` array.
     @objc(showGiftsDialogWithTitles:gifts:)
-    public func showGiftsDialog(titles: [String],gifts: [GiftsViewController]) {
+    public func showGiftsDialog(titles: [String],gifts: [GiftsViewControllerProtocol&UIViewController]) {
         let gift = PageContainersDialogController(pageTitles: titles, childControllers: gifts,constraintsSize: Appearance.giftDialogContainerConstraintsSize)
         
         UIViewController.currentController?.presentViewController(gift)

@@ -12,7 +12,7 @@ public typealias PresentationViewController = UIViewController & PresentedViewTy
 
 public extension UIViewController {
     
-    static var currentController: UIViewController? {
+    @objc static var currentController: UIViewController? {
         if let vc = UIApplication.shared.chatroom.keyWindow?.rootViewController {
             if let nav = vc as? UINavigationController {
                 return nav.visibleViewController

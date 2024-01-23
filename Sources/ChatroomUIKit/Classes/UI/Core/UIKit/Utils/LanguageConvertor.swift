@@ -16,7 +16,7 @@ public enum LanguageType: String {
 /**
  A utility class for converting language keys to localized strings.
  */
-@objc public final class LanguageConvertor: NSObject {
+@objcMembers public final class LanguageConvertor: NSObject {
 
     public static func localValue(key: String) -> String {
         LanguageConvertor.shared.localValue(key)
