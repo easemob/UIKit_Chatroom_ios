@@ -107,6 +107,8 @@ import UIKit
     /// The default height of ``GiftBarrageCell``.
     public static var giftAreaRowHeight: CGFloat = 44
     
+    public static var chatAreaSidePadding = CGFloat(15)
+    
     /// The label for message reporting types.
     public static var reportTags: [String] = ["tag1","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9"]
     
