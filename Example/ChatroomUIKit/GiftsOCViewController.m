@@ -7,6 +7,8 @@
 //
 
 #import "GiftsOCViewController.h"
+#import <HyphenateChat/HyphenateChat.h>
+
 #define BottomSafeAreaHeight (UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom > 0 ? 34:0)
 
 @interface GiftsOCViewController ()<GiftsViewActionEventsDelegate>
