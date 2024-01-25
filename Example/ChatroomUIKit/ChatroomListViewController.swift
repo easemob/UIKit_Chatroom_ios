@@ -82,7 +82,7 @@ final class ChatroomListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.navigationController?.pushViewController(self.entranceOC ? OCUIComponentsExampleViewController(roomId: self.chatrooms[indexPath.row].chatroomId ?? "",ownerId: "lcy"):UIWithBusinessViewController(chatroomId: self.chatrooms[indexPath.row].chatroomId ?? ""), animated: true)
+        self.navigationController?.pushViewController(self.entranceOC ? OCUIComponentsExampleViewController(roomId: self.chatrooms[indexPath.row].chatroomId ?? "",ownerId: self.chatrooms[indexPath.row].owner ?? ""):UIWithBusinessViewController(chatroomId: self.chatrooms[indexPath.row].chatroomId ?? ""), animated: true)
     }
     
     deinit {
