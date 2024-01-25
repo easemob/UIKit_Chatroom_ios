@@ -51,10 +51,98 @@
     [self.view addSubview:self.bottomBar];
     [self.view addSubview:self.inputBar];
     
+//    CGRect(x: 100, y: 160, width: 150, height: 20)
+    UIButton *members = [[UIButton alloc] initWithFrame:CGRectMake(100, 160, 150, 20)];
+    members.backgroundColor = [UIColor orangeColor];
+    [members addTarget:self action:@selector(showMembers) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:members];
+    
     [self viewActions];
     
     [self connectService];
 }
+
+- (void)showMembers {
+    __weak typeof(self) weakSelf = self;
+    [DialogManager.shared showParticipantsDialogWithMoreClosure:^(id<UserInfoProtocol> _Nonnull user) {
+        [weakSelf handleUserActionWithUser:user muteTab:NO];
+    } muteMoreClosure:^(id<UserInfoProtocol> _Nonnull user) {
+        [weakSelf handleUserActionWithUser:user muteTab:YES];
+    }];
+}
+
+- (void)handleUserActionWithUser:(id<UserInfoProtocol>)user muteTab:(BOOL)muteTab {
+    NSArray *actions = muteTab ? [Appearance defaultOperationMuteUserActions] : [Appearance defaultOperationUserActions];
+    [DialogManager.shared showWithUserActions:actions action:^(id<ActionSheetItemProtocol> _Nonnull item, id _Nullable object) {
+        if ([item.tag isEqualToString:@"Mute"]) {
+            [ChatroomUIKitClient.shared.roomService muteUserWithId:user.userId completion:^(EMError * _Nullable error) {
+                NSString *toast;
+                if (error == nil) {
+                    toast = @"禁言成功";
+                } else {
+                    toast = error.errorDescription;
+                }
+                [[UIViewController currentController] showToastWithToast:toast duration:2 delay:0];
+            }];
+        }
+        if ([item.tag isEqualToString:@"unMute"]) {
+            [ChatroomUIKitClient.shared.roomService unmuteUserWithId:user.userId completion:^(EMError * _Nullable error) {
+                NSString *toast;
+                if (error == nil) {
+                    toast = @"解除禁言成功";
+                } else {
+                    toast = error.errorDescription;
+                }
+                [[UIViewController currentController] showToastWithToast:toast duration:2 delay:0];
+            }];
+        }
+        if ([item.tag isEqualToString:@"Remove"]) {
+            NSString *memberName = [user.nickname isEqualToString:@""] ? user.userId:user.nickname;
+            [DialogManager.shared showAlertWithContent:[NSString stringWithFormat:@"确定删除`%@`？",memberName] showCancel:YES showConfirm:YES title:@"" confirmClosure:^{
+                [ChatroomUIKitClient.shared.roomService kickUserWithId:user.userId completion:^(EMError * _Nullable error) {
+                    NSString *toast;
+                    if (error == nil) {
+                        toast = @"踢出成功";
+                    } else {
+                        toast = error.errorDescription;
+                    }
+                    [[UIViewController currentController] showToastWithToast:toast duration:2 delay:0];
+                }];
+            }];
+        }
+    }];
+//case "Mute":
+//    ChatroomUIKitClient.shared.roomService?.mute(userId: user.userId, completion: { [weak self] error in
+//        guard let `self` = self else { return }
+//        if error == nil {
+////                        self.removeUser(user: user)
+//        } else {
+//            self.showToast(toast: "\(error?.errorDescription ?? "")",duration: 3)
+//        }
+//    })
+//case "unMute":
+//    ChatroomUIKitClient.shared.roomService?.unmute(userId: user.userId, completion: { [weak self] error in
+//        guard let `self` = self else { return }
+//        if error == nil {
+////                        self.removeUser(user: user)
+//        } else {
+//            self.showToast(toast: "\(error?.errorDescription ?? "")", duration: 3)
+//        }
+//    })
+//case "Remove":
+//    DialogManager.shared.showAlert(content: "删除 `\(user.nickname.isEmpty ? user.userId:user.nickname)`.确定?", showCancel: true, showConfirm: true) {
+//        ChatroomUIKitClient.shared.roomService?.kick(userId: user.userId) { [weak self] error in
+//            guard let `self` = self else { return }
+//            if error == nil {
+////                            self.removeUser(user: user)
+//                self.showToast(toast: error == nil ? "删除成功":"\(error?.errorDescription ?? "")",duration: 2)
+//            } else {
+//                self.showToast(toast: "\(error?.errorDescription ?? "")", duration: 3)
+//            }
+//        }
+//    }
+}
+
 
 - (void)viewActions {
     __weak typeof(self) weakSelf = self;
