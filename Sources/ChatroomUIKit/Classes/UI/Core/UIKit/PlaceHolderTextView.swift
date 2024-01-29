@@ -72,7 +72,7 @@ import UIKit
         }
         var newRect = CGRect()
         let size = self.placeHolder.chatroom.sizeWithText(font: self.font ?? UIFont.theme.bodyLarge, size: rect.size)
-        newRect.size.width = size.width-20
+        newRect.size.width = size.width+10
         newRect.size.height = size.height
         newRect.origin.x = self.contentInset.left
         newRect.origin.y = (rect.height-size.height)/2.0
