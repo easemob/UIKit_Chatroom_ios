@@ -21,7 +21,7 @@ public extension Chatroom where Base == UIApplication {
     /// `UIApplication.shared.chatroom.keyWindow`
     var keyWindow: UIWindow? {
         if #available(iOS 13.0, *) {
-            (base.connectedScenes
+            return (base.connectedScenes
              // Keep only active scenes, onscreen and visible to the user
                 .filter { $0.activationState == .foregroundActive }
              // Keep only the first `UIWindowScene`
@@ -32,7 +32,7 @@ public extension Chatroom where Base == UIApplication {
                 .first(where: \.isKeyWindow))
         } else {
             // Fallback on earlier versions
-            UIApplication.shared.keyWindow
+            return UIApplication.shared.keyWindow
         }
     }
 }
