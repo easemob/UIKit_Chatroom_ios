@@ -328,7 +328,9 @@ extension ChatroomServiceImplement: ChatEventsListener {
     public func messagesInfoDidRecall(_ aRecallMessagesInfo: [RecallInfo]) {
         for info in aRecallMessagesInfo {
             for response in self.responseDelegates.allObjects {
-                response.onMessageRecalled(roomId: info.recallMessage.to, message: info.recallMessage, by: info.recallBy)
+                if let recallMessage = info.recallMessage {
+                    response.onMessageRecalled(roomId: recallMessage.to, message: recallMessage, by: info.recallBy)
+                }
             }
         }
     }
