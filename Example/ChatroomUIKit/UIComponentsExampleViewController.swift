@@ -121,10 +121,19 @@ final class UIComponentsExampleViewController: UIViewController {
     
 }
 
+
+
 extension UIComponentsExampleViewController: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
+        UIContextMenuConfiguration(identifier: nil, previewProvider: {
+//            let previewView = UIView()
+//            previewView.backgroundColor = .gray
+//            previewView.frame = self.view.bounds
+//            previewView.layer.cornerRadius = 15
+//            previewView.layer.masksToBounds = true
+            return UIComponentsExampleViewController()
+        }) { (_) -> UIMenu? in
             let action1 = UIAction(title: ".all", image: UIImage(systemName: "bookmark.fill")) { (_) in
                 Appearance.messageDisplayStyle = .all
                 self.barrageList.messages?.removeAll()
@@ -170,6 +179,26 @@ extension UIComponentsExampleViewController: UIContextMenuInteractionDelegate {
             return menu
         }
     }
+    
+//    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, previewForHighlightingMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+//            let previewParams = UIPreviewParameters()
+//            previewParams.backgroundColor = .clear
+//        let visiblePath = UIBezierPath(roundedRect: self.view.bounds, cornerRadius: 15)
+//            previewParams.visiblePath = visiblePath
+//        return UITargetedPreview(view: self.view, parameters: previewParams)
+//        }
+//
+//        func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+//            animator.addAnimations {
+//                self.view.backgroundColor = .lightGray // 改变消息气泡的背景色以实现高亮效果
+//            }
+//            
+//            animator.addCompletion {
+//                UIView.animate(withDuration: 0.25) {
+//                    self.view.backgroundColor = .white // 动画完成后恢复原始颜色
+//                }
+//            }
+//        }
 }
 
 extension UIComponentsExampleViewController: BottomAreaToolBarActionEvents,GiftsViewActionEventsDelegate {
