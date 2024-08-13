@@ -29,7 +29,7 @@ import UIKit
 
 @objc open class GiftMessageList: UIView {
     
-    public var dataSource: GiftMessageListTransformAnimationDataSource?
+    public weak var dataSource: GiftMessageListTransformAnimationDataSource?
     
     public var gifts = [GiftEntityProtocol]() {
         didSet {
