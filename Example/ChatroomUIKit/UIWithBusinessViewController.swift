@@ -249,6 +249,9 @@ extension UIWithBusinessViewController: RoomEventsListener {
     func onUserLeave(roomId: String, userId: String) {
         //Statistical data
         self.showToast(toast: "\(ChatroomContext.shared?.usersMap?[userId]?.nickname ?? userId) was left.", duration: 3)
+        if let membersCount = ChatRoom(id: roomId)?.occupantsCount {
+            //其他人加入聊天室 聊天室人数变动
+        }
     }
     
     
@@ -285,7 +288,9 @@ extension UIWithBusinessViewController: RoomEventsListener {
     }
     
     func onUserJoined(roomId: String, user: ChatroomUIKit.UserInfoProtocol) {
-        
+        if let membersCount = ChatRoom(id: roomId)?.occupantsCount {
+            //其他人加入聊天室 聊天室人数变动
+        }
     }
     
     func onUserBeKicked(roomId: String, reason: ChatroomUIKit.ChatroomBeKickedReason) {
