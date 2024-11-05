@@ -12,36 +12,36 @@ import ChatroomUIKit
 final class UIComponentsExampleViewController: UIViewController {
     
     var style: ThemeStyle = .light
-    
+    //背景图
     lazy var background: UIImageView = {
         UIImageView(frame: self.view.frame).image(UIImage(named: "background_light"))
     }()
-    
+    //聊天区域上收到礼物显示的区域
     lazy var giftBarrages: GiftMessageList = {
         GiftMessageList(frame: CGRect(x: 10, y: ScreenHeight-BottomBarHeight-54-5-Appearance.giftAreaRowHeight*2-200, width: self.view.frame.width-100, height: Appearance.giftAreaRowHeight*2),source:nil)
     }()
-    
+    //聊天区域
     lazy var barrageList: MessageList = {
         MessageList(frame: CGRect(x: 0, y: ScreenHeight-BottomBarHeight-54-5, width: self.view.frame.width-50, height: 200))
     }()
-    
+    //底部工具栏
     lazy var bottomBar: BottomAreaToolBar = {
         BottomAreaToolBar(frame: CGRect(x: 0, y: self.view.frame.height-54-BottomBarHeight, width: self.view.frame.width, height: 54), datas: self.bottomBarDatas())
     }()
-    
+    //输入框
     lazy var inputBar: MessageInputBar = {
         MessageInputBar(frame: CGRect(x: 0, y: ScreenHeight, width: ScreenWidth, height: 52),text: nil,placeHolder: "说点什么!.")
     }()
-    
+    //礼物页面1
     lazy var gift1: GiftsViewController = {
         GiftsViewController(gifts: self.gifts())
     }()
-    
+    //礼物页面2
     lazy var gift2: GiftsViewController = {
         GiftsViewController(gifts: self.gifts())
     }()
     
-    /// Global notify container
+    /// Global notify container（全局广播UI组件）
     lazy var carouselTextView: GlobalBoardcastView = {
         GlobalBoardcastView(originPoint: CGPoint(x: 20, y: 85), width: self.view.frame.width-40, font: .systemFont(ofSize: 16, weight: .semibold), textColor: UIColor.theme.neutralColor98).cornerRadius(.large).backgroundColor(UIColor.theme.primaryColor6)
     }()
@@ -124,7 +124,7 @@ final class UIComponentsExampleViewController: UIViewController {
 
 
 extension UIComponentsExampleViewController: UIContextMenuInteractionDelegate {
-
+//此处演示如何切换聊天区域消息部分可隐藏内容的范围、及其如何设置
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: {
 //            let previewView = UIView()

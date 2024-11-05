@@ -19,8 +19,11 @@ final class UIWithBusinessViewController: UIViewController {
     
     var option: UIOptions {
         let options = UIOptions()
+        //配置ChatroomView中底部工具区域的一些展示数据
         options.bottomDataSource = self.bottomBarDatas()
+        //是否显示收礼物的区域
         options.showGiftMessageArea = true
+        //是否在聊天内容区域显示收到的礼物，这个与上面一个互相冲突，建议只选择一个，不能同时设置为true
         options.chatAreaShowGift = false
         return options
     }
@@ -28,7 +31,7 @@ final class UIWithBusinessViewController: UIViewController {
     lazy var background: UIImageView = {
         UIImageView(frame: self.view.frame).image(UIImage(named: "background_light"))
     }()
-    
+    //初始化聊天室UIKit的整体视图包含全局广播区域、置顶消息显示区域、礼物显示区域、消息内容显示区域、底部区域以及输入框
     lazy var roomView: ChatroomUIKit.ChatroomView = {
         ChatroomUIKitClient.shared.launchRoomView(roomId: self.roomId, frame: CGRect(x: 0, y: ScreenHeight/2.0, width: ScreenWidth, height: ScreenHeight/2.0), ownerId: "",options: self.option)
     }()
@@ -67,11 +70,11 @@ final class UIWithBusinessViewController: UIViewController {
     }()
     
     lazy var gift1: GiftsViewController = {
-        GiftsViewController(gifts: self.gifts())
+        MineGiftsViewController(gifts: self.gifts())
     }()
     
     lazy var gift2: GiftsViewController = {
-        GiftsViewController(gifts: self.gifts())
+        MineGiftsViewController(gifts: self.gifts())
     }()
     
     @objc public required convenience init(chatroomId: String) {
@@ -84,8 +87,10 @@ final class UIWithBusinessViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.addSubViews([self.background,self.roomView,self.members,self.modeSegment,self.illustrate,self.showGiftInChatArea])
         //Not necessary.When you want to receive chatroom view's click events.
+        //想要监听聊天室UIKit中ChatroomView的点击事件参照下面代码
         self.roomView.addActionHandler(self)
         //Not necessary.But when you want to receive room events,you can call as follows.
+        //想要监听聊天室UIKit中的一些api的请求出错事件，可以参照下面代码
         ChatroomUIKitClient.shared.registerRoomEventsListener( self)
     }
         
@@ -116,7 +121,7 @@ extension UIWithBusinessViewController {
         }
 
     }
-    
+    //处理用户弹窗页面的点击事件
     private func handleUserAction(user: UserInfoProtocol,muteTab: Bool) {
         DialogManager.shared.showUserActions(actions: muteTab ? Appearance.defaultOperationMuteUserActions:Appearance.defaultOperationUserActions) { item,object in
             switch item.tag {
@@ -159,6 +164,7 @@ extension UIWithBusinessViewController {
     /// Constructor of ``ChatBottomFunctionBar`` data source.
     /// - Returns: Conform ``ChatBottomItemProtocol`` class instance array.
     func bottomBarDatas() -> [ChatBottomItemProtocol] {
+        //底部工具栏数据源数组构造
         var entities = [ChatBottomItemProtocol]()
         let names = ["ellipsis.circle","mic.slash","gift"]
         for i in 0...names.count-1 {
@@ -173,7 +179,7 @@ extension UIWithBusinessViewController {
         return entities
     }
     
-    /// Simulate fetch json from server .
+    /// Simulate fetch json from server .（礼物数据源，示例工程为本地json数据解析后演示，实际情况需要请求接口，解析出的模型（礼物模型需要遵守``GiftEntityProtocol``协议）数组需要塞进ChatroomUIKit中底部区域数据源详见此文件20行。）
     /// - Returns: Conform ``GiftEntityProtocol`` class instance.
     private func gifts() -> [GiftEntityProtocol] {
         if let path = Bundle.main.url(forResource: "Gifts", withExtension: "json") {
@@ -197,6 +203,10 @@ extension UIWithBusinessViewController {
 
 //MARK: - When you called `self.roomView.addActionHandler(actionHandler: self)`.You'll receive chatroom view's click action events callback.
 extension UIWithBusinessViewController : ChatroomViewActionEventsDelegate {
+    func onPinMessageViewLongPressed(message: ChatroomUIKit.ChatMessage) {
+        //Statistical data
+    }
+    
     func onMessageClicked(message: ChatroomUIKit.ChatMessage) {
         //Statistical data
     }
@@ -208,7 +218,7 @@ extension UIWithBusinessViewController : ChatroomViewActionEventsDelegate {
     func onKeyboardRaiseClicked() {
         //Statistical data
     }
-    
+    //底部工具栏区域点击事件
     func onExtensionBottomItemClicked(item: ChatroomUIKit.ChatBottomItemProtocol) {
         if item.type == 2 {
             DialogManager.shared.showGiftsDialog(titles: ["Gifts","1231232"], gifts: [self.gift1,self.gift2])

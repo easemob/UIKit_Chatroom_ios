@@ -12,7 +12,11 @@ import ChatroomUIKit
 class MineGiftsViewController: GiftsViewController {
     
     override func onGiftSendClick(item: GiftEntityProtocol) {
-//        super.onGiftSendClick(item: item)
+        //点击发送礼物按钮时此方法会被触发
+        super.onGiftSendClick(item: item)
     }
 
+    override func onGiftSelected(item: any GiftEntityProtocol) {
+        //点击选择礼物后此方法会触发
+    }
 }
