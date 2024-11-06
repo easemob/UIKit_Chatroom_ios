@@ -21,6 +21,7 @@ import UIKit
     case fetchParticipants
     case fetchMutes
     case sendMessage
+    case fetchPinMessages
 }
 
 /// The chat room event listener.
@@ -149,6 +150,8 @@ import UIKit
     /// ``ChatroomView``  UI Drive.
     public private(set) weak var chatDrive: IMessageListDrive?
     
+    public private(set) weak var pinDrive: IPinMessageViewDriver?
+    
     /// ``GiftMessageList`` UI Drive
     public private(set) weak var giftDrive: IGiftMessageListDrive?
     
@@ -161,6 +164,24 @@ import UIKit
     
     @objc public func bindChatDriver(_ driver: IMessageListDrive) {
         self.chatDrive = driver
+    }
+    
+    @objc public func bindPinDriver(_ driver: IPinMessageViewDriver) {
+        self.pinDrive = driver
+        self.roomService?.fetchPinnedMessages(roomId: self.roomId, completion: { [weak self] messages, error in
+            if error == nil {
+                if let message = messages?.last {
+                    if let json = message.ext as? [String:Any],let userInfo = json["chatroom_uikit_userInfo"] as? [String:Any] {
+                        let user = User()
+                        user.setValuesForKeys(userInfo)
+                        ChatroomContext.shared?.usersMap?[user.userId] = user
+                    }
+                    self?.pinDrive?.showNewMessage(message: message, gift: nil)
+                }
+            } else {
+                self?.handleError(type: .fetchPinMessages, error: error)
+            }
+        })
     }
     
     @objc public func bindGiftDriver(_ driver: IGiftMessageListDrive) {
@@ -476,9 +497,40 @@ import UIKit
             completion(error)
         })
     }
+    
+    open func pinMessage(message: ChatMessage,completion: @escaping (ChatMessage?,ChatError?) -> Void) {
+        self.roomService?.pinMessage(messageId: message.messageId, completion: { [weak self] message, error in
+            if error == nil {
+                if let pinMessage = message {
+                    self?.pinDrive?.showNewMessage(message: pinMessage, gift: nil)
+                }
+            } else {
+                self?.handleError(type: .fetchPinMessages, error: error)
+            }
+            completion(message,error)
+        })
+    }
+    
+    open func unpinMessage(message: ChatMessage,completion: @escaping (ChatMessage?,ChatError?) -> Void) {
+        self.roomService?.unpinMessage(messageId: message.messageId, completion: { [weak self] message, error in
+            if error == nil {
+                if let pinMessage = message {
+                    self?.pinDrive?.removeMessage(message: pinMessage)
+                }
+            }
+            self?.handleError(type: .fetchPinMessages, error: error)
+            completion(message,error)
+        })
+    }
 }
 
 extension RoomService: ChatroomResponseListener {
+    public func onMessageStickiedTop(roomId: String, messageId: String, operation: MessagePinOperation, info: MessagePinInfo) {
+        if let message = ChatClient.shared().chatManager?.getMessageWithMessageId(messageId) {
+            self.pinDrive?.showNewMessage(message: message, gift: nil)
+        }
+    }
+    
     
     public func onUserMuted(roomId: String, userId: String) {
         for listener in self.eventsListener.allObjects {
@@ -497,6 +549,7 @@ extension RoomService: ChatroomResponseListener {
     public func onMessageRecalled(roomId: String, message: ChatMessage, by userId: String) {
         if roomId == self.roomId {
             self.chatDrive?.removeMessage(message: message)
+            self.pinDrive?.removeMessage(message: message)
         }
     }
     

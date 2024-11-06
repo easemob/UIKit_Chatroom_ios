@@ -32,6 +32,8 @@ public typealias ConnectionState = EMConnectionState
 public typealias ChatSDKOptions = EMOptions
 public typealias RecallInfo = EMRecallMessageInfo
 public typealias CursorResult = EMCursorResult
+public typealias MessagePinOperation = EMMessagePinOperation
+public typealias MessagePinInfo = EMMessagePinInfo
 
 #elseif canImport(AgoraChat)
 import AgoraChat
@@ -52,5 +54,7 @@ public typealias ConnectionState = AgoraChatConnectionState
 public typealias ChatSDKOptions = AgoraChatOptions
 public typealias RecallInfo = AgoraChatRecallMessageInfo
 public typealias CursorResult = AgoraChatCursorResult
+public typealias MessagePinOperation = AgoraChatMessagePinOperation
+public typealias MessagePinInfo = AgoraChatMessagePinInfo
 #endif
 

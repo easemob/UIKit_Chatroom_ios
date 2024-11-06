@@ -122,6 +122,24 @@ import Foundation
     ///   - reason: reason
     ///   - completion: Report callback,what if success or error.
     func report(messageId: String,tag: String,reason: String, completion: @escaping (ChatError?) -> Void)
+    
+    /// Pin a message
+    /// - Parameters:
+    ///   - messageId: ID of the message
+    ///   - completion: Callback error represent success,otherwise fail.
+    func pinMessage(messageId: String, completion: @escaping (ChatMessage?,ChatError?) -> Void)
+    
+    /// Unpin a message
+    /// - Parameters:
+    ///   - messageId: ID of the message
+    ///   - completion: Callback error represent success,otherwise fail.
+    func unpinMessage(messageId: String, completion: @escaping (ChatMessage?,ChatError?) -> Void)
+    
+    /// Fetch pinned messages
+    /// - Parameters:
+    ///   - roomId: chatroom id
+    ///   - completion: Callback error represent success,otherwise fail.
+    func fetchPinnedMessages(roomId: String, completion: @escaping ([ChatMessage]?,ChatError?) -> Void)
 }
 
 
@@ -184,6 +202,14 @@ import Foundation
     ///   - userId: UserId were muted
     ///   - operatorId: Operator user id
     func onUserUnmuted(roomId: String,userId: String)
+    
+    /// When a message was stickied top of the chatroom.
+    /// - Parameters:
+    ///   - roomId: ID of the chatroom.
+    ///   - messageId: ID of the message
+    ///   - operation: ``MessagePinOperation``
+    ///   - info: ``MessagePinInfo``
+    func onMessageStickiedTop(roomId: String, messageId: String, operation: MessagePinOperation, info: MessagePinInfo)
 }
 
 

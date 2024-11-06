@@ -37,10 +37,12 @@ var chatViewWidth: CGFloat = 0
     
     /// The method called on message  long pressed.
     /// - Parameter message: ``ChatMessage``
+    /// - Parameter target: Touch the``UIView``
     func onMessageLongPressed(message: ChatMessage)
     
     /// The method called on message  clicked.
     /// - Parameter message: ``ChatMessage``
+    /// - Parameter target: Touch the``UIView``
     func onMessageClicked(message: ChatMessage)
 }
 
@@ -75,28 +77,54 @@ var chatViewWidth: CGFloat = 0
         }
     }
 
-    public var messages: [ChatEntity]? = [ChatEntity]()
+    public var messages: [ChatEntity]? = [ChatEntity]() {
+        didSet {
+            if self.messages?.count ?? 0 > 300 {
+                self.messages?.removeFirst(100)
+            }
+        }
+    }
 
-    public lazy var chatView: UITableView = {
-        UITableView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), style: .plain).delegate(self).dataSource(self).separatorStyle(.none).tableFooterView(UIView()).backgroundColor(.clear).showsVerticalScrollIndicator(false).isUserInteractionEnabled(true)
-    }()
-
-    private lazy var gradientLayer: CAGradientLayer = {
-        CAGradientLayer().startPoint(CGPoint(x: 0, y: 0)).endPoint(CGPoint(x: 0, y: 0.1)).colors([UIColor.clear.withAlphaComponent(0).cgColor, UIColor.clear.withAlphaComponent(1).cgColor]).locations([NSNumber(0), NSNumber(1)]).rasterizationScale(UIScreen.main.scale).frame(self.blurView.frame)
-    }()
-
-    private lazy var blurView: UIView = {
-        UIView(frame: CGRect(x: 0, y: 0, width: chatViewWidth, height: self.frame.height)).backgroundColor(.clear).isUserInteractionEnabled(true)
+    public private(set) lazy var chatView: UITableView = {
+        self.createChatView()
     }()
     
-    lazy var moreMessages: UIButton = {
-        UIButton(type: .custom).frame(CGRect(x: 20, y: self.chatView.frame.maxY-28, width: 180, height: 26)).cornerRadius(.large).font(UIFont.theme.labelMedium).title("    \(self.moreMessagesCount) "+"new messages".chatroom.localize, .normal).addTargetFor(self, action: #selector(scrollTableViewToBottom), for: .touchUpInside)
+    open func createChatView() -> UITableView {
+        UITableView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), style: .plain).delegate(self).dataSource(self).separatorStyle(.none).tableFooterView(UIView()).backgroundColor(.clear).showsVerticalScrollIndicator(false).isUserInteractionEnabled(true)
+    }
+
+    public private(set) lazy var gradientLayer: CAGradientLayer = {
+        self.createGradientLayer()
     }()
+    
+    open func createGradientLayer() -> CAGradientLayer {
+        CAGradientLayer().startPoint(CGPoint(x: 0, y: 0)).endPoint(CGPoint(x: 0, y: 0.1)).colors([UIColor.clear.withAlphaComponent(0).cgColor, UIColor.clear.withAlphaComponent(1).cgColor]).locations([NSNumber(0), NSNumber(1)]).rasterizationScale(UIScreen.main.scale).frame(self.blurView.frame)
+    }
+
+    public private(set) lazy var blurView: UIView = {
+        self.createBlurView()
+    }()
+    
+    open func createBlurView() -> UIView {
+        UIView(frame: CGRect(x: 0, y: 0, width: chatViewWidth, height: self.frame.height)).backgroundColor(.clear).isUserInteractionEnabled(true)
+    }
+    
+    public private(set) lazy var moreMessages: UIButton = {
+        self.createMoreMessages()
+    }()
+    
+    open func createMoreMessages() -> UIButton {
+        UIButton(type: .custom).frame(CGRect(x: 20, y: self.chatView.frame.maxY-28, width: 180, height: 26)).cornerRadius(.large).font(UIFont.theme.labelMedium).title("    \(self.moreMessagesCount) "+"new messages".chatroom.localize, .normal).addTargetFor(self, action: #selector(scrollTableViewToBottom), for: .touchUpInside)
+    }
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
         self.isUserInteractionEnabled = true
-        chatViewWidth = frame.width
+        self.setup()
+    }
+    
+    open func setup() {
+        chatViewWidth = self.frame.width
         self.addSubViews([self.blurView])
         self.blurView.layer.mask = self.gradientLayer
         self.blurView.addSubview(self.chatView)
@@ -274,7 +302,7 @@ extension MessageList: IMessageListDrive {
         }
     }
     
-    private func convertMessageToRender(message: ChatMessage,gift: GiftEntityProtocol?) -> ChatEntity {
+    func convertMessageToRender(message: ChatMessage,gift: GiftEntityProtocol?) -> ChatEntity {
         let entity = ComponentsRegister.shared.MessageEntity.init()
         entity.message = message
         entity.gift = gift

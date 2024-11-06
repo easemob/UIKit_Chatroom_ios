@@ -41,4 +41,6 @@ import UIKit
     
     /// The cache users map.Key is user id.Value is conform `UserInfoProtocol` instance.
     public var usersMap: Dictionary<String,UserInfoProtocol>? = Dictionary<String,UserInfoProtocol>()
+    
+    public var pinnedCache: Dictionary<String,Bool>? = Dictionary<String,Bool>()
 }

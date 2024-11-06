@@ -68,15 +68,20 @@ import UIKit
     /// - Parameters:
     ///   - actions: ``ActionSheetItemProtocol`` array.
     ///   - action: Callback upon a click of a message operation.
-    @objc(showWithMessageActions:action:)
-    public func showMessageActions(_ actions: [ActionSheetItemProtocol],action: @escaping ActionClosure) {
-        let actionSheet = ActionSheet(items: actions) { item,object in
-            action(item,object)
-            UIViewController.currentController?.dismiss(animated: true)
-        }
+    @objc(showWithMessageActions:action:withHeader:)
+    public func showMessageActions(actions: [ActionSheetItemProtocol],withHeader: UIView? = nil, action: @escaping ActionClosure) {
+        let actionSheet = ActionSheet(items: actions,withHeader: withHeader) { item,object in
+            UIViewController.currentController?.dismiss(animated: true) {
+                action(item,object)
+            }
+        }.cornerRadius(.medium, [.topLeft,.topRight], .clear, 0)
         actionSheet.frame = CGRect(x: 0, y: 0, width: actionSheet.frame.width, height: actionSheet.frame.height)
         let vc = DialogContainerViewController(custom: actionSheet,constraintsSize: actionSheet.frame.size)
-        UIViewController.currentController?.presentViewController(vc)
+        let current = UIViewController.currentController
+        if current != nil {
+            DialogManager.feedback()
+            current?.presentViewController(vc)
+        }
     }
     
     /// Shows the member operation list when you click `...`.
@@ -123,5 +128,11 @@ import UIKit
         } else {
             vc?.presentViewController(alertVC)
         }
+    }
+    
+    @objc static public func feedback() {
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
     }
 }

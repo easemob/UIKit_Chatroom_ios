@@ -24,11 +24,11 @@ import UIKit
     }()
     
     @objc open func createContainer() -> UIView {
-        UIView(frame: CGRect(x: 15, y: 6, width: self.contentView.frame.width - 30, height: self.frame.height - 6)).backgroundColor( UIColor.theme.barrageLightColor2).cornerRadius(.small)
+        UIView(frame: CGRect(x: 15, y: 6, width: self.contentView.frame.width - 30, height: self.frame.height - 12)).backgroundColor( UIColor.theme.barrageLightColor2).cornerRadius(.small)
     }
     
     public private(set) lazy var time: UILabel = {
-        UILabel(frame: CGRect(x: 8, y: 10, width: 40, height: 18)).font(UIFont.theme.bodyMedium).textColor(UIColor.theme.secondaryColor8).textAlignment(.center).backgroundColor(.clear)
+        UILabel(frame: CGRect(x: 8, y: 4, width: 40, height: 18)).font(UIFont.theme.bodyMedium).textColor(UIColor.theme.secondaryColor8).textAlignment(.center).backgroundColor(.clear)
     }()
     
     public private(set) lazy var identity: ImageView = {
@@ -40,7 +40,7 @@ import UIKit
             originX = originX
             break
         }
-        return ImageView(frame: CGRect(x: originX, y: 10, width: 18, height: 18)).backgroundColor(.clear).cornerRadius(Appearance.avatarRadius)
+        return ImageView(frame: CGRect(x: originX, y: 4, width: 18, height: 18)).backgroundColor(.clear).cornerRadius(Appearance.avatarRadius)
     }()
     
     public private(set) lazy var avatar: ImageView = {
@@ -55,7 +55,7 @@ import UIKit
         default:
             break
         }
-        return ImageView(frame: CGRect(x: originX, y: 10, width: 18, height: 18)).backgroundColor(.clear).cornerRadius(Appearance.avatarRadius)
+        return ImageView(frame: CGRect(x: originX, y: 4, width: 18, height: 18)).backgroundColor(.clear).cornerRadius(Appearance.avatarRadius)
     }()
     
     public private(set) lazy var content: UILabel = {
@@ -121,9 +121,10 @@ import UIKit
         self.identity.image(with: chat.message.user?.identity ?? "", placeHolder: Appearance.identityPlaceHolder)
         self.avatar.image(with: chat.message.user?.avatarURL ?? "", placeHolder: Appearance.avatarPlaceHolder)
         self.content.attributedText = chat.attributeText
-        self.container.frame = CGRect(x: 15, y: 6, width: chat.width + 24, height: chat.height - 6)
+        self.container.frame = CGRect(x: 15, y: 6, width: chat.width + 24, height: chat.height - 12)
+        self.container.cornerRadius(.small)
 //        self.content.preferredMaxLayoutWidth =  self.container.frame.width - 24
-        self.content.frame = CGRect(x: 10, y: self.container.frame.minY, width:  self.container.frame.width - 24, height:  self.container.frame.height - 16)
+        self.content.frame = CGRect(x: 8, y: 4, width:  self.container.frame.width - 16, height:  self.container.frame.height - 8)
         self.giftIcon.frame = CGRect(x: self.container.frame.width-26, y: (self.container.frame.height-18)/2.0, width: 18, height: 18)
         self.giftIcon.isHidden = chat.gift == nil
         if let item = chat.gift {
@@ -162,22 +163,35 @@ fileprivate let gift_tail_indent: CGFloat = 26
     lazy public var message: ChatMessage = ChatMessage()
     
     /// The time at which the message was sent, formatted as "HH:mm".
-    lazy public var showTime: String = {
+    lazy open var showTime: String = {
         let date = Date(timeIntervalSince1970: Double(self.message.timestamp)/1000)
         return date.chatroom.dateString("HH:mm")
     }()
     
     /// The attributed text of the message, including the user's nickname, message text, and emojis.
     lazy public var attributeText: NSAttributedString = self.convertAttribute()
+    
+    /// The attribute text of the pinned message, including the user's nickname, message text, and emojis.
+    lazy public var pinAttributeText: NSAttributedString = self.convertPinAttribute()
         
     /// The height of the chat entity, calculated based on the attributed text and the width of the chat view.
-    lazy public var height: CGFloat =  {
-        let cellHeight = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).height + 26
+    lazy open var height: CGFloat =  {
+        let cellHeight = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).height + 20
         return cellHeight
     }()
     
+    lazy open var pinHeight: CGFloat =  {
+        let cellHeight = UILabel().numberOfLines(0).attributedText(self.pinAttributeText).sizeThatFits(CGSize(width: ScreenWidth - 54 - 26 - 8 - 16, height: 9999)).height+8
+        return cellHeight
+    }()
+    
+    lazy open var pinWidth: CGFloat = {
+        let cellWidth = UILabel().numberOfLines(0).attributedText(self.pinAttributeText).sizeThatFits(CGSize(width: ScreenWidth - 54 - 26 - 8 - 16, height: 9999)).width
+        return cellWidth
+    }()
+    
     /// The width of the chat entity, calculated based on the attributed text and the width of the chat view.
-    lazy public var width: CGFloat = {
+    lazy open var width: CGFloat = {
         let cellWidth = UILabel().numberOfLines(0).attributedText(self.attributeText).sizeThatFits(CGSize(width: chatViewWidth - 54, height: 9999)).width+(self.gift != nil ? gift_tail_indent:0)
         return cellWidth
     }()
@@ -232,11 +246,61 @@ fileprivate let gift_tail_indent: CGFloat = 26
         return text
     }
     
+    @objc open func convertPinAttribute() -> NSAttributedString {
+        let userId = self.message.user?.userId ?? self.message.from
+        var text = NSMutableAttributedString {
+            AttributedText((self.message.user?.nickname ?? userId)).foregroundColor(Color.theme.primaryColor8).font(UIFont.theme.labelMedium).paragraphStyle(self.pinParaStyle())
+        }
+        if self.message.body.type == .custom,let body = self.message.body as? ChatCustomMessageBody {
+            switch body.event {
+            case chatroom_UIKit_gift:
+                if let item = self.gift {
+                    let giftText = " "+item.giftName+" "+"× \(item.giftCount)"
+                    text.append(NSMutableAttributedString {
+                        AttributedText(giftText).foregroundColor(Color.theme.neutralColor98).font(UIFont.theme.labelMedium).paragraphStyle(self.pinParaStyle())
+                    })
+                }
+            case chatroom_UIKit_user_join,chatroom_UIKit_gift:
+                text.append(NSMutableAttributedString {
+                    AttributedText(" "+"Joined".chatroom.localize).foregroundColor(Color.theme.secondaryColor7).font(UIFont.theme.labelMedium).paragraphStyle(self.pinParaStyle())
+                })
+            default:
+                break
+            }
+            
+        } else {
+            text.append(NSAttributedString {
+                AttributedText(" : "+self.message.text).foregroundColor(Color.theme.neutralColor98).font(UIFont.theme.bodyMedium).paragraphStyle(self.pinParaStyle())
+            })
+            let string = text.string as NSString
+            
+            for symbol in ChatEmojiConvertor.shared.emojis {
+                if string.range(of: symbol).location != NSNotFound {
+                    let ranges = text.string.chatroom.rangesOfString(symbol)
+                    text = ChatEmojiConvertor.shared.convertEmoji(input: text, ranges: ranges, symbol: symbol)
+                    text.addAttribute(.paragraphStyle, value: self.pinParaStyle(), range: NSMakeRange(0, text.length))
+                    text.addAttribute(.font, value: UIFont.theme.bodyMedium, range: NSMakeRange(0, text.length))
+                }
+            }
+        }
+        return text
+    }
+    
     /// Returns a paragraph style object with the first line head indent set based on the appearance of the chat cell.
     @objc open func paragraphStyle() -> NSMutableParagraphStyle {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent()
         paragraphStyle.lineHeightMultiple = 1.08
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        return paragraphStyle
+    }
+    
+    @objc open func pinParaStyle() -> NSMutableParagraphStyle {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.firstLineHeadIndent = self.pinFirstLineHeadIndent()
+        paragraphStyle.lineHeightMultiple = 1.08
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        paragraphStyle.lineSpacing = 0
         return paragraphStyle
     }
     
@@ -252,6 +316,10 @@ fileprivate let gift_tail_indent: CGFloat = 26
         case .hideTimeAndUserIdentity,.hideTimeAndAvatar: distance = 24
         }
         return distance
+    }
+    
+    @objc open func pinFirstLineHeadIndent() -> CGFloat {
+        return 48
     }
     
     /// Returns the distance of the last line head indent based on the appearance of the chat cell.
@@ -277,5 +345,26 @@ public extension ChatMessage {
     /// Translation of the text message.
     @objc var translation: String? {
         (self.body as? ChatTextMessageBody)?.translations?[Appearance.messageTranslationLanguage.rawValue]
+    }
+}
+
+extension UILabel {
+    func isAttributedTextTruncated() -> Bool {
+        guard let attributedText = self.attributedText else {
+            return false // 如果没有富文本，认为没有截断
+        }
+
+        // 获取 UILabel 的边界
+        let labelSize = self.bounds.size
+
+        // 计算富文本所需的大小
+        let textSize = attributedText.boundingRect(
+            with: CGSize(width: labelSize.width, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil
+        ).size
+
+        // 检查是否超出 UILabel 的大小
+        return textSize.height > labelSize.height || textSize.width > labelSize.width
     }
 }

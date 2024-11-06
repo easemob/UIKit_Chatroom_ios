@@ -28,6 +28,8 @@ fileprivate let component = ComponentsRegister()
     /// Chatroom chat list cell class.
     public var ChatsCell: ChatMessageCell.Type = ChatMessageCell.self
     
+    public var PinCell: PinMessageCell.Type = PinMessageCell.self
+    
     /// Report message controller
     public var ReportViewController: ReportOptionsController.Type = ReportOptionsController.self
     

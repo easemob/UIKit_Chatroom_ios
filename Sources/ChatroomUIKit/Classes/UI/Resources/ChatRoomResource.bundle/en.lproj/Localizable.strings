@@ -31,6 +31,9 @@
 "barrage_long_press_menu_cancel" = "Cancel";
 "report_button_click_menu_title" = "Report";
 "report_button_click_menu_button_cancel" = "Cancel";
+"barrage_long_press_menu_pin" = "Pin";
+"barrage_long_press_menu_unpin" = "Unpin";
+
 "Confirm" = "Confirm";
 "participant_list_title" = "Participants";
 "Ban List" = "Ban List";

@@ -57,7 +57,14 @@ import UIKit
     public static var messageTranslationLanguage: LanguageType = .English
     
     /// ActionSheet data source of the message being long pressed.``ActionSheetItemProtocol``
-    public static var defaultMessageActions: [ActionSheetItemProtocol] = [ActionSheetItem(title: "barrage_long_press_menu_translate".chatroom.localize, type: .normal,tag: "Translate"),ActionSheetItem(title: "barrage_long_press_menu_delete".chatroom.localize, type: .normal,tag: "Recall"),ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute"),ActionSheetItem(title: "barrage_long_press_menu_report".chatroom.localize, type: .destructive,tag: "Report")]
+    public static var defaultMessageActions: [ActionSheetItemProtocol] = [
+        ActionSheetItem(title: "barrage_long_press_menu_translate".chatroom.localize, type: .normal,tag: "Translate"),
+        ActionSheetItem(title: "barrage_long_press_menu_delete".chatroom.localize, type: .normal,tag: "Recall"),
+        ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute"),
+        ActionSheetItem(title: "barrage_long_press_menu_report".chatroom.localize, type: .destructive,tag: "Report"),
+        ActionSheetItem(title: "barrage_long_press_menu_pin".chatroom.localize, type: .normal, tag: "Pin"),
+        ActionSheetItem(title: "barrage_long_press_menu_unpin".chatroom.localize, type: .normal, tag: "Unpin")
+    ]
     
     /// ActionSheet data source of the member list cell on click ``...``.
     public static var defaultOperationUserActions: [ActionSheetItemProtocol] = [ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute"),ActionSheetItem(title: "participant_list_button_click_menu_remove".chatroom.localize, type: .destructive,tag: "Remove")]
@@ -85,6 +92,7 @@ import UIKit
     public static var notifyBackgroundColor = UIColor.theme.primaryColor5
     
     /// The origin point of the global notification message.
+    /// Deprecated 1.1.2
     public static var notifyMessageOriginPoint: CGPoint = CGPoint(x: 20, y: NavigationHeight+10)
         
     /// The placeholder image of the user-level image view of ``ChatMessageCell``.
@@ -119,4 +127,7 @@ import UIKit
     
     /// The number of  mute list page size.
     public static var mutePageSize: UInt = 200
+    
+    /// Whether enable pin function of the message.
+    public static var enablePinnedMessage: Bool = true
 }

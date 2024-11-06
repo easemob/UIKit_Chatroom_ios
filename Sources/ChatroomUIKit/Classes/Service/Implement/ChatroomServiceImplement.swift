@@ -29,6 +29,15 @@ let chatroom_UIKit_user_join = "CHATROOMUIKITUSERJOIN"
 }
 //MARK: - ChatroomService
 extension ChatroomServiceImplement: ChatroomService {
+    public func pinMessage(messageId: String, completion: @escaping (ChatMessage?, ChatError?) -> Void) {
+        ChatClient.shared().chatManager?.pinMessage(messageId, completion: completion)
+    }
+    
+    public func unpinMessage(messageId: String, completion: @escaping (ChatMessage?, ChatError?) -> Void) {
+        ChatClient.shared().chatManager?.unpinMessage(messageId, completion: completion)
+    }
+    
+    
     
     public func bindResponse(response: ChatroomResponseListener) {
         if self.responseDelegates.contains(response) {
@@ -209,6 +218,17 @@ extension ChatroomServiceImplement: ChatroomService {
             completion(ids,error)
         })
     }
+    
+    public func fetchPinnedMessages(roomId: String, completion: @escaping ([ChatMessage]?, ChatError?) -> Void) {
+        let has = ChatroomContext.shared?.pinnedCache?[roomId] as? Bool ?? false
+        if has {
+            let messages = ChatClient.shared().chatManager?.getConversation(roomId, type: .chatRoom, createIfNotExist: true)?.pinnedMessages() ?? []
+            completion(messages,nil)
+        } else {
+            ChatClient.shared().chatManager?.getConversation(roomId, type: .chatRoom, createIfNotExist: true)
+            ChatClient.shared().chatManager?.getPinnedMessages(fromServer: roomId, completion: completion)
+        }
+    }
 }
 //MARK: - ChatRoomManagerDelegate
 extension ChatroomServiceImplement: ChatroomEventsListener {
@@ -271,6 +291,12 @@ extension ChatroomServiceImplement: ChatroomEventsListener {
 }
 //MARK: - ChatManagerDelegate
 extension ChatroomServiceImplement: ChatEventsListener {
+    
+    public func onMessagePinChanged(_ messageId: String, conversationId: String, operation pinOperation: MessagePinOperation, pinInfo: MessagePinInfo) {
+        for handler in self.responseDelegates.allObjects {
+            handler.onMessageStickiedTop(roomId: conversationId, messageId: messageId, operation: pinOperation, info: pinInfo)
+        }
+    }
     
     public func messagesDidReceive(_ aMessages: [ChatMessage]) {
         for message in aMessages {

@@ -12,19 +12,23 @@ import UIKit
 @objc public protocol ChatroomViewActionEventsDelegate {
     
     /// The method called on ChatroomView message  clicked.
-    /// - Parameter message: `ChatMessage`
+    /// - Parameter message: ``ChatMessage``
     func onMessageClicked(message: ChatMessage)
     
     /// The method called on ChatroomView message  long pressed.
-    /// - Parameter message: `ChatMessage`
+    /// - Parameter message: ``ChatMessage``
     func onMessageLongPressed(message: ChatMessage)
     
     /// The method called on ChatroomView raise keyboard button clicked.
     func onKeyboardRaiseClicked()
     
     /// The method called on ChatroomView extension view  item clicked that below chat area list .
-    /// - Parameter item: The item conform `ChatBottomItemProtocol` instance.
+    /// - Parameter item: The item conform ``ChatBottomItemProtocol`` instance.
     func onExtensionBottomItemClicked(item: ChatBottomItemProtocol)
+    
+    /// The method called on ChatroomView pin message view long pressed.
+    /// - Parameter message: ``ChatMessage``
+    func onPinMessageViewLongPressed(message: ChatMessage)
 }
 
 /// ChatroomUIKit's ChatroomView UI component.
@@ -34,13 +38,21 @@ import UIKit
     public private(set) weak var service: RoomService?
     
     lazy private var eventHandlers: NSHashTable<ChatroomViewActionEventsDelegate> = NSHashTable<ChatroomViewActionEventsDelegate>.weakObjects()
+    
+    public private(set) lazy var pinArea: PinMessageView = {
+        self.createPinArea()
+    }()
+    
+    @objc open func createPinArea() -> PinMessageView {
+        PinMessageView(frame: CGRect(x: 12, y: NavigationHeight+20, width: 0, height: 0)).cornerRadius(.small).backgroundColor(Theme.style == .dark ? UIColor.theme.barrageLightColor2:UIColor.theme.barrageDarkColor1)
+    }
         
     public private(set) lazy var carouselTextView: GlobalBoardcastView = {
         self.createBoardcast()
     }()
     
     @objc open func createBoardcast() -> GlobalBoardcastView {
-        GlobalBoardcastView(originPoint: Appearance.notifyMessageOriginPoint, width: self.frame.width-40, font: UIFont.theme.headlineExtraSmall, textColor: UIColor.theme.neutralColor98).cornerRadius(.large).backgroundColor(Appearance.notifyBackgroundColor)
+        GlobalBoardcastView(originPoint: CGPoint(x: 12, y: Appearance.enablePinnedMessage ? self.pinArea.frame.maxY+8:NavigationHeight+20), width: self.frame.width-40, font: UIFont.theme.headlineExtraSmall, textColor: UIColor.theme.neutralColor98).cornerRadius(.large).backgroundColor(Appearance.notifyBackgroundColor)
     }
         
     /// Gift list on receive gift.
@@ -99,17 +111,28 @@ import UIKit
         self.touchFrame = frame
         super.init(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: ScreenHeight))
         if ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea {
-            self.addSubViews([self.giftArea,self.bottomBar,self.chatList,self.inputBar,self.carouselTextView])
+            if Appearance.enablePinnedMessage {
+                self.addSubViews([self.giftArea,self.bottomBar,self.chatList,self.inputBar,self.pinArea,self.carouselTextView])
+            } else {
+                self.addSubViews([self.giftArea,self.bottomBar,self.chatList,self.inputBar,self.carouselTextView])
+            }
         } else {
-            self.addSubViews([self.bottomBar,self.chatList,self.inputBar,self.carouselTextView])
+            if Appearance.enablePinnedMessage {
+                self.addSubViews([self.bottomBar,self.chatList,self.inputBar,self.pinArea,self.carouselTextView])
+            } else {
+                self.addSubViews([self.bottomBar,self.chatList,self.inputBar,self.carouselTextView])
+            }
         }
         self.carouselTextView.alpha = 0
         self.chatList.addActionHandler(actionHandler: self)
+        self.pinArea.addActionHandler(actionHandler: self)
         self.bottomBar.addActionHandler(actionHandler: self)
         self.inputBar.sendClosure = { [weak self] in
             self?.sendTextMessage(text: $0)
         }
-
+        self.pinArea.axisMaxYChanged = { [weak self] in
+            self?.carouselTextView.frame.origin = CGPoint(x: 20, y: $0+8)
+        }
     }
     
     required public init?(coder: NSCoder) {
@@ -141,6 +164,7 @@ import UIKit
         }
         self.service = service
         service.bindChatDriver(self.chatList)
+        service.bindPinDriver(self.pinArea)
         if ChatroomUIKitClient.shared.option.option_UI.showGiftMessageArea {
             service.bindGiftDriver(self.giftArea)
         }
@@ -216,11 +240,27 @@ extension ChatroomView: GiftMessageListTransformAnimationDataSource {
     }
 }
 
+extension ChatroomView: PinMessageViewDelegate {
+        
+    public func pinMessageViewDidLongPress(entity: ChatEntity) {
+        self.showLongPressDialog(message: entity.message, messageActions: [ActionSheetItem(title: "barrage_long_press_menu_unpin".chatroom.localize, type: .normal, tag: "Unpin")], withHeader: UIView {
+            UIView {
+                UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 62)).backgroundColor(.clear)
+                UILabel(frame: CGRect(x: 16, y: 13, width: ScreenWidth-32, height: 36)).font(UIFont.theme.labelMedium).textColor(Theme.style == .dark ? UIColor.theme.neutralColor7:UIColor.theme.neutralColor5).textAlignment(.center).lineBreakMode(.byTruncatingTail).backgroundColor(.clear).text(entity.attributeText.string).numberOfLines(2)
+                UIView(frame: CGRect(x: 16, y: 61.5, width: ScreenWidth-32, height: 0.5)).backgroundColor(Theme.style == .dark ? UIColor.theme.neutralColor2:UIColor.theme.neutralColor9)
+            }
+        })
+        for delegate in self.eventHandlers.allObjects {
+            delegate.onPinMessageViewLongPressed(message: entity.message)
+        }
+    }
+        
+}
+
 //MARK: - MessageListActionEventsHandler
 extension ChatroomView: MessageListActionEventsHandler {
     
     public func onMessageLongPressed(message: ChatMessage) {
-        
         self.showLongPressDialog(message: message, messageActions: self.filterMessageActions(message: message))
         for delegate in self.eventHandlers.allObjects {
             delegate.onMessageLongPressed(message: message)
@@ -264,6 +304,12 @@ extension ChatroomView: MessageListActionEventsHandler {
                     messageActions[index] = ActionSheetItem(title: "barrage_long_press_menu_mute".chatroom.localize, type: .normal,tag: "Mute")
                 }
             }
+            if messageActions.first(where: { $0.tag == "Pin" }) == nil,message.pinnedInfo == nil {
+                messageActions.append(ActionSheetItem(title: "barrage_long_press_menu_pin".chatroom.localize, type: .normal, tag: "Pin"))
+            }
+            if messageActions.first(where: { $0.tag == "Unpin" }) == nil,message.pinnedInfo != nil {
+                messageActions.append(ActionSheetItem(title: "barrage_long_press_menu_unpin".chatroom.localize, type: .normal, tag: "Unpin"))
+            }
         } else {
             messageActions.append(contentsOf: Appearance.defaultMessageActions)
             if let index = messageActions.firstIndex(where: { $0.tag == "Mute"
@@ -274,6 +320,8 @@ extension ChatroomView: MessageListActionEventsHandler {
             }) {
                 messageActions.remove(at: index)
             }
+            messageActions.removeAll { $0.tag == "Pin" }
+            messageActions.removeAll(where: { $0.tag == "Unpin" })
         }
         if currentUser == message.from {
             if let index = messageActions.firstIndex(where: { $0.tag == "Mute"
@@ -287,8 +335,8 @@ extension ChatroomView: MessageListActionEventsHandler {
         return messageActions
     }
     
-    private func showLongPressDialog(message: ChatMessage,messageActions: [ActionSheetItemProtocol]) {
-        DialogManager.shared.showMessageActions(messageActions) { [weak self] item,object in
+    private func showLongPressDialog(message: ChatMessage,messageActions: [ActionSheetItemProtocol],withHeader: UIView? = nil) {
+        DialogManager.shared.showMessageActions(actions: messageActions,withHeader: withHeader) { [weak self] item,object in
             switch item.tag {
             case "Translate":
                 self?.service?.translate(message: message, completion: { _ in })
@@ -308,6 +356,10 @@ extension ChatroomView: MessageListActionEventsHandler {
                         }
                     }
                 }
+            case "Pin":
+                self?.service?.pinMessage(message: message, completion: { _,_ in })
+            case "Unpin":
+                self?.service?.unpinMessage(message: message, completion: { _,_ in })
             default:
                 item.action?(item,message)
             }

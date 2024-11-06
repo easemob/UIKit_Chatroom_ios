@@ -29,6 +29,8 @@
 "barrage_long_press_menu_report" = "举报";
 "barrage_long_press_menu_cancel" = "取消";
 "report_button_click_menu_button_cancel" = "取消";
+"barrage_long_press_menu_pin" = "置顶";
+"barrage_long_press_menu_unpin" = "取消置顶";
 "Confirm" = "确定";
 
 

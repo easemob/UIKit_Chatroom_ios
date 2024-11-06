@@ -63,11 +63,15 @@ import UIKit
     /// - Parameters:
     /// Returns the initialization success or an error that includes the description of the cause of the failure.
     @objc(setupWithAppkey:option:)
-    public func setup(appKey: String,option: ChatOptions = ChatOptions()) -> ChatError? {
-        let option = ChatSDKOptions(appkey: appKey)
-        option.enableConsoleLog = true
-        option.isAutoLogin = false
-        return ChatClient.shared().initializeSDK(with: option)
+    public func setup(appKey: String,option: ChatSDKOptions? = nil) -> ChatError? {
+        if option == nil {
+            let option = ChatSDKOptions(appkey: appKey)
+            option.enableConsoleLog = true
+            option.isAutoLogin = false
+            return ChatClient.shared().initializeSDK(with: option)
+        } else {
+            return ChatClient.shared().initializeSDK(with: option!)
+        }
     }
     
     /// Login user.
