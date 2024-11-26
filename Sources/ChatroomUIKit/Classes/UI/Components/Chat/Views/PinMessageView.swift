@@ -12,6 +12,7 @@ let pinMessageViewWidth: CGFloat = ScreenWidth - 54 - 26 - 8
 @objc public protocol IPinMessageViewDriver: AnyObject {
     func showNewMessage(message: ChatMessage, gift: (any GiftEntityProtocol)?)
     func removeMessage(message: ChatMessage)
+    func showPinMessages(messages: [ChatMessage])
 }
 
 @objc public protocol PinMessageViewDelegate: AnyObject {
@@ -133,7 +134,7 @@ open class PinMessageView: UIView,IPinMessageViewDriver {
     }
     
     @objc func longGesture(gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
+        if gesture.state == .began,ChatroomContext.shared?.owner ?? false {
             for handler in self.eventHandlers.allObjects {
                 handler.pinMessageViewDidLongPress(entity: self.entity)
             }
@@ -192,6 +193,8 @@ open class PinMessageView: UIView,IPinMessageViewDriver {
         return entity
     }
     
+    
+    
     open func showNewMessage(message: ChatMessage, gift: (any GiftEntityProtocol)?) {
         self.expandButton.isSelected = false
         self.messages.append(self.convertMessageToRender(message: message, gift: gift))
@@ -242,20 +245,21 @@ open class PinMessageView: UIView,IPinMessageViewDriver {
         return paragraphStyle
     }
     
+    public func showPinMessages(messages: [ChatMessage]) {
+        self.messages.removeAll()
+        for message in messages.reversed() {
+            self.messages.append(self.convertMessageToRender(message: message, gift: nil))
+        }
+        if let first = self.messages.last {
+            self.showNewMessage(message: first.message, gift: nil)
+        }
+    }
+    
     open func removeMessage(message: ChatMessage) {
-        var itemWidth:CGFloat = 0
-        var index = -1
-        if let idx = self.messages.lastIndex(where: { $0.message.messageId == message.messageId }) {
-            itemWidth = self.messages[idx].pinWidth
-            index = idx
-        }
-        if index < 0 {
-            return
-        }
-        self.messages.remove(at: index)
+        self.messages.removeAll { $0.message.messageId == message.messageId }
         if self.messages.count <= 0 {
             UIView.animate(withDuration: 0.22) {
-                self.frame = CGRect(x: self.frame.origin.x, y: NavigationHeight+20, width: itemWidth, height: 0)
+                self.frame = CGRect(x: self.frame.origin.x, y: NavigationHeight+20, width: 0, height: 0)
                 self.axisMaxYChanged?(self.frame.height+NavigationHeight+20)
             } completion: { _ in
                 self.isHidden = true

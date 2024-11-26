@@ -170,13 +170,13 @@ import UIKit
         self.pinDrive = driver
         self.roomService?.fetchPinnedMessages(roomId: self.roomId, completion: { [weak self] messages, error in
             if error == nil {
-                if let message = messages?.last {
+                if let message = messages?.last,let pinMessages = messages {
                     if let json = message.ext as? [String:Any],let userInfo = json["chatroom_uikit_userInfo"] as? [String:Any] {
                         let user = User()
                         user.setValuesForKeys(userInfo)
                         ChatroomContext.shared?.usersMap?[user.userId] = user
                     }
-                    self?.pinDrive?.showNewMessage(message: message, gift: nil)
+                    self?.pinDrive?.showPinMessages(messages: pinMessages)
                 }
             } else {
                 self?.handleError(type: .fetchPinMessages, error: error)
@@ -210,6 +210,7 @@ import UIKit
     }
     
     @objc open func cleanCache() {
+        ChatClient.shared().chatManager?.deleteConversation(self.roomId, isDeleteMessages: true)
         self.roomId = ""
         self.roomService = nil
         self.giftDrive = nil
@@ -484,6 +485,7 @@ import UIKit
         self.roomService?.recall(messageId: message.messageId, completion: { [weak self] error in
             if error == nil {
                 self?.chatDrive?.removeMessage(message: message)
+                self?.pinDrive?.removeMessage(message: message)
             }
             self?.handleError(type: .recall, error: error)
             completion(error)
@@ -527,7 +529,11 @@ import UIKit
 extension RoomService: ChatroomResponseListener {
     public func onMessageStickiedTop(roomId: String, messageId: String, operation: MessagePinOperation, info: MessagePinInfo) {
         if let message = ChatClient.shared().chatManager?.getMessageWithMessageId(messageId) {
-            self.pinDrive?.showNewMessage(message: message, gift: nil)
+            if operation == .pin {
+                self.pinDrive?.showNewMessage(message: message, gift: nil)
+            } else {
+                self.pinDrive?.removeMessage(message: message)
+            }
         }
     }
     
