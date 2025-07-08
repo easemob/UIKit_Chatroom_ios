@@ -132,13 +132,13 @@ extension ChatroomServiceImplement: ChatroomService {
         }
     }
     
-    public func sendMessage(text: String, roomId: String, completion: @escaping (ChatMessage, ChatError?) -> Void) {
+    public func sendMessage(text: String, roomId: String, completion: @escaping (ChatMessage?, ChatError?) -> Void) {
         let user = ChatroomContext.shared?.currentUser
         if let user_json = user?.toJsonObject() {
             let message = ChatMessage(conversationID: roomId, body: ChatTextMessageBody(text: text), ext: ["chatroom_uikit_userInfo":user_json])
             message.chatType = .chatRoom
             ChatClient.shared().chatManager?.send(message, progress: nil,completion: { chatMessage, error in
-                completion(chatMessage ?? ChatMessage(),error)
+                completion(chatMessage,error)
             })
         }
     }
