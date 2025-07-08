@@ -84,7 +84,7 @@ import Foundation
     ///   - text: You'll send text.
     ///   - roomId: chatroom id
     ///   - completion: Send callback,what if success or error.
-    func sendMessage(text: String, roomId: String, completion: @escaping (ChatMessage,ChatError?) -> Void)
+    func sendMessage(text: String, roomId: String, completion: @escaping (ChatMessage?,ChatError?) -> Void)
     
     /// Send targeted text messages to some participants of the chat room
     /// - Parameters:

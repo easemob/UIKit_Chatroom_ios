@@ -141,7 +141,7 @@ import UIKit
     
     @objc open func sendTextMessage(text: String) {
         self.service?.roomService?.sendMessage(text: text, roomId: ChatroomContext.shared?.roomId ?? "", completion: { [weak self] message, error in
-            if error == nil {
+            if error == nil,let message = message {
                 self?.chatList.showNewMessage(message: message, gift: nil)
             } else {
                 let errorInfo = "Send message failure!\n\(error?.errorDescription ?? "")"

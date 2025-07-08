@@ -160,7 +160,7 @@ fileprivate let gift_tail_indent: CGFloat = 26
 @objc open class ChatEntity: NSObject {
     
     /// The message associated with the chat entity.
-    lazy public var message: ChatMessage = ChatMessage()
+    public var message: ChatMessage!
     
     /// The time at which the message was sent, formatted as "HH:mm".
     lazy open var showTime: String = {

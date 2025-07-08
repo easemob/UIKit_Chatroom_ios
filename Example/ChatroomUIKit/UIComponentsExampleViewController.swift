@@ -22,7 +22,7 @@ final class UIComponentsExampleViewController: UIViewController {
     }()
     //聊天区域
     lazy var barrageList: MessageList = {
-        MessageList(frame: CGRect(x: 0, y: ScreenHeight-BottomBarHeight-54-5, width: self.view.frame.width-50, height: 200))
+        MessageList(frame: CGRect(x: 0, y: ScreenHeight-BottomBarHeight-54-5-200, width: self.view.frame.width-50, height: 200))
     }()
     //底部工具栏
     lazy var bottomBar: BottomAreaToolBar = {
